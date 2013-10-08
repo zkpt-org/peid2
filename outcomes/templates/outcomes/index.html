@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% block title %}Outcomes{% endblock %}
+
+{% block javascript %}
+	<script type="text/javascript" src="{{STATIC_URL}}js/jquery-ui.js"></script>
+	<script type="text/javascript" src="{{STATIC_URL}}js/tooltip.js"></script>
+{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block content %}
+	{% include 'filters.html' %}
+        <div id="graph-1">
+            <div class="show-hide-toggle">
+                <a href="javascript:;" onclick="fold('#graph-1');">
+                <i class=icon-caret-down></i></a>
+                <hr/>
+            </div>
+            <div class="hide">
+                <div class="button-back circle"><a href="javascript:;" onclick="ShiftSlide('prev');">
+                    <i class="icon-chevron-left"></i></a></div>
+                <div class="button-fwd circle"><a href="javascript:;" onclick="ShiftSlide('next');">
+                    <i class="icon-chevron-right"></i></a></div>
+                <h3>Trend Curve of User Activity and Health Progress</h3>
+                <div class="box" id=slides>
+                    <div id="slide-0"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="graph-2" class="bubble-chart">
+            
+            <div class="show-hide-toggle">
+                <a href="javascript:;" onclick="fold('#graph-2');">
+                <i class=icon-caret-down></i></a>
+                <hr/>
+            </div>
+            
+            <div class="hide">
+                <h3>Change in Outcome by Segment</h3>                
+                
+                <div class="box summary" id=summary-1>
+                    <div class=pointer-box><div class=pointer></div></div>
+                    
+                    <table>
+                        <tr>
+                        <th>Top 5 Outcomes</th>
+                        <th>Bottom 5 outcomes</th>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td><div class="circle small blue degree-1"></div></td>
+                            <td class=narrow>Segment 2</td><td>Program C, Female, Age 35-50</td>
+                            <td><div class="circle small fuschia degree-1"></div></td>
+                            <td class=narrow>Segment 3</td><td>Program A, Male, Age 35-50</td>
+                        </tr>
+                        <tr>
+                            <td><div class="circle small blue degree-2"></div></td>
+                            <td class=narrow>Segment 10</td><td>Female, Age 50-65, Diabetic</td>
+                            <td><div class="circle small fuschia degree-2"></div></td>
+                            <td class=narrow>Segment 19</td><td>Male, Age 50-65, Diabetic</td>
+                        </tr>
+                        <tr>
+                            <td><div class="circle small blue degree-3"></div></td>
+                            <td class=narrow>Segment 15</td><td>Program A, Female, Age 50-65</td>
+                            <td><div class="circle small fuschia degree-3"></div></td>
+                            <td class=narrow>Segment 21</td><td>Program C, Age 35-50, Diabetic</td>
+                        </tr>
+                        <tr>
+                            <td><div class="circle small blue degree-4"></div></td>
+                            <td class=narrow>Segment 4</td><td>Male, Age 35-50, Diabetic</td>
+                            <td><div class="circle small fuschia degree-4"></div></td>
+                            <td class=narrow>Segment 5</td><td>Male, Age 35-50, High Blood Pressure</td>
+                        </tr>
+                        <tr>
+                            <td><div class="circle small blue degree-5"></div></td>
+                            <td class=narrow>Segment 22</td><td>Program B, Male, Age 35-50</td>
+                            <td><div class="circle small fuschia degree-5"></div></td>
+                            <td class=narrow>Segment 12</td><td>Female, Age 50-65, Diabetic</td>
+                        </tr>
+                    </table>
+                </div>
+            
+            </div>
+        </div>
+        
+        <div id="graph-3" class="bubble-chart">    
+            <div class="show-hide-toggle">
+                <a href="javascript:;" onclick="fold('#graph-3');">
+                <i class=icon-caret-down></i></a>
+                <hr/>
+            </div>
+            
+            <div class="hide">
+                <h3>Movement in Outcome by Segment</h3>                
+                
+                <div class="box summary" id=summary-2>
+                    <div class=pointer-box><div class=pointer></div></div>
+                    
+                    <table>
+                        <tr>
+                        <th>Top 5 Movers</th>
+                        <th>Bottom 5 Movers</th>
+                        </tr>
+                    </table>
+                    <table>
+                        <tr>
+                            <td><div class="circle small blue degree-1"></div></td>
+                            <td class=narrow>Segment 2</td><td>Program C, Female, Age 35-50</td>
+                            <td><div class="circle small fuschia degree-1"></div></td>
+                            <td class=narrow>Segment 3</td><td>Program A, Male, Age 35-50</td>
+                        </tr>
+                        <tr>
+                            <td><div class="circle small blue degree-2"></div></td>
+                            <td class=narrow>Segment 10</td><td>Female, Age 50-65, Diabetic</td>
+                            <td><div class="circle small fuschia degree-2"></div></td>
+                            <td class=narrow>Segment 19</td><td>Male, Age 50-65, Diabetic</td>
+                        </tr>
+                        <tr>
+                            <td><div class="circle small blue degree-3"></div></td>
+                            <td class=narrow>Segment 15</td><td>Program A, Female, Age 50-65</td>
+                            <td><div class="circle small fuschia degree-3"></div></td>
+                            <td class=narrow>Segment 21</td><td>Program C, Age 35-50, Diabetic</td>
+                        </tr>
+                        <tr>
+                            <td><div class="circle small blue degree-4"></div></td>
+                            <td class=narrow>Segment 4</td><td>Male, Age 35-50, Diabetic</td>
+                            <td><div class="circle small fuschia degree-4"></div></td>
+                            <td class=narrow>Segment 5</td><td>Male, Age 35-50, High Blood Pressure</td>
+                        </tr>
+                        <tr>
+                            <td><div class="circle small blue degree-5"></div></td>
+                            <td class=narrow>Segment 22</td><td>Program B, Male, Age 35-50</td>
+                            <td><div class="circle small fuschia degree-5"></div></td>
+                            <td class=narrow>Segment 12</td><td>Female, Age 50-65, Diabetic</td>
+                        </tr>
+                    </table>
+                </div>
+            
+            </div>
+        </div>
+		<script src="../public/js/bubble-1.js"></script>
+		<script src="../public/js/bubble-2.js"></script>
+{% endblock %}

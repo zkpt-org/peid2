@@ -1,0 +1,94 @@
+.box{
+    padding:20px;
+    width:720px;
+}
+
+.hide table{
+    width:720px;
+    /* margin-left:10px; */
+}
+.hide tr{
+    border-bottom: 1px #ddd solid;
+}
+.hide td{
+    padding:35px 0px 5px 0px;
+    font-size: small;
+    /* color:#777; */
+    font-weight: bold;
+    vertical-align: middle;   
+}
+.hide td.screening{
+    width:150px;
+/*     font-weight: bold; */
+}
+.hide td.status{
+    width:150px;
+}
+.hide td.overdue{
+    width:200px;
+    text-align:right;
+}
+
+.hide th h3{
+   color: #aaa;
+   /* color:#57a1ff; */
+   font-weight: bold;
+   font-size: large;
+}
+.hide th.screening{
+    width:150px;
+    text-align:left;
+}
+.hide th.status{
+    width:150px;
+    text-align:left;
+}
+.hide th.overdue{
+    width:200px;
+    text-align:right;
+}
+
+.hide td input[type="checkbox"]{
+    margin-left: 30px;
+    margin-top: -2px;
+    margin-right:2px;
+}
+
+.hide td .hi-lite{
+    color:#57a1ff;
+    font-weight:bolder;
+    font-size: medium;
+}
+
+#messaging{
+    height:150px;
+    width:720px;
+    margin-top: 50px;
+}
+#messaging td{
+    min-width:80px;
+    text-align: center;
+    padding: 0;
+}
+#messaging tr{
+    border-bottom:none;  
+}
+#mail{
+    /* opacity: 0.5; */
+    width:100px;
+    height:100px;
+}
+#smartphone{
+    /* opacity: 0.5; */
+    width:100px;
+    height:100px;
+}
+td.preview{
+    width:300px;
+}
+td.or{
+    width:10px;
+}
+#messaging td input[type="checkbox"]{
+    margin-left:0px;
+}

@@ -1,0 +1,238 @@
+svg{
+    font: 10px sans-serif;
+	/* opacity:0; */
+}
+
+
+.x.axis path {
+  display: none;
+}
+.y.axis path {
+  display: none;
+}
+text{
+    font-size: 12px;
+}
+.barchart-labels{
+    z-index: 2;
+    font-size: 12px;
+    position: relative;
+/*
+    background-color: #000;
+    width:100px;
+    height:100px;
+*/
+}
+.right{
+    width:330px;
+    display: inline-block;
+    margin:10px;
+    padding:10px;
+    vertical-align: top;
+}
+.left{
+    width:330px;
+    display: inline-block;
+    margin:10px;
+    padding:10px;
+    vertical-align: top;
+}
+#thermometer{
+    margin-left:20px;
+    display: inline-block;
+    width:50px;
+}
+#thermo-top{
+    border-radius: 50%;
+    border: #999 solid 2px;
+    height:20px;
+    width:20px;
+    background-color: #fff;
+       
+}
+#thermo{
+    border-left: #999 solid 2px;
+    border-right: #999 solid 2px;
+    height:130px;
+    width:20px;
+    top:-10px;
+    position: relative;
+    background-color: #fff;
+
+    z-index:1;
+}
+
+#thermo-bottom{
+    border-radius: 50%;
+    border: #999 solid 2px;
+    height:40px;
+    width:40px;
+    top:-15px;
+    left:-10px;
+    position:relative;
+    z-index:0;
+    background-color: #fff;     
+}
+
+#thermo-circle{
+    border-radius: 50%;
+    background-color: #ff4566;
+    width:30px;
+    height:30px;
+    top:-52px;
+    left:-3px;
+    position:relative;
+    z-index: 2;
+}
+
+#measure{
+    height:70px;
+    width:10px;
+    background-color: #ff4566;
+    top:70px;
+    left:5px;
+    position:relative;
+    border-radius: 5px;
+}
+#health-index{
+    padding-top:20px;
+}
+#health-index .info{
+    display: inline-block;
+    width:250px;
+    vertical-align: top;
+}
+
+#health-index .left .info h2{
+    color:#57a1ff;
+    font-weight: bold;
+}
+
+#health-index p{
+    padding:10px;
+    padding-left:0px;
+    margin-left:0px;
+}
+
+#health-index h5, #health-index h4{
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+#health-index h5{
+    font-size: x-small;
+}
+
+#health-index table tr{
+    width:200px;
+}
+
+#health-index table td{
+    padding:10px;
+    font-size: medium;
+    font-weight:bold;
+}
+
+#health-index table td.percent{
+    color:#57a1ff;
+    font-size: x-large;
+}
+
+#ugly-hack{
+    position: relative;
+    z-index: 3;
+    color:#fff;
+    top:230px;
+    left:120px;
+    font-weight: bold;
+}
+
+#ugly-hack td{
+    padding:5px;
+    position: relative;
+}
+
+#hack1{left:5px;}
+#hack2{left:5px;top:-15px;}
+#hack3{left:7px;top:-25px;}
+#hack4{left:92px;}
+#hack5{left:94px;top:-30px;}
+#hack6{left:96px;top:-55px;}
+#hack7{left:180px;}
+#hack8{left:182px;top:-6px;}
+#hack9{left:184px;top:-15px;}
+
+.bullet{
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.bullet { font: 10px sans-serif; }
+.bullet .marker { stroke: #eee; stroke-width: 2px;}
+.bullet .tick line { stroke: #666; stroke-width: .5px; }
+.bullet .range.s0 { fill: #eee; }
+.bullet .range.s1 { fill: #ddd; }
+.bullet .range.s2 { fill: #ccc; }
+/*
+.bullet .measure.s0 { fill: lightsteelblue; }
+.bullet .measure.s1 { fill: steelblue; }
+*/
+.bullet .measure.s0 { fill: #57a1ff; }
+.bullet .measure.s1 { fill: #ff8c00; }
+.bullet .title { font-size: 14px; font-weight: bold; }
+.bullet .subtitle { fill: #999; }
+
+#activity{
+    padding:20px;
+    width:720px;
+}
+
+
+#results{
+    padding-top:50px;
+    padding-bottom:30px;
+}
+#results table{
+    width:700px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+#results table td{
+    font-size: xx-large;
+    padding:20px;
+    color:#57a1ff;
+    font-weight: bold;
+}
+
+#results table th{
+   font-size: medium; 
+   font-weight: bold;
+}
+
+#view-switch{
+    margin-left:650px;
+    margin-top:20px;
+}
+/*
+#view-switch input{
+    display: inline-block;
+}
+*/
+.bar-text{
+    fill:#777;
+}
+
+#big-costs{
+    
+}
+.bubble-labels{
+    fill:#555;
+    /* font-size: x-small; */
+    /* font-weight: bold; */
+}
+
+#health-index .left{
+    border-right:2px #eee solid;
+}

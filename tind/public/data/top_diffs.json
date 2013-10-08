@@ -1,0 +1,12 @@
+[
+{"name": "Metabolic Syndrome, Male, Age 46-55", "value": 127.53},
+{"name": "High Cholesterol, Male, Age 26-35", "value": 80.26},
+{"name": "High Blood Pressure, Female, Age 46-55", "value": 76.03},
+{"name": "Chronic Pain,  Assistant, Age 36-45", "value": 40.55},
+{"name": "Heart Disease, Manager, Age 46-55", "value": 20.66},
+{"name": "Stress Related, Male, Age 26-35", "value": -89.80},
+{"name": "Diabetes, Director, Age 36-45", "value": -76.42},
+{"name": "Mood Disorder, Female, Age 26-35", "value": -55.31},
+{"name": "Physical Injury, Entry Level, Age 26-35", "value": -30.05},
+{"name": "High Cholesterol, Female, Age 26-35", "value": -15.98}
+]

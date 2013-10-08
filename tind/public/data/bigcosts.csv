@@ -1,0 +1,9 @@
+group,population,popgrowth,costs
+Smoking,300,16,7.5
+Obesity,800,60,50
+Diabetes,500,11,30
+Congestive Heart Failure,100,5.5,40
+Anxiety Disorders,700,22,22.5
+Mood Disorders,500,39,40
+Coronary Heart Disease,80,1,5
+Cerebrovascular Disease,90,8,15

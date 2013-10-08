@@ -1,0 +1,19 @@
+group,date,value
+Other,2011,32
+Other,2012,15
+Other,2013,28
+Depression,2011,8
+Depression,2012,6
+Depression,2013,15
+Stress Related,2011,15
+Stress Related,2012,12
+Stress Related,2013,18
+Heart Condition,2011,9
+Heart Condition,2012,10
+Heart Condition,2013,6
+Diabetes,2011,18
+Diabetes,2012,12
+Diabetes,2013,10
+Physical Injury,2011,13
+Physical Injury,2012,25
+Physical Injury,2013,18

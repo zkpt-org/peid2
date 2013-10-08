@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+{% block title %}Compliance{% endblock %}
+
+{% block javascript %}{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block content %}
+    {% include 'filters.html' %}
+    <div id="graph-1">
+        <div class="show-hide-toggle">
+            <a href="javascript:;" onclick="fold('#graph-1');">
+            <i class=icon-caret-down></i></a>
+            <hr/>
+        </div>
+        <div class="hide">
+            <div id="screening" class="box">
+            <table class="fadeIn fadeIn-1s">
+            <tr>
+                <th class="screening"><h3>Screening</h3></th>
+                <th class="status"><h3>Status</h3></th>
+                <th class="overdue"><h3>Employees overdue</h3>
+                    <span style="font-size:x-small;">in the next 30 days
+                    <br />
+                    who have not received a reminder</span>
+                </th>
+            </tr>
+            <tr>
+                <td class="screening">Mamogram</td>
+                <td>
+                    <span class="hi-lite">592</span> / 1689
+                </td>
+                <td class="overdue">
+                    <span class="hi-lite">19</span>
+                    <input type="checkbox" name="remind" value="physical"> Remind
+                </td>
+            </tr>
+            <tr>
+                <td class="screening">Pap screening
+                </td>
+                <td>
+                    <span class="hi-lite">149</span> / 678
+                </td>
+                <td class="overdue">
+                    <span class="hi-lite">5</span>
+                    <input type="checkbox" name="remind" value="physical"> Remind
+                </td>
+            </tr>
+            <tr>
+                <td class="screening">Colonoscopy
+                </td>
+                <td>
+                    <span class="hi-lite">46</span> / 349</td>
+                <td class="overdue">
+                    <span class="hi-lite">16</span>
+                    <input type="checkbox" name="remind" value="physical"> Remind
+                </td>
+            </tr>
+            <tr>
+                <td class="screening">Flu shot</td>
+                <td>
+                    <span class="hi-lite">2939</span> / 4387
+                </td>
+                <td class="overdue">
+                    <span class="hi-lite">0</span>
+                    <input type="checkbox" name="remind" value="physical"> Remind
+                </td>
+            </tr>
+            <tr>
+                <td class="screening">Dental exam</td>
+                <td>
+                    <span class="hi-lite">2105</span> / 4387
+                </td>
+                <td class="overdue">
+                    <span class="hi-lite">14</span>
+                    <input type="checkbox" name="remind" value="physical"> Remind
+                </td>
+            </tr>
+            <tr>
+                <td class="screening">Vision exam</td>
+                <td>
+                    <span class="hi-lite">67</span> / 567
+                </td>
+                <td class="overdue">
+                    <span class="hi-lite">1</span>
+                    <input type="checkbox" name="remind" value="physical"> Remind
+                </td>
+            </tr>
+            <tr>
+                <td class="screening">Anual physical</td>
+                <td>
+                    <span class="hi-lite">965</span> / 4387
+                </td>
+                <td class="overdue">
+                    <span class="hi-lite">17</span>
+                    <input type="checkbox" name="remind" value="physical"> Remind
+                </td>
+            </tr>
+            </table>
+            <table id="messaging" class="fadeIn fadeIn-1s">
+                <tr>
+                    <td><img src="../public/images/mail.svg" id="mail"/></td>
+                    <td class="or"><span class="hi-lite" style="font-size:x-large;">or</span></td>
+                    <td><img src="../public/images/smartphone2.svg" id="smartphone"/></td>
+                    <td class="preview"><button class="btn btn-zp" id="preview">Preview and approve</button></td>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="checkbox" name="remind" value="physical"> email
+                    </td>
+                    <td class="or"></td>
+                    <td>
+                        <input type="checkbox" name="remind" value="physical"> sms
+                    </td>
+                    <td class="preview">reminders</td>
+                </tr>
+            </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

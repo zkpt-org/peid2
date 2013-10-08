@@ -1,0 +1,121 @@
+svg{
+    font: 10px sans-serif;
+	opacity:0;
+}
+
+h3 {
+    color: #AAAAAA;
+}
+#snapshot .right{
+    display:inline-block;
+}
+#snapshot article{
+    width:300px;
+    /* min-height: 150px; */
+    height:60px;
+    border-radius: 5px;
+    vertical-align: middle;
+    text-align: center;
+    position: relative;
+    font-style: italic;
+    display:none;
+}
+
+#snapshot{}
+
+#download{
+    margin-left:15px;
+    margin-top:15px;
+    margin-bottom:30px;
+}
+#download i{
+    font-size:40px;
+    color:#64b3c1;
+}
+#download:hover i, #download:hover .label{
+    color:#72cede;
+    transition: color 1s;
+    -moz-transition: color 1s;
+    -webkit-transition: color 1s;
+    -o-transition: color 1s;  
+}
+
+#download .label{
+    background:none;
+    color:#64b3c1;
+    text-shadow: none;
+    vertical-align:middle;
+    margin-top: -20px;
+    margin-left:5px;
+}
+
+
+#traffic-1, #traffic-2, #traffic-3{
+    width:0px;
+    height:0px;
+    border-radius: 50%;
+    display: inline-block;
+
+    opacity:0;
+    color:#fff;
+    font-size: large;
+    font-weight: bold;
+    
+    text-align: center;
+    vertical-align: middle;
+}
+
+#traffic-lights table{
+    /* width:450px; */
+    height:150px;
+    position:relative;
+    margin:20px 0px 20px -20px;
+    display: inline-table;
+    vertical-align: top;
+}
+
+#traffic-lights table td{
+    font-size: medium;
+    padding:0px;
+    margin: 0px;
+    text-align: center;
+    width:150px;
+    height:25px;
+    color:#999;
+}
+
+#traffic-lights table #diff_leavers, 
+#traffic-lights table #diff_fencers, 
+#traffic-lights table #diff_stayers{
+    font-size: x-large;
+    color:#888;
+}
+
+#traffic-lights table td.traffic{
+    width:150px;
+    height:150px;
+}
+
+#traffic-lights table div h4{
+    text-align: center;
+    vertical-align: middle;
+    color:#fff;
+    font-size: 16px;
+    font-weight: bold;
+    position:relative;
+    top:38%;    
+}
+
+#summary th{
+    font-size: large;
+    text-align: left;
+    width:50%;
+}
+
+
+.pointer-box-left .pointer{
+    /*background-color: #f0f0f0;*/
+}
+.pointer-box-left{
+    margin-top:2px;
+}

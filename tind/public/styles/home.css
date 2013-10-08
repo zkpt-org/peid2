@@ -1,0 +1,214 @@
+.pmpm{
+    fill:none;
+    stroke:#3ea4bf;
+    stroke-width:2px;
+}
+
+
+
+
+.grid .tick {
+    stroke: #eee;
+    opacity: 0.6;
+}
+.grid path {
+    stroke-width: 0;
+}
+.overlay {
+   fill: none;
+   pointer-events: all;
+}
+.tracker{
+    fill:#fff;
+    stroke:#3ea4bf;
+    /* stroke:#ff4566; */
+    stroke-width:1;
+}
+
+.tooltip-1{
+    background-color: #fff;
+    min-height:20px;
+    min-width:20px;
+    border:#3ea4bf 1px solid;
+    border-radius:5px;
+    padding:10px;
+    padding-top:0px;
+    opacity:0.9;
+    font-size: x-small;
+    font-weight: bold;
+    box-shadow: 2px 2px 5px #aaaaaa;
+    /* color:#3ea4bf; */
+    color:#777;   
+}
+.tooltip-1 li{
+    list-style-type: decimal;
+    list-style-position: inside;
+    white-space: nowrap;
+}
+.tooltip-1 h4{
+    font-size: x-small;
+    font-weight: bold;
+    /* color:#888; */
+    /* color:#3ea4bf; */
+    line-height:2.5;
+}
+.tooltip-1 ul{
+   /*  border-top: #eee solid 1px; */
+}
+
+.tooltip-1{
+    padding-top:15px;
+}
+
+.tooltip-1 h3{
+    vertical-align: middle;
+    text-align: center;
+    font-size: small;
+    font-weight: bold;
+    color:#3ea4bf;
+}
+.tooltip-2{
+    background-color: #fff;
+    min-height:10px;
+    min-width:100px;
+    border:#aaa 1px solid;
+    border-radius:5px;
+    padding:5px;
+    opacity:0.9;
+    font-size: x-small;
+    box-shadow: 1px 1px 3px #777;
+    /* color:#3ea4bf; */
+    color:#777;
+    text-align: center;
+    font-weight: bold;
+}
+
+#subconditions{
+    min-width:230px;
+    min-height:110px;
+    background-color: #fff;
+    border:#aaa 1px solid;
+    border-radius:5px;
+    padding:10px;
+    
+}
+
+#subconditions h3{
+    font-weight: bold;
+}
+#subconditions ul{
+    margin-top:15px;
+    margin-left: 10px;
+}
+#subconditions li{
+ line-height: 1.5;
+}
+
+#top-diseases text{
+    fill:#FFF;
+    font-weight: bold;
+    font-size: medium;
+}
+
+#top-diseases .legend text{
+    font-size: small;
+    font-weight: normal;
+}
+
+#top-diseases .legend rect{
+/*
+    stroke: #000;
+    stroke-width:0.5;
+*/
+}
+
+#top-diseases .box{
+    /* min-height: 400px; */
+    padding-top:10px;
+    padding-bottom:30px;
+}
+
+
+
+.bar.positive {
+  fill:#ff4566;
+}
+
+.bar.negative {
+  fill: #3ea4bf;
+}
+
+.bar-group text{
+    /* fill:#555; */
+    font-weight:bold;
+    /* font-size:small; */
+}
+
+#delta-labels table{
+    width:100%;
+    text-align: center;
+    margin:10px;
+    margin-top:-30px;
+}
+
+#delta-labels h3{
+    font-weight:bold;
+}
+
+#view-switch{
+    margin-left:650px;
+    margin-top:20px;
+}
+#treatments .x.axis path {
+  display: none;
+}
+treatments .y.axis path {
+  display: none;
+}
+#treatments text{
+    font-size: 12px;
+
+}
+
+
+
+#cumulative .bar {
+  fill: orange;
+}
+
+#cumulative .bar:hover {
+  fill: orangered ;
+}
+
+#cumulative .x.axis path {
+  display: none;
+}
+
+.d3-tip {
+  line-height: 1;
+  font-weight: bold;
+  padding: 12px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 2px;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+  box-sizing: border-box;
+  display: inline;
+  font-size: 10px;
+  width: 100%;
+  line-height: 1;
+  color: rgba(0, 0, 0, 0.8);
+  content: "\25BC";
+  position: absolute;
+  text-align: center;
+}
+
+/* Style northward tooltips differently */
+.d3-tip.n:after {
+  margin: -1px 0 0 0;
+  top: 100%;
+  left: 0;
+}

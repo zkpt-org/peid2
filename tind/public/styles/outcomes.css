@@ -1,0 +1,95 @@
+svg{
+    font: 10px sans-serif;
+	/* opacity:0; */
+}
+.line {
+  fill: none;
+  stroke: #3399cc;
+  stroke-width:3px;
+}
+
+h3 {
+    color: #AAAAAA;
+}
+
+#graph-1 .hide .box{
+    min-height:420px;
+}
+
+#graph-1 .hide:hover .button-back, #graph-1 .hide:hover .button-fwd{
+    opacity:0.4;
+    transition:opacity 2s;
+    -moz-transition:opacity 2s;
+    -webkit-transition:opacity 2s;
+    -o-transition:opacity 2s;
+}
+
+.button-back{
+    background-color: #ddd;
+    left:20px;
+    top:40%;
+    width:60px;
+    height:60px;
+    opacity:0;
+    border:2px solid #ccc;
+    z-index: 3;
+}
+
+.button-fwd{
+    background-color: #ddd;
+    right:20px;
+    top:40%;
+    width:60px;
+    height:60px;
+    opacity:0;
+    border:2px solid #ccc;
+     z-index: 3;
+}
+
+.button-back a, .button-fwd a{
+    height:100%;
+    width:100%;
+    display: table;
+}
+
+.button-back a i, .button-fwd a i{
+    vertical-align: middle;
+    display: table-cell;
+    text-align: center;
+    color:#fff;   
+}
+.button-back:hover, .button-fwd:hover{
+    background-color: #999;
+    border:2px solid #eee;
+    opacity:0.7;
+    transition:opacity 2s;
+    -moz-transition:opacity 2s;
+    -webkit-transition:opacity 2s;
+    -o-transition:opacity 2s;
+}
+
+.button-back:active, .button-fwd:active{
+    background-color: #555;
+    opacity:0.5;
+}
+
+#graph-1 .hide{
+    position: relative;
+}
+
+#slides{
+    overflow: hidden;
+}
+#slides svg{
+    position: relative;
+        
+}
+#slide-0{
+    position:relative;
+    left:0;
+    display:inline-block;
+}
+
+#graph-2 .pointer{
+    background-color:#f7f7f7;
+}

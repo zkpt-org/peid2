@@ -1,0 +1,25 @@
+Segment 1   Program A, Male, High Blood Pressure
+Segment 2	Program C, Female, Age 35-50
+Segment 3	Program A, Male, Age 35-50
+Segment 4	Male, Age 35-50, Diabetic
+Segment 5	Male, Age 35-50, High Blood Pressure	
+Segemnt 6   Program B, Male, High Blood Pressure
+Segemnt 7   Program C, Female, High Blood Pressure
+Segemnt 8   Female, Age 50-65, High Blood Pressure
+Segemnt 9   Female, Age 35-50, High Blood Pressure
+Segment 10	Female, Age 50-65, Diabetic
+Segemnt 11  Program C, Male, High Blood Pressure
+Segment 12	Female, Age 35-50, Diabetic
+Segemnt 13  Program A, Female, Diabetic
+Segemnt 14  Program B, Female, Diabetic
+Segment 15	Program A, Female, Age 50-65
+Segemnt 16  Program A, Male, Age 50-65
+Segemnt 17  Program B, Female, Age 35-50
+Segemnt 18  Program B, Male, Age 50-65
+Segment 19	Male, Age 50-65, Diabetic
+Segemnt 20  Program C, Age 50-65, Diabetic
+Segment 21	Program C, Age 35-50, Diabetic
+Segment 22	Program B, Male, Age 35-50
+Segemnt 23  Program B, Male, Age 50-65
+Segemnt 24  Program C, Male, Age 50-65
+Segemnt 25  Program C, Female, Age 50-65

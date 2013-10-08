@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block title %}Costs{% endblock %}
+
+{% block javascript %}
+<script src="{{STATIC_URL}}js/d3-tip.js"></script>   
+{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block content %}
+    {% include 'filters.html' %}
+    <div id="graph-1" class="">
+        <div class="show-hide-toggle">
+            <a href="javascript:;" onclick="fold('#graph-1');">
+            <i class=icon-caret-down></i></a>
+            <hr/>
+        </div>
+        <div class="hide">
+            <h3>Per-Member Costs over 12 Months</h3>
+            <div  class="box">
+                <div id="pmpm" class="fadeIn fadeIn-1s"></div>
+            </div>
+        </div>
+    </div>
+    <div id="graph-2">
+        <div class="show-hide-toggle">
+            <a href="javascript:;" onclick="fold('#graph-2');">
+            <i class=icon-caret-down></i></a>
+            <hr/>
+        </div>
+        <div class="hide">
+            <h3>Top Five Disease Conditions</h3>
+            <div class="box">
+                <div id="top-diseases" class="fadeIn fadeIn-1s">
+                </div>
+            </div>
+        </div>            
+    </div>
+    <div id="graph-3" class="">
+        <div class="show-hide-toggle">
+            <a href="javascript:;" onclick="fold('#graph-3');">
+            <i class=icon-caret-down></i></a>
+            <hr/>
+        </div>
+        <div class="hide">
+            <h3>Top 5 Treatments</h3>
+            <div  class="box">
+                <div id=treatments class="fadeIn fadeIn-1s">
+                    <form id="view-switch">
+                        <label><input type="radio" name="mode" value="multiples" checked> Side by side</label>
+                        <label><input type="radio" name="mode" value="stacked"> Stacked</label>
+                    </form>
+                    <!-- <div id="treatemets" class="left fadeIn fadeIn-1s"></div> -->
+                    {% include 'home/treatments.html' %}
+                </div>
+            </div>
+        </div>
+    </div>    
+    <div id="graph-4">
+        <div class="show-hide-toggle">
+            <a href="javascript:;" onclick="fold('#graph-4');">
+            <i class=icon-caret-down></i></a>
+            <hr/>
+        </div>
+        <div class="hide">
+            <h3>Worst and Top Performing Segments</h3>
+            <div id="" class="box">
+                <div id="delta-cost" class="fadeIn fadeIn-1s"></div>
+                <div id="delta-labels">
+                    <table>
+                    <tr>
+                    <td><h3 style="color:#3ea4bf;">Lower Costs</h3></td>
+                    <td><h3 style="color:#ff4566;">Higher Costs</h3></td>
+                    </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="graph-5">
+        <div class="show-hide-toggle">
+            <a href="javascript:;" onclick="fold('#graph-5');">
+            <i class=icon-caret-down></i></a>
+            <hr/>
+        </div>
+        <div class="hide">
+            <h3>Cumulative Costs</h3>
+            <div id="" class="box">
+            <div id="cumulative" class="fadeIn fadeIn-1s"></div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

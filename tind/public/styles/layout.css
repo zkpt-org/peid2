@@ -1,0 +1,270 @@
+/* ~~~~~~~~~~ main ~~~~~~~~~~~ */
+
+#main{
+    position:relative;
+    margin:0px;
+    padding:0px;
+	min-height:100%;
+	width:100%;
+	top:0;
+	bottom:0;	
+}
+
+/* ~~~~~~~~~ header ~~~~~~~~~~ */
+
+header{    
+    height:35px;
+    padding:5px 10px 0px 10px;
+    z-index: 1;
+    top:0;
+}
+
+/* ~~~~~~~~~ footer ~~~~~~~~~~ */
+
+footer{
+    
+}
+
+/* ~~~~~~~~~ layout ~~~~~~~~~~ */
+
+#container{
+    width:760px;
+    min-height:100%;
+    margin:0px auto 0px auto;
+    padding:20px;
+    padding-bottom: 80px;
+    z-index: 1;    
+}
+
+#logo-box{
+    position: absolute;
+    display:table;
+    /* code below is for the logo if it is not to be placed in the header */
+    top:45px;
+    z-index:-1;
+}
+
+#logo{
+    /* height:30px; */
+    display: table-cell;
+    vertical-align: middle;
+}
+
+#logo img{
+    width:125px;
+    height:22px;
+    vertical-align:middle;
+    z-index: 0;
+    margin-left:5px;
+}
+
+nav{
+    width:800px;
+    font-size: medium;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-top: 5px;
+    white-space: nowrap;
+}
+
+nav ul{
+    width:100%;
+}
+
+nav ul li{
+    display: inline-block;
+    height:18px;
+    padding:5px 15px 0px 15px;
+    margin:0px 0px 0px 0px;    
+}
+
+nav .dropdown-menu li{
+    font-size: small;
+    height:auto;
+    padding: 0;
+    display: block;
+    text-align: left;    
+}
+
+nav .dropdown-toggle{
+    font-size: small;   
+}
+
+nav .dropdown{
+    position: relative;
+}
+
+
+#filter-controls{
+    width:780px;
+    margin:0 auto 0 -7px;
+}
+
+#dial-panel{
+    width:732px;
+}
+
+#filter-controls .btn-group{
+    padding:0px;
+    margin:0px;
+}
+#filters .btn-group{
+    margin-right:2px;
+}
+#filter-controls .btn-group button{
+    width:98px;
+    font-size: small;
+    text-align:left;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    text-indent: 7px;
+/*
+    padding-left:0px;
+    padding-right:0px;
+*/
+}
+#filters .btn-group button{
+    width:100px;
+    font-size: small;
+    text-align:left;
+    overflow: hidden;
+    text-overflow:ellipsis;
+    white-space:nowrap;
+    text-indent: 7px;
+    height:30px;
+    border-style: none;
+    border-bottom:1px solid #ddd;
+}
+
+#filter-controls .btn-group .caret, 
+#filters .btn-group .caret{
+    margin-left:0px;
+}
+#filter-controls .btn-group .dropdown-toggle,
+#filters .btn-group .dropdown-toggle{
+    width:25px;
+    padding:0px;
+    margin:0px;
+    height:30px;
+}
+#filters .btn-group .dropdown-toggle{
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+
+
+
+.pointer-box .pointer{
+    border:1px solid #ddd;
+    border-radius: 3px;
+    width:30px;
+    height:30px;
+    top:10px;
+    left:50px;
+    position: absolute;
+    background-color:#fff;
+    z-index: 2;
+    
+/*
+    transform: skew(20deg,30deg);
+    -ms-transform: skew(30deg,20deg);
+    -webkit-transform: skew(30deg,20deg);
+    -o-transform: skew(30deg,20deg);
+    -moz-transform: skew(25deg,25deg);
+*/
+    
+    transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    
+}
+
+.pointer-box{
+    width:auto;
+    height:25px;
+    overflow: hidden;
+    position: relative;
+    top:-25px;          
+}
+
+.pointer-box.down{
+    width: 25px;
+    height:20px;
+    overflow: hidden;
+    position: relative;
+    top:25px;
+}
+
+.pointer-box.down .pointer{
+    border:1px solid #ddd;
+    border-radius: 3px;
+
+    top:-30px;
+    left:-1px;
+    position: absolute;
+    background-color:#fff;
+    z-index: 2;
+    
+    transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);   
+}
+
+
+.pointer-box-left{
+    width:25px;
+    height:50px;
+    overflow-x: hidden;
+    position: absolute;
+    left:-25px;
+    vertical-align: middle;
+    z-index: 2;
+}
+
+.pointer-box-left .pointer{
+    border:1px solid #ddd;
+    border-radius: 3px;
+    width:30px;
+    height:30px;
+    top:10px;
+    left:10px;
+    position: absolute;
+    background-color:#fff;
+    z-index: 2;
+    
+    transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);    
+}
+.pointer-box-left .pointer.medium{
+    left:15px;
+}
+.pointer-box-left .pointer.small{
+    left:20px;
+    border-radius: 2px;
+    width: 25px;
+}
+
+.pointer-box.down .pointer.small{
+    border-radius: 2px;
+}
+
+
+.tooltip-0 .pointer-box.down{
+       
+}
+.tooltip-0 .pointer-box.down .pointer.small{
+    border-radius: 1px;        
+}
+.tooltip-0 .pointer-box.down .pointer{
+    border:1px solid #999;    
+}

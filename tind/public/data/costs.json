@@ -1,0 +1,17 @@
+{'data':[
+{
+"chart":"Average cost per employee",
+"previous":505,
+"current":545
+},
+{
+"chart":"Not in program",
+"previous":550,
+"current":632
+},
+{
+"chart":"In Program",
+"previous":475,
+"current":499
+}
+]}

@@ -1,0 +1,8 @@
+[
+{"condition" : "High Cholesterol", "population" : 520, "intersection" : {"Diabetes":203, "High Blood Pressure":247, "Metabolic Syndrome":132}},
+{"condition" : "High Blood Pressure", "population" : 354, "intersection" : {"High Cholesterol":247, "Diabetes":153, "Metabolic Syndrome":88}},
+{"condition" : "Diabetes", "population" : 334, "intersection" : {"High Cholesterol":203, "High Blood Pressure":153, "Metabolic Syndrome":95}},
+{"condition" : "Metabolic Syndrome", "population" : 295, "intersection" : {"Diabetes":95, "High Blood Pressure":88, "High Cholesterol":132}},
+{"condition" : "Heart Disease", "population" : 100, "intersection" : {"High Cholesterol":98, "High Blood Pressure":38,"Metabolic Syndrome":35 }},
+{"condition" : "Other", "population" : 80, "intersection" : {"High Blood Pressure":64,"Injury":10,"Chronic Pain":21}}
+]

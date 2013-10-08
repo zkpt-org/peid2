@@ -1,0 +1,181 @@
+.tabbed-box{
+    padding-top:30px;
+    padding-bottom: 50px;
+}
+
+#intervention-builder-1 #filters,
+#intervention-builder-2 #filters{
+    margin-left:20px;
+    display: inline-block;
+}
+#intervention-builder-1 .nav,
+#intervention-builder-2 .nav{
+    margin-left:10px;
+    margin-top:10px;
+}
+#intervention-builder-1 table,
+#intervention-builder-2 table{
+    width:720px;
+    margin:10px 20px;
+    margin-top:0px;
+    text-align:left;
+    position:relative;
+    padding: 0px;
+}
+#intervention-builder-1 td label{
+    font-size: small;
+    color: #bbb;
+}
+
+#reset{
+    display:inline-block;
+    width:250px;
+    margin-left:30px;
+    right:0px;
+    position:relative;
+}
+#reset label{
+    position: absolute;
+    font-size: x-small;
+}
+#reset .icon-refresh{
+    color:#999;
+}
+
+#parameters{
+    height:150px;
+}
+
+#currency-box{width:104px;}
+#currency-box .k-textbox,
+#currency-box .k-widget,
+#currency-box .k-autocomplete, 
+#currency-box .k-dropdown-wrap, 
+#currency-box .k-picker-wrap, 
+#currency-box .k-numeric-wrap{
+    width:80px;
+}
+#days-box{width:94px;}
+#days-box .k-textbox,
+#days-box .k-widget, 
+#days-box .k-autocomplete, 
+#days-box .k-dropdown-wrap, 
+#days-box .k-picker-wrap, 
+#days-box .k-numeric-wrap{
+    width:70px;
+}
+#steps-box{width:134px;}
+#steps-box .k-textbox,
+#steps-box .k-widget, 
+#steps-box .k-autocomplete, 
+#steps-box .k-dropdown-wrap, 
+#steps-box .k-picker-wrap, 
+#steps-box .k-numeric-wrap{
+    width:110px;
+}
+#kudos-box{width:114px;}
+#kudos-box .k-textbox,
+#kudos-box .k-widget, 
+#kudos-box .k-autocomplete, 
+#kudos-box .k-dropdown-wrap, 
+#kudos-box .k-picker-wrap, 
+#kudos-box .k-numeric-wrap{
+    width:90px;
+}
+
+.k-textbox > input, 
+.k-autocomplete .k-input, 
+.k-picker-wrap .k-input, 
+.k-numeric-wrap .k-input, 
+.k-dropdown-wrap .k-input, 
+.k-selectbox .k-input {
+    border: 0 none;
+    height: 1.5em;
+}
+
+
+#result-box-1,
+#result-box-2{
+    width:120px;
+    min-height:120px;
+}
+#result-1.circle,
+#result-2.circle{
+    background-color: #3ca3da;
+    border:1px solid #2688bc;
+    font-weight:bold;
+    color:#fff;
+    font-size: xx-large;
+    vertical-align: middle;
+    text-align: center;
+    margin:auto;
+    padding:0;
+    background: #00b7ea;
+    background: -moz-radial-gradient(center, ellipse cover,  #00b7ea 0%, #009ec3 100%);
+    background: -webkit-gradient(radial, center center, 0px, center center, 100%, color-stop(0%,#00b7ea), color-stop(100%,#009ec3));
+    background: -webkit-radial-gradient(center, ellipse cover,  #00b7ea 0%,#009ec3 100%);
+    background: -o-radial-gradient(center, ellipse cover,  #00b7ea 0%,#009ec3 100%);
+    background: -ms-radial-gradient(center, ellipse cover,  #00b7ea 0%,#009ec3 100%);
+    background: radial-gradient(ellipse at center,  #00b7ea 0%,#009ec3 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00b7ea', endColorstr='#009ec3',GradientType=1 );
+    box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+
+}
+.operators{
+    font-size: xx-large;
+    color: #3ca3da;
+    text-align:center;
+    vertical-align: center;
+    position:relative;
+    padding:0px 0px;
+    font-weight:bold;
+    
+}
+#intervention-builder-1 .operators{
+    padding-top:20px;
+}
+#lift-box{
+    display:table;
+    width:100%;
+    height:100%;
+    text-align: center;    
+}
+#lift{
+    display:table-cell;
+    vertical-align: middle;
+    text-align: center;
+    text-shadow: 1px 2px #3fb4f3, 0px -2px #2688bc;
+}
+#lift-label{
+    color: #3ca3da;
+    font-weight: bold;
+    vertical-align: middle;
+    text-align:center;
+    padding-top:10px;
+    width:120px;
+}
+
+#intervention-builder-2{
+    min-height:200px;
+}
+#intervention-builder-2 th{
+    padding-left:20px;
+    padding-bottom:10px;
+    padding-top:10px;
+    font-size: medium;
+    color:#3ca3da;
+}
+
+#intervention-builder-2 fieldset{
+   width:160px;
+   padding-left: 20px;
+}
+#intervention-builder-2 .operators{
+    width:180px;
+    text-align: left;
+    position: relative;
+}
+
+#message-content{
+    margin-top:20px;
+}

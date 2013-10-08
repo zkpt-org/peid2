@@ -1,0 +1,82 @@
+<script type="text/javascript" src="{{STATIC_URL}}js/filters.js"></script>
+<script type="text/javascript">
+    filter_default_labels = ["Client", "Gender", "Age Group", "Condition", "Tenure"];
+    filter_query = {"client":"ALL", "gender":"ALL", "age":"ALL", "condition":"ALL", "tenure":"ALL"};
+    filter_keys = ["client", "gender", "age", "condition", "tenure"]
+    query_string = query(filter_query);
+</script>
+<div id="filter-controls">
+    <div class="btn-group" id="filter-0">
+      <button class="btn filter-label" onclick="reset_filter(this, 0)">Client</button>
+      <button class="btn dropdown-toggle btn-zp" data-toggle="dropdown" href="#">
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li onclick="reset_filter(this, 0)"><a>All Clients</a></li>
+        <li class="divider"></li>
+        <li onclick="filter(this, 0);"><a>Client A</a></li>
+        <li onclick="filter(this, 0);"><a>Client B</a></li>
+        <li onclick="filter(this, 0);"><a>Client C</a></li>
+      </ul>
+    </div>
+    <div class="btn-group" id="filter-1">
+      <button class="btn filter-label" onclick="reset_filter(this, 1)">Gender</button>
+      <button class="btn dropdown-toggle btn-zp" data-toggle="dropdown" href="#">
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li onclick="reset_filter(this, 1)"><a>Both Genders</a></li>
+        <li class="divider"></li>        
+        <li onclick="filter(this, 1)"><a>Male</a></li>
+        <li onclick="filter(this, 1)"><a>Female</a></li>
+      </ul>
+    </div>
+    <div class="btn-group" id="filter-2">
+      <button class="btn filter-label" onclick="reset_filter(this, 2)">Age Group</button>
+      <button class="btn dropdown-toggle btn-zp" data-toggle="dropdown" href="#">
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li onclick="reset_filter(this, 2)"><a>All Ages</a></li>
+        <li class="divider"></li>
+        <li onclick="filter(this, 2)"><a>18-25</a></li>
+        <li onclick="filter(this, 2)"><a>26-35</a></li>
+        <li onclick="filter(this, 2)"><a>36-45</a></li>
+        <li onclick="filter(this, 2)"><a>46-55</a></li>
+        <li onclick="filter(this, 2)"><a>56-65</a></li>
+        <li onclick="filter(this, 2)"><a>66-75</a></li>
+        <li onclick="filter(this, 2)"><a>76+</a></li>
+      </ul>
+    </div>
+    <div class="btn-group" id="filter-3">
+      <button class="btn filter-label" onclick="reset_filter(this, 3)">Condition</button>
+      <button class="btn dropdown-toggle btn-zp" data-toggle="dropdown" href="#">
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li onclick="reset_filter(this, 3)"><a>All Conditions</a></li>
+        <li class="divider"></li>
+        <li onclick="filter(this, 3)"><a>High Cholesterol</a></li>
+        <li onclick="filter(this, 3)"><a>High Blood Pressure</a></li>
+        <li onclick="filter(this, 3)"><a>Diabetes</a></li>
+        <li onclick="filter(this, 3)"><a>Metabolic Syndrome</a></li>
+        <li onclick="filter(this, 3)"><a>Heart Disease</a></li>
+        <li onclick="filter(this, 3)"><a>Other</a></li>
+        <li onclick="filter(this, 3)"><a>None</a></li>
+      </ul>
+    </div>
+    <div class="btn-group" id="filter-4">
+      <button class="btn filter-label" onclick="reset_filter(this, 4)">Tenure</button>
+      <button class="btn dropdown-toggle btn-zp" data-toggle="dropdown" href="#">
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li onclick="reset_filter(this, 4)"><a>All Periods</a></li>
+        <li class="divider"></li>
+        <li onclick="filter(this, 4)"><a>Last month</a></li>
+        <li onclick="filter(this, 4)"><a>Last 3 months</a></li>
+        <li onclick="filter(this, 4)"><a>Last 6 months</a></li>
+        <li onclick="filter(this, 4)"><a>More than 6 months</a></li>
+      </ul>
+    </div>
+</div>

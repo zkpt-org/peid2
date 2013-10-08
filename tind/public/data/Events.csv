@@ -1,0 +1,10 @@
+Event ID,StartVsEnd,EventDay1,EventWeek1,EventMonth1Label,EventMonthWeek1Label,ZPClient,Program,Text
+101,Start,5/25/2012,21,May,3,1,Program 2,10 week Challenge started for Program 2 
+102,Start,7/20/2012,29,July,3,1,Program 1,4 week Challenge started for Program 1
+101,End,8/3/2012,30,August,1,1,Program 2,10 week Challenge ended for Program 2 
+103,,8/11/2012,32,August,1,1,Program 2,Division ABC of company WXY started signing up on Program 2 
+102,End,8/31/2012,33,August,3,1,Program 1,4 week Challenge ended for Program 1 
+104,Start,10/1/2012,40,October,1,1,Program 3,8 week Challenge started for Program 3 
+105,Start,10/27/2012,43,October,4,1,Program 4,10 week Challenge started for Program 4 
+104,End,11/26/2012,48,November,4,1,Program 3,8 week Challenge started for Program 3 
+105,End,1/5/2013,53,January,1,1,Program 4,10 week Challenge ended for Program 4 

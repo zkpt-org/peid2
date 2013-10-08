@@ -1,0 +1,140 @@
+<script>
+
+var margin = {top: 30, right: 30, bottom: 50, left: 40},
+    width  = 760 - margin.left - margin.right,
+    height = 400 - margin.top  - margin.bottom;
+
+var x0a = d3.scale.ordinal()
+    .rangeRoundBands([0, width], .4);
+
+var x1a = d3.scale.ordinal();
+
+var y = d3.scale.linear()
+    .range([height, 110]);
+
+var color1 = d3.scale.ordinal()
+/*     .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]); */
+/*     .range(["#ff4566","#57a1ff"]); "#ffbd2f"*/
+    /* .range(["#ffb165","#ff8c00","#57a1ff"]); */
+    .range(['#f64976','#db55a6',"#57a1ff"]);
+var xAxis = d3.svg.axis()
+    .scale(x0a)
+    .orient("bottom");
+
+var yAxis = d3.svg.axis()
+    .scale(y)
+    .orient("left")
+    .ticks(5)
+    .tickFormat(d3.format(".2s"));
+
+var svg1 = d3.select("#costs").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .attr("class", "fadeIn fadeIn-1s")
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+d3.csv("../public/data/costs.csv", function(error, data) {
+  var ageNames = d3.keys(data[0]).filter(function(key) { return key !== "chart" && key !=="diff"; });
+
+  data.forEach(function(d) {
+    d.ages = ageNames.map(function(name) { return {name: name, value: +d[name]}; });
+  });
+
+  x0a.domain(data.map(function(d) { return d.chart; }));
+  x1a.domain(ageNames).rangeRoundBands([0, x0a.rangeBand()]);
+  y.domain([0, d3.max(data, function(d) { return d3.max(d.ages, function(d) { return d.value; }); })]);
+
+  svg1.append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate(0," + height + ")")
+      .call(xAxis);
+
+  svg1.append("g")
+      .attr("class", "y axis")
+      .call(yAxis)
+    .append("text")
+      /* .attr("transform", "rotate(-90)") */
+      .attr("y", 80)
+      .attr("x", 8)
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("Dollars");
+
+  var state = svg1.selectAll(".state")
+      .data(data)
+    .enter().append("g")
+      .attr("class", "g")
+      .attr("transform", function(d) { return "translate(" + x0a(d.chart) + ",0)"; });
+
+  state.selectAll("rect")
+      .data(function(d) { return d.ages; })
+    .enter().append("rect")
+      .attr("width", x1a.rangeBand())
+      .attr("x", function(d) { return x1a(d.name); })
+      .attr("y", function(d) { return y(d.value); })
+      .attr("height", function(d) { return height - y(d.value); })
+      .style("fill", function(d) { return color1(d.name); })
+      .attr('opacity', 0.9);
+    
+/*
+  var bars = state.selectAll("rect").data(function(d) { return d.ages; }).enter();
+      
+    bars.append("g")
+      .attr("x",50)
+      .attr("y",50)
+    .append("text")
+      .style("text-anchor", "middle")
+      .style("font-size", '16px')
+      .text(function(d){return "hello";});
+*/
+ 
+/*
+state.selectAll("text").
+  data(data).
+  enter().
+  append("svg:text").
+  attr("x", function(datum, index) { return x(index) + x1a.rangeBand(); }).
+  attr("y", function(datum) { return height - y(datum.value); }).
+  attr("dx", -x1a.rangeBand()/2).
+  attr("dy", "1.2em").
+  attr("text-anchor", "middle").
+  text(function(datum) { return datum.value;}).
+  attr("fill", "white"); 
+*/
+ 
+ 
+ 
+ 
+  state.append("g")
+    .append("text")
+      .attr("x",65)
+      .attr("y",80)
+      .style("text-anchor", "middle")
+      .style("font-weight", 'bold')
+      .style("font-size", '19px')
+      .style("fill", "#57a1ff")
+      .text(function(d){return "+ "+d.diff+"%";});
+
+  var legend = svg1.selectAll(".legend")
+      .data(ageNames.slice().reverse())
+    .enter().append("g")
+      .attr("class", "legend")
+      .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+
+  legend.append("rect")
+      .attr("x", width - 18)
+      .attr("width", 18)
+      .attr("height", 18)
+      .style("fill", color1);
+
+  legend.append("text")
+      .attr("x", width - 24)
+      .attr("y", 9)
+      .attr("dy", ".35em")
+      .style("text-anchor", "end")
+      .text(function(d) { return d; });
+
+});
+
+</script>

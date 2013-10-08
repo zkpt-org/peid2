@@ -1,0 +1,69 @@
+[{
+  
+  "engagement" :[
+  {
+  "title":"Pedometer",
+  "subtitle":"Percentage Using",
+  "ranges":[100],
+  "measures":[100,90.0],
+  "markers":[100]},
+  {
+  "title":"Weight",
+  "subtitle":"Percentage Measuring",
+  "ranges":[100],
+  "measures":[100,40],
+  "markers":[100]}
+  ,
+  {
+  "title":"Logins",
+  "subtitle":"Percentage Loggin In",
+  "ranges":[100],
+  "measures":[100,86.7],
+  "markers":[100]
+  }
+  ],
+  "activity" : [
+  {
+  "title":"Tracker 1",
+  "ranges":[100],
+  "measures":[100,44],
+  "markers":[100]
+  },
+  {
+  "title":"Tracker 2",
+  "ranges":[100],
+  "measures":[100,83],
+  "markers":[100]
+  },
+  {
+  "title":"Tracker 3",
+  "ranges":[100],
+  "measures":[100,57],
+  "markers":[100]
+  }
+  ],
+  "outcomes" : [
+  {
+  "title":"BMI",
+  "subtitle":"Average Change",
+  "ranges":[2],
+  "measures":[2,0.5],
+  "markers":[2]
+  },
+  {
+  "title":"Diastolic BP",
+  "subtitle":"Average Change",
+  "ranges":[2],
+  "measures":[2,0.34],
+  "markers":[2]
+  },
+  {
+  "title":"Systolic BP",
+  "subtitle":"Average Change",
+  "ranges":[2],
+  "measures":[2,0.26],
+  "markers":[2]
+  }
+  ]
+  
+}]
