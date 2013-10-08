@@ -299,7 +299,7 @@ function draw_top_diseases(){
               tooltip2.style("visibility", "visible")
               tooltip2.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+5)+"px")
             
-              $('.tooltip-2').html(d.data.condition+", pop. "+d.data.population);
+              $('.tooltip-2').html("pop. "+d.data.population);
               d3.select('#subconditions').style("visibility", "visible")
               
               list = "<ul>"
