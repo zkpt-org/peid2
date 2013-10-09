@@ -131,11 +131,12 @@
 
 
 .bar.positive {
-  fill:#ff4566;
+/*   fill:#3ea4bf; */
+  fill:#57a1ff
 }
 
 .bar.negative {
-  fill: #3ea4bf;
+  fill: #ff4566;
 }
 
 .bar-group text{

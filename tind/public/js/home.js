@@ -386,7 +386,7 @@ function draw_top_diffs(){
         .append("g")
         .attr("class", "bar-group")
         .append("rect")
-          .attr("class", function(d) { return d.value < 0 ? "bar negative" : "bar positive"; })
+          .attr("class", function(d) { return d.value < 0 ? "bar positive" : "bar negative"; })
           .attr("x", function(d) { return x(Math.min(0, d.value)); })
           .attr("y", function(d) { return y(d.name); })
           .attr("width", function(d) { return Math.abs(x(d.value) - x(0)); })
