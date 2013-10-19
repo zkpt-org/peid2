@@ -25,7 +25,7 @@
         heroku config:add DB_PASS=<DB_PASS>
         heroku config:add SALT=<HASH_STRING>
 
-   Then create a .env file with the same variable assignments.  
+   Then add the same variable assignments to the "activate" file or create a .env file.  
    Alternatively write a config.py and have python handle environment settings.
 	
 8. **Configure settings.py and wsgi.py:**
