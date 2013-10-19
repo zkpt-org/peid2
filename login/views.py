@@ -1,25 +1,36 @@
 from django.shortcuts import render_to_response
-from django.contrib.auth import authenticate, login
-# from django.core.context_processors import csrf
 from django.template import RequestContext
+from django.http import HttpResponseRedirect
+from django.contrib import auth
 
 def index(request):
-    state = "Please log in below..."
-    username = password = ''
+    return login(request)
     
+def login(request):
+    state = ""
+    username = password = ''
+        
     if request.POST:
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+        username = request.POST.get('username', '')
+        password = request.POST.get('password', '')
+        next     = request.POST.get('next', '/')
 
-        user = authenticate(username=username, password=password)
+        user = auth.authenticate(username=username, password=password)
         if user is not None:
             if user.is_active:
-                login(request, user)
-                state = "You're successfully logged in!"
+                auth.login(request, user)
+                # state = "You're successfully logged in!"
+                return HttpResponseRedirect(next)
             else:
-                state = "Your account is not active, please contact the site admin."
+                state = "Your account is not active, please contact the site administrator."
         else:
-            state = "Your username and/or password were incorrect."
+            state = "Your username or password was incorrect."
 
-    return render_to_response('login/index.html',{'state':state, 'username': username}, 
+    return render_to_response('login/index.html',{'page':'login', 'state':state, 'username': username, "next":request.REQUEST.get('next')}, 
+                              context_instance=RequestContext(request))
+                              
+def logout(request):
+    auth.logout(request)
+    state = "Logged out."
+    return render_to_response('logout/index.html',{'page':'logout','state':state}, 
                               context_instance=RequestContext(request))

@@ -1,4 +1,4 @@
-/* @import url(http://fonts.googleapis.com/css?family=Pacifico); */
+@import url(http://fonts.googleapis.com/css?family=Pacifico);
 
 html, body, div, ul, ol, li, dl, dt, dd, h1, h2, h3, h4, h5, h6, pre, p, blockquote, button{
 margin:0;
@@ -52,6 +52,10 @@ table {border-collapse: collapse;border-spacing: 0;}
     font-family: "Webfont";
     font-style: normal;
     font-weight: normal;
+}
+
+.pacifico{
+    font-family: 'Pacifico', cursive;
 }
 
 .bold{

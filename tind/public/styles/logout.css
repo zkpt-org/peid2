@@ -1,0 +1,87 @@
+#main{
+    display: table;
+    width:100%;
+    height:100%;
+}
+
+/*
+#logout form{
+    width:350px;
+    margin-left: auto;
+    margin-right: auto;
+}
+*/
+
+#logout-container{
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+    width:350px;
+    height:150px;
+}
+
+#logout{
+    width:350px;
+    height:150px;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius:5px;
+    font-size: medium;
+    text-align: center;
+}
+
+/*
+#logout input[type=text],#logout input[type=password],#logout input[type=email] {
+    border-radius: 5px;
+    border-width: 1px;
+    border-color: #555;
+    border-style: solid;
+    padding-right: 10px;
+    background-color: #777;
+    color: #bbb;
+    width:150px;
+}
+
+#logout form input[type=text], #logout form input[type=password], #logout form input[type=email] {
+    background-color: #222;
+    border: #333 solid 1px;
+    margin: 5px 0px 5px 10px;
+    color: #83c0ff;
+}
+
+input[type=text], input[type=password], input[type=email] {
+    text-indent: 5px;
+    height:15px;
+}
+
+input[type=text], input[type=password], input[type=email] {
+    margin-bottom: 5px;
+    font-size: medium;
+    letter-spacing:1px
+}
+
+input[type=text]:focus, input[type=password]:focus, input[type=email]:focus, textarea:focus {
+    box-shadow: 0px 0px 2px #83c0ff;
+    border: #83c0ff solid 1px;
+}
+
+#logout input.btn.btn-info{
+    min-width:50px;
+    margin-left:10px;
+}
+*/
+
+/*
+#logout .logout-label{
+    width:50px;
+    color:#888;
+}
+
+#logout table td{
+    padding:2px;
+    text-align: left;
+}
+*/
+#logout-title{
+    color:#3399cc;
+}

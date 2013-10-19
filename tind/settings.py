@@ -127,8 +127,8 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'django.contrib.admin',
-    # 'django.contrib.admindocs',
+    'django.contrib.admin',
+    'django.contrib.admindocs',
     'tind',
     'home',
     'compliance',
@@ -136,6 +136,7 @@ INSTALLED_APPS = (
     'outlook',
     'projections',
     'login',
+    'registration'
 )
 
 # A sample logging configuration. The only tangible logging
@@ -167,11 +168,24 @@ LOGGING = {
     }
 }
 
+LOGIN_URL = '/login/'
+LOGOUT_URL = '/logout/'
+#LOGIN_REDIRECT_URL = 'home/'
+
 # ===================
 # = HEROKU SETTINGS =
 # ===================
 import dj_database_url
-DATABASES['default'] =  dj_database_url.config()
+DATABASES['default'] = dj_database_url.config(default='postgres://tind:'+DB_PASS+'@localhost:5432/tind')
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 ALLOWED_HOSTS = ['*']
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+# =========================
+# = REGISTRATION SETTINGS =
+# =========================
+ACCOUNT_ACTIVATION_DAYS=7
+EMAIL_HOST=os.environ['EMAIL_HOST']
+EMAIL_PORT=os.environ['EMAIL_PORT']
+EMAIL_HOST_USER=os.environ['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD=os.environ['EMAIL_HOST_PASSWORD']
