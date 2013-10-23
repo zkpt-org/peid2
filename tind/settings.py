@@ -136,7 +136,8 @@ INSTALLED_APPS = (
     'outlook',
     'projections',
     'login',
-    'registration'
+    'registration',
+    'population'
 )
 
 # A sample logging configuration. The only tangible logging
@@ -170,7 +171,7 @@ LOGGING = {
 
 LOGIN_URL = '/login/'
 LOGOUT_URL = '/logout/'
-#LOGIN_REDIRECT_URL = 'home/'
+#LOGIN_REDIRECT_URL = '/home/'
 
 # ===================
 # = HEROKU SETTINGS =

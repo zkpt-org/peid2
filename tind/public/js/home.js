@@ -13,8 +13,6 @@ else
 	
 function onDocumentReady(){
     draw_pmpm();
-    draw_top_diseases();
-    draw_top_diffs();
     draw_cumulative();
 }
 
@@ -228,7 +226,81 @@ function draw_pmpm(){
     }
     });
 }
+function draw_cumulative(){
+    
+    /* var formatPercent = d3.format(".0%"); */
 
+    var x = d3.scale.ordinal()
+        .rangeRoundBands([0, width], .1);
+    
+    var y = d3.scale.linear()
+        .range([height, 0]);
+    
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .tickValues([1,10,20,30,40,50,60,70,80,90,100])
+        .orient("bottom");
+    
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left")
+        
+        /* .tickFormat(formatPercent) */;
+    
+    var tip = d3.tip()
+      .attr('class', 'd3-tip')
+      .offset([-10, 0])
+      .html(function(d) {
+        return '<strong>Cost:</strong> <span style="color:orange">' + d.frequency + "%</span>";
+      })
+    
+    var svg = d3.select("#cumulative").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+    
+    svg.call(tip);
+    
+    d3.csv("../public/data/cumulative.csv", function(error, data) {
+      x.domain(data.map(function(d) { return d.letter; }));
+      y.domain([0, d3.max(data, function(d) { return d.frequency; })]);      
+      
+      svg.append("g")
+          .attr("class", "x axis")
+          .attr("transform", "translate(-40," + height + ")")
+          .call(xAxis)
+          .append("text")
+          .attr("y", 30)
+          .attr("x", 660)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("Claims %");
+    
+      svg.append("g")
+          .attr("class", "y axis")
+          .call(yAxis)
+        .append("text")
+          .attr("y", 5)
+          .attr("x", 40)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("Cost %");
+    
+      svg.selectAll(".bar")
+          .data(data)
+        .enter().append("rect")
+          .attr("class", "bar")
+          .attr("x", function(d) { return x(d.letter)-40; })
+          .attr("width", x.rangeBand())
+          .attr("y", function(d) { return y(d.frequency); })
+          .attr("height", function(d) { return height - y(d.frequency); })
+          .on('mouseover', tip.show)
+          .on('mouseout', tip.hide)
+    
+    });
+}
+/*
 function draw_top_diseases(){
     
     var radius = Math.min(width, height) / 2;
@@ -291,7 +363,7 @@ function draw_top_diseases(){
       g.append("path")
           .attr("d", arc)
           .style("fill", function(d) { return color(d.data.condition); })
-          /* .style("cursor", "pointer") */
+          //.style("cursor", "pointer")
           .on("mouseover", function(d){
               orig_color = d3.event.target.style.fill;
               update_subcategories(d, d.data.condition);
@@ -344,19 +416,19 @@ function draw_top_diseases(){
       .append("text")
         .attr("x", 225)
         .attr("y", function(d, i){ return i *  25+ 12;})
-      /* .style("fill", function(d) { return colors[data.indexOf(d)];}) */
+      //.style("fill", function(d) { return colors[data.indexOf(d)];})
       .text(function(d) { i++; return labels[i] + ". " + d.condition; })
       .style("fill", "#aaaaaa");
       
     });    
-}
+}*/
+/*
 
 function update_subcategories(d, condition){
     d3.select( d3.event.target ).style("fill", function(d){ return d3.rgb(d3.event.target.style.fill).brighter(0.5);});
 }
-
-
-
+*/
+/*
 function draw_top_diffs(){
     
     var x = d3.scale.linear()
@@ -427,79 +499,4 @@ function draw_top_diffs(){
     
     });
 }
-
-function draw_cumulative(){
-    
-    /* var formatPercent = d3.format(".0%"); */
-
-    var x = d3.scale.ordinal()
-        .rangeRoundBands([0, width], .1);
-    
-    var y = d3.scale.linear()
-        .range([height, 0]);
-    
-    var xAxis = d3.svg.axis()
-        .scale(x)
-        .tickValues([1,10,20,30,40,50,60,70,80,90,100])
-        .orient("bottom");
-    
-    var yAxis = d3.svg.axis()
-        .scale(y)
-        .orient("left")
-        
-        /* .tickFormat(formatPercent) */;
-    
-    var tip = d3.tip()
-      .attr('class', 'd3-tip')
-      .offset([-10, 0])
-      .html(function(d) {
-        return '<strong>Cost:</strong> <span style="color:orange">' + d.frequency + "%</span>";
-      })
-    
-    var svg = d3.select("#cumulative").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-      .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-    
-    svg.call(tip);
-    
-    d3.csv("../public/data/cumulative.csv", function(error, data) {
-      x.domain(data.map(function(d) { return d.letter; }));
-      y.domain([0, d3.max(data, function(d) { return d.frequency; })]);      
-      
-      svg.append("g")
-          .attr("class", "x axis")
-          .attr("transform", "translate(-30," + height + ")")
-          .call(xAxis)
-          .append("text")
-          .attr("y", 30)
-          .attr("x", 660)
-          .attr("dy", ".71em")
-          .style("text-anchor", "end")
-          .text("Claims %");
-    
-      svg.append("g")
-          .attr("class", "y axis")
-          .call(yAxis)
-        .append("text")
-          //.attr("transform", "rotate(-90)")
-          .attr("y", 5)
-          .attr("x", 40)
-          .attr("dy", ".71em")
-          .style("text-anchor", "end")
-          .text("Cost %");
-    
-      svg.selectAll(".bar")
-          .data(data)
-        .enter().append("rect")
-          .attr("class", "bar")
-          .attr("x", function(d) { return x(d.letter)-30; })
-          .attr("width", x.rangeBand())
-          .attr("y", function(d) { return y(d.frequency); })
-          .attr("height", function(d) { return height - y(d.frequency); })
-          .on('mouseover', tip.show)
-          .on('mouseout', tip.hide)
-    
-    });
-}
+*/

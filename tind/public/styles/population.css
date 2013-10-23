@@ -1,0 +1,101 @@
+.tooltip-2{
+    background-color: #fff;
+    min-height:10px;
+    min-width:50px;
+    border:#aaa 1px solid;
+    border-radius:5px;
+    padding:5px;
+    opacity:0.9;
+    font-size: x-small;
+    box-shadow: 1px 1px 3px #777;
+    /* color:#3ea4bf; */
+    color:#777;
+    text-align: center;
+    font-weight: bold;
+}
+
+#subconditions{
+    min-width:230px;
+    min-height:110px;
+    background-color: #fff;
+    border:#aaa 1px solid;
+    border-radius:5px;
+    padding:10px;
+    
+}
+
+#subconditions h3{
+    font-weight: bold;
+}
+#subconditions ul{
+    margin-top:15px;
+    margin-left: 10px;
+}
+#subconditions li{
+ line-height: 1.5;
+}
+
+#top-diseases text{
+    fill:#FFF;
+    font-weight: bold;
+    font-size: medium;
+}
+
+#top-diseases .legend text{
+    font-size: small;
+    font-weight: normal;
+}
+
+#top-diseases .legend rect{
+/*
+    stroke: #000;
+    stroke-width:0.5;
+*/
+}
+
+#top-diseases .box{
+    /* min-height: 400px; */
+    padding-top:10px;
+    padding-bottom:30px;
+}
+
+.bar.positive {
+/*   fill:#3ea4bf; */
+  fill:#57a1ff
+}
+
+.bar.negative {
+  fill: #ff4566;
+}
+
+.bar-group text{
+    /* fill:#555; */
+    font-weight:bold;
+    /* font-size:small; */
+}
+
+#delta-labels table{
+    width:100%;
+    text-align: center;
+    margin:10px;
+    margin-top:-30px;
+}
+
+#delta-labels h3{
+    font-weight:bold;
+}
+
+#view-switch{
+    margin-left:650px;
+    margin-top:20px;
+}
+#treatments .x.axis path {
+  display: none;
+}
+treatments .y.axis path {
+  display: none;
+}
+#treatments text{
+    font-size: 12px;
+
+}
