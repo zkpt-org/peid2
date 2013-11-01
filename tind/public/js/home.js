@@ -14,6 +14,22 @@ else
 function onDocumentReady(){
     draw_pmpm();
     draw_cumulative();
+    
+    /* If the first child in the alert box is a real alert, then display alert. */
+    if($("#alerts-box").children().length > 0 && $("#alerts-box .alert").first().attr("id")!="no-alerts"){
+        ToggleAlertsBox();
+        $('#alerts-label').addClass("active-alerts");
+    }
+    
+    if(show_alerts){
+        $("#alerts-box").css("display","block");
+        $("#alerts-box").animate( {width:788, opacity:1}, 1000);
+    }
+    else{
+        $("#alerts-box").css("display","none");
+        $("#alerts-box").css("opacity","0.5");
+        $("#alerts-box").css("width","0");
+    }    
 }
 
 function draw_pmpm(){    
@@ -300,6 +316,24 @@ function draw_cumulative(){
     
     });
 }
+
+function ToggleAlertsBox(){
+    if($("#alerts-box").css("display") == "none"){
+        $("#alerts-box").css("display","block");
+        $("#alerts-box").animate( {width:788, opacity:1}, 1000);
+        $.get('/home/show_alerts/', function( data ){ console.log(data);});
+    }
+    else{
+        $("#alerts-box").animate( {width:0, opacity:0.5}, 1000, 
+            function(){
+                $("#alerts-box").css("display","none");
+                $.get('/home/hide_alerts/', function( data ){ console.log(data);});
+            }    
+        );        
+    }
+}
+
+
 /*
 function draw_top_diseases(){
     

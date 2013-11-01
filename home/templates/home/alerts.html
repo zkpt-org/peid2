@@ -1,0 +1,46 @@
+<div id=alerts-tab>
+    <a href="javascript:;" onclick="ToggleAlertsBox();">
+       <i class="icon-bell" 
+          onmouseover="$(this).toggleClass('icon-bell');"
+          onmouseout="$(this).toggleClass('icon-bell-alt');"></i>
+    </a>
+    <div id=alerts-label>alerts</div>
+</div>
+<div id="alerts-box">
+{% if alerts == "none" %}
+<!-- EXAMPLE NO ALERT -->
+    <script>show_alerts = false;</script>
+    <div class="alert alert-info" id="no-alerts">
+        <button type="button" class="close" onclick="ToggleAlertsBox();">&times;</button>
+        <i class="icon-bell"></i>
+        <strong>There are currently no alerts.</strong>
+    </div>
+{% elif alerts != "none" %}
+<!-- EXAMPLE RED AND GREEN ALERT -->
+    {% if alerts == "show" %}
+        <script>show_alerts = true;</script>
+    {% else %}
+        <script>show_alerts = false;</script>
+    {% endif %}
+    
+    <div class="alert alert-error">
+        <button type="button" class="close" onclick="ToggleAlertsBox();">&times;</button>
+        <i class="icon-warning-sign"></i>
+        <strong>10% of users in Program A are in the red zone.</strong>
+    </div>
+
+    <!-- <div class="alert alert-success">
+        <i class="icon-ok"></i>
+        <strong>70% of users from Program B are now in the green zone.</strong>
+    </div>  -->       
+
+<!-- EXAMPLE YELLOW ALERT -->
+<!--
+    <div class="alert alert-warning">
+        <button type="button" class="close" onclick="ToggleAlertsBox();">&times;</button>
+        <i class="icon-bell"></i>
+        <strong>60% of users in Program A are in the yellow zone.</strong>
+    </div>
+-->
+{% endif %}
+</div>

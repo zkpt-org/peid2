@@ -6,4 +6,6 @@ from django.shortcuts import redirect
 
 @login_required
 def index(request):
-    return render_to_response('home/index.html',{"page":"home","user":request.user}, context_instance=RequestContext(request))
+    if not request.session['alerts']:
+        request.session['alerts'] = "show"
+    return render_to_response('home/index.html',{"page":"home","user":request.user, "alerts":request.session['alerts']}, context_instance=RequestContext(request))
