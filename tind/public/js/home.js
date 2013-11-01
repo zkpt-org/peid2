@@ -27,8 +27,6 @@ function onDocumentReady(){
     }
     else{
         $("#alerts-box").css("display","none");
-        $("#alerts-box").css("opacity","0.5");
-        $("#alerts-box").css("width","0");
     }    
 }
 
@@ -319,6 +317,8 @@ function draw_cumulative(){
 
 function ToggleAlertsBox(){
     if($("#alerts-box").css("display") == "none"){
+        $("#alerts-box").css("opacity","0.5");
+        $("#alerts-box").css("width","0");
         $("#alerts-box").css("display","block");
         $("#alerts-box").animate( {width:788, opacity:1}, 1000);
         $.get('/home/show_alerts/', function( data ){ console.log(data);});

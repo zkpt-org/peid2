@@ -7,7 +7,7 @@ import json
 
 @login_required #(redirect_field_name='login/')
 def index(request):
-    if not request.session['alerts']:
+    if 'alerts' not in request.session:
         request.session['alerts'] = "show"
     return render_to_response('home/index.html',{"page":"home", "user":request.user, "alerts":request.session['alerts']}, context_instance=RequestContext(request))
 
