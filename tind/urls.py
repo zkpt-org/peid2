@@ -23,5 +23,7 @@ urlpatterns = patterns('',
     url(r'^account/', include('login.urls')),
     url(r'^login/', login.views.login),
     url(r'^logout/', login.views.logout),
+    url(r'^data/', include('data.urls'))
+    
 )
 urlpatterns += staticfiles_urlpatterns()

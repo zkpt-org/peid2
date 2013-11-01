@@ -139,7 +139,8 @@ INSTALLED_APPS = (
     'projections',
     'login',
     'registration',
-    'population'
+    'population',
+    'data'
 )
 
 # A sample logging configuration. The only tangible logging
