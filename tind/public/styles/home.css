@@ -112,7 +112,8 @@
     font-weight: bold;
     box-shadow: 2px 2px 5px #aaaaaa;
     /* color:#3ea4bf; */
-    color:#777;   
+    color:#777;
+    z-index: 1;
 }
 .tooltip-1 li{
     list-style-type: decimal;
@@ -143,11 +144,19 @@
 }
 
 #cumulative .bar {
-  fill: orange;
+  /* fill: #49bf92; */
+  fill:orange;
+  /* fill:#7abfff; */
+  /* fill:#fd889b; */
+  
 }
 
 #cumulative .bar:hover {
-  fill: orangered ;
+  fill: orangered;
+  /* fill: #ff4566; */
+  /* fill:#57a1ff; */
+  /* fill:#3ea4bf; */
+  
 }
 
 #cumulative .x.axis path {

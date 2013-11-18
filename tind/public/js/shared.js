@@ -1,4 +1,6 @@
 /* Shared Javascript functions */
+var shadowbox = false;
+
 if( !window.isLoaded )
 	window.addEventListener("load", function(){ onready(); }, false);
 else
@@ -14,12 +16,12 @@ function onready() {
             selector: '[data-toggle="popover"]'
         });
 
-/*
+        /*
         $('body').tooltip({
             delay: { show: 5000, hide: 0 },
             selector: 'a[rel="tooltip"], [data-toggle="tooltip"]'
         });
-*/
+        */
     });
     
     $('.nav.nav-tabs a').click(function (e) {
@@ -43,4 +45,86 @@ function dropdown(elem, num){
 
 function reset_dropdown(num, defaults){
     $('#filter-'+num+' .filter-label').text(defaults[num]);
+}
+
+function details(elem){
+    $("#container").animate( {width:1200}, 750);
+    $(".box").animate( {width:300, height:300}, 750, function(){
+        $(".box")
+            .animate({
+                borderTopLeftRadius: '50%', 
+                borderTopRightRadius: '50%', 
+                borderBottomLeftRadius: '50%', 
+                borderBottomRightRadius: '50%'}, 300);
+    });
+    
+    $(".box svg").animate( {width:300, height:300}, 750, function(){
+        $(".box svg")
+            .animate({
+                borderTopLeftRadius: '50%', 
+                borderTopRightRadius: '50%', 
+                borderBottomLeftRadius: '50%', 
+                borderBottomRightRadius: '50%'}, 300, function(){
+                    if(!shadowbox){
+                        var ypos = $(elem).position().top
+                        $('body').append("<div id=shadow-box></div><div id=disable>");
+                        $("#disable").css("display", "block");
+                        $("#container").append('<div id=details><button type=button class=close onclick="details_reset()">×</button><div id=deep-dive></div></div>');
+                        $("#details").append("<div class=pointer-box-left><div class=pointer></div></div>");
+                        $("#details").css("top", (ypos-30)+"px");
+                        $("#details").css("width", "820px");
+                        $(".pointer-box-left").css("top", 130+"px");
+                        $(".pointer").css("position", "relative");
+                        shadowbox = true;
+                        $("#deep-dive").load( "/dive" );
+                    }
+                });    
+    });
+    $(elem).css("position", "relative");
+    $(elem).css("z-index", "10");
+}
+
+function details_reset(){
+    $("#shadow-box").animate({opacity:0}, 750);
+    $("#disable").css("display", "none");
+    $("#disable").remove();
+    $("#deep-dive").remove();
+    shadowbox = false;
+    
+    $("#details").animate({width:0}, 750, function(){
+        $(".pointer-box-left").remove();
+        $("#details").remove();
+        $("#details button.close").remove();
+        $("#shadow-box").remove();
+        
+        $(".box").animate({
+                borderTopLeftRadius: '5px', 
+                borderTopRightRadius: '5px', 
+                borderBottomLeftRadius: '5px', 
+                borderBottomRightRadius: '5px'}, 300, function(){$(".box").animate( {width:760, height:400}, 750);});
+        
+        $(".box svg")
+            .animate({
+                borderTopLeftRadius: '5px', 
+                borderTopRightRadius: '5px', 
+                borderBottomLeftRadius: '5px', 
+                borderBottomRightRadius: '5px'}, 300, function(){
+                    
+                    $("#container").animate({width:760},750);
+                    $(".box svg").animate( {width:760, height:400}, 750,
+                        function(){
+                            redraw();
+                            $(".box").css("position", "static");
+                            $(".box").css("z-index", "0");
+                            $(".box svg").css("position", "static");
+                            $(".box svg").css("z-index", "0");
+                            
+                            //location.reload();
+
+                        }
+                    );     
+                });
+        
+    });
+    
 }

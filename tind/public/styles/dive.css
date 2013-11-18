@@ -1,0 +1,88 @@
+#deep-dive .box{
+    margin-bottom: 30px;    
+}
+
+#deep-dive h3{
+    clear:both;
+    margin-top:30px;
+}
+
+#deep-dive{
+    padding-left:20px;
+    background-color: #fff;
+}
+
+.boxplotplot {
+  font: 10px sans-serif;
+  left: 100px;
+}
+
+.boxplot line,
+.boxplot rect,
+.boxplot circle {
+  fill: #fff;
+  stroke: #777;
+  stroke-width: 1.5px;
+}
+
+.boxplot .center {
+  stroke-dasharray: 3,3;
+}
+
+.boxplot .outlier {
+  fill: none;
+  stroke: #ccc;
+}
+
+g.tick.major line{
+    stroke: #ddd;
+}
+
+#boxplot-table{
+  /* width:760px; */
+  width:680px;
+  margin-left:40px;
+  border-top: 1px solid #ddd;
+}
+#boxplot-table td{
+    text-align: left;
+    padding-bottom:30px;
+    padding-top:10px;
+    
+}
+#gender-table{
+/*   width:760px; */
+  width:680px;
+  margin-left:40px;
+  font-size:large;
+  font-weight:bold;
+}
+#gender-table td{
+    text-align: center;
+    padding-bottom:30px;
+    padding-top:10px;
+    
+}
+
+#gender-table td.female{
+    color:#fd889b;
+}
+#gender-table td.male{
+    color:#7abfff;
+}
+
+.bar.male{
+    /* fill:#57a1ff; */
+    fill:#7abfff;
+}
+
+.bar.female{
+    /* fill: #ff4566; */
+    fill:#fd889b;
+}
+
+.bar-group text{
+    font-size:medium;
+    font-weight: bold;
+    fill:#ffffff;
+}
