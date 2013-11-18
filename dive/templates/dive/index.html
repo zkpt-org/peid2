@@ -1,0 +1,35 @@
+<link type="text/css" rel="stylesheet" href="{{STATIC_URL}}styles/dive.css"/>
+{% include 'dive/box.html' %}
+{% include 'dive/age.html' %}
+<script>genders();</script>
+
+<h3>Age Distribution</h3>
+<div class=box>
+    <div id=age-distribution></div>
+</div>
+<h3>Gender Distribution</h3>
+<div class=box>
+    <div id=genders></div>
+    <table id=gender-table>
+        <tr>
+            <td class=female>Female</td>
+            <td class=male>Male</td>
+        </tr>
+    </table>
+</div>
+<h3>Population Risk Assessments</h3>
+<div class=box>
+    <script>
+    margin = {top: 20, right: 90, bottom: 20, left: 90},
+    box_width =  200 - margin.left - margin.right,
+    box_height = 360 - margin.top  - margin.bottom;
+    </script>
+    <div id=box-plot></div>
+    <table id=boxplot-table>
+        <tr>
+            <td>Target Population</td>
+            <td>Overall Population</td>
+            <td>Benchmark Population</td>
+        </tr>
+    </table>
+</div>

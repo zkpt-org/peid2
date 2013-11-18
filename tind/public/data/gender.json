@@ -1,0 +1,8 @@
+[
+{"name": "Target", "value": 45.53, "gender": "male"},
+{"name": "Overall", "value": 60.26, "gender": "male"},
+{"name": "Benchmark", "value": 52.03, "gender": "male"},
+{"name": "Target", "value": -54.47, "gender": "female"},
+{"name": "Overall", "value": -39.74, "gender": "female"},
+{"name": "Benchmark", "value": -47.97, "gender": "female"}
+]
