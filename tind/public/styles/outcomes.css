@@ -91,5 +91,130 @@ h3 {
 }
 
 #graph-2 .pointer{
-    background-color:#f7f7f7;
+    /* background-color:#f7f7f7; */
+    background-color:#ffffff;
+}
+
+
+
+
+
+
+.right{
+    width:330px;
+    display: inline-block;
+    margin:10px;
+    padding:10px;
+    vertical-align: top;
+}
+.left{
+    width:330px;
+    display: inline-block;
+    margin:10px;
+    padding:10px;
+    vertical-align: top;
+}
+#thermometer{
+    margin-left:20px;
+    display: inline-block;
+    width:50px;
+}
+#thermo-top{
+    border-radius: 50%;
+    border: #999 solid 2px;
+    height:20px;
+    width:20px;
+    background-color: #fff;
+       
+}
+#thermo{
+    border-left: #999 solid 2px;
+    border-right: #999 solid 2px;
+    height:130px;
+    width:20px;
+    top:-10px;
+    position: relative;
+    background-color: #fff;
+
+    z-index:1;
+}
+
+#thermo-bottom{
+    border-radius: 50%;
+    border: #999 solid 2px;
+    height:40px;
+    width:40px;
+    top:-15px;
+    left:-10px;
+    position:relative;
+    z-index:0;
+    background-color: #fff;     
+}
+
+#thermo-circle{
+    border-radius: 50%;
+    background-color: #ff4566;
+    width:30px;
+    height:30px;
+    top:-52px;
+    left:-3px;
+    position:relative;
+    z-index: 2;
+}
+
+#measure{
+    height:70px;
+    width:10px;
+    background-color: #ff4566;
+    top:70px;
+    left:5px;
+    position:relative;
+    border-radius: 5px;
+}
+#health-index{
+    padding-top:20px;
+}
+#health-index .info{
+    display: inline-block;
+    width:250px;
+    vertical-align: top;
+}
+
+#health-index .left .info h2{
+    color:#57a1ff;
+    font-weight: bold;
+}
+
+#health-index p{
+    padding:10px;
+    padding-left:0px;
+    margin-left:0px;
+}
+
+#health-index h5, #health-index h4{
+    display: inline-block;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+#health-index h5{
+    font-size: x-small;
+}
+
+#health-index table tr{
+    width:200px;
+}
+
+#health-index table td{
+    padding:10px;
+    font-size: medium;
+    font-weight:bold;
+}
+
+#health-index table td.percent{
+    color:#57a1ff;
+    font-size: x-large;
+}
+#health-index .left{
+    border-right:2px #eee solid;
 }
