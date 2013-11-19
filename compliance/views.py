@@ -7,4 +7,4 @@ import json
 
 @login_required
 def index(request):
-    return render_to_response('compliance/index.html',{"page":"compliance", "user":request.user}, context_instance=RequestContext(request))
+    return render_to_response('compliance/index.html',{"page":"compliance", "user":request.user, "loop":[i for i in range(5)]}, context_instance=RequestContext(request))

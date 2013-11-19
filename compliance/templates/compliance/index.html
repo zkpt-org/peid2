@@ -1,7 +1,9 @@
 {% extends 'base.html' %}
 {% block title %}Compliance{% endblock %}
 
-{% block javascript %}{% endblock %}
+{% block javascript %}
+    <script type="text/javascript" src="{{STATIC_URL}}js/gauge-white.js"></script>
+{% endblock %}
 
 {% block css %}{% endblock %}
 
@@ -126,4 +128,5 @@
             </div>
         </div>
     </div>
+    {% include 'compliance/dial_panel.html' %}
 {% endblock %}
