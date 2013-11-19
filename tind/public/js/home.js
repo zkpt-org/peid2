@@ -92,7 +92,7 @@ function draw_costs(){
       data.sort(function(a, b) { return b.total - a.total; });
     
       x.domain(data.map(function(d) { return d.State; }));
-      y.domain([0, d3.max(data, function(d) { return d.total; })]);
+      y.domain([0, d3.max(data, function(d) { return d.total; })*1.2]);
     
       svg.append("g")
           .attr("class", "x axis")
@@ -122,12 +122,12 @@ function draw_costs(){
           .attr("x", x.rangeBand()/2/2)
           .attr("y", function(d) { return y(d.y1); })
           .attr("height", function(d) { return y(d.y0) - y(d.y1); })
-          .style("fill", function(d) { return color(d.name); })
+          .style("fill", function(d) { return color(d.name); });
 /*
           .append("g")
           .append("text")
-          .text(function(d) { console.log(d); return d; })
-*/;
+          .text(function(d) { console.log(d); return d; });
+*/
     
       var legend = svg.selectAll(".legend")
           .data(color.domain().slice().reverse())

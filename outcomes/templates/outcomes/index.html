@@ -27,7 +27,34 @@
                 </div>
             </div>
         </div>
-
+    <div id="graph-5">
+        <div class="show-hide-toggle">
+            <a href="javascript:;" onclick="fold('#graph-5');">
+            <i class=icon-caret-down></i></a>
+            <hr/>
+        </div>
+        <div class="hide">
+            <h3>Health Claim Costs, rolling monthly average</h3>
+            <div id="costs" class="box">
+                <div id="ugly-hack" class="fadeIn fadeIn-1s">
+                    <table>
+                    <tr>
+                        <td id=hack1>$455</td>
+                        <td id=hack2>$505</td>
+                        <td id=hack3>$545</td>
+                        <td id=hack4>$460</td>
+                        <td id=hack5>$550</td>
+                        <td id=hack6>$632</td>
+                        <td id=hack7>$450</td>
+                        <td id=hack8>$475</td>
+                        <td id=hack9>$499</td>
+                    </tr>
+                    </table>
+                </div>
+                {% include 'projections/costs.html' %}
+            </div>
+        </div>            
+    </div>
 
     <div id="graph-4">
         <div class="show-hide-toggle">

@@ -24,30 +24,6 @@ text{
 */
 }
 
-#ugly-hack{
-    position: relative;
-    z-index: 3;
-    color:#fff;
-    top:230px;
-    left:120px;
-    font-weight: bold;
-}
-
-#ugly-hack td{
-    padding:5px;
-    position: relative;
-}
-
-#hack1{left:5px;}
-#hack2{left:5px;top:-15px;}
-#hack3{left:7px;top:-25px;}
-#hack4{left:92px;}
-#hack5{left:94px;top:-30px;}
-#hack6{left:96px;top:-55px;}
-#hack7{left:180px;}
-#hack8{left:182px;top:-6px;}
-#hack9{left:184px;top:-15px;}
-
 .bullet{
     padding-top: 20px;
     padding-bottom: 20px;
