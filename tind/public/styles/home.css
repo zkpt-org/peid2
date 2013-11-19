@@ -81,6 +81,14 @@
     stroke:#3ea4bf;
     stroke-width:2px;
 }
+
+.benchmark{
+    stroke:#F6BB33;
+    fill:none;
+    stroke-width:2px;
+}
+
+
 .grid .tick {
     stroke: #eee;
     opacity: 0.6;
@@ -190,4 +198,18 @@
   margin: -1px 0 0 0;
   top: 100%;
   left: 0;
+}
+
+.benchmark{
+    stroke:#F6BB33;
+    fill:none;
+    stroke-width:2px;
+}
+.overall{
+    stroke:#49bf92;
+    fill:none;
+    stroke-width:2px;
+}
+.text.dark{
+	fill:#777;    
 }

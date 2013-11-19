@@ -125,6 +125,7 @@ function draw_pmpm(){
         var table = [];
         var times = [];
         var costs = [];
+        var benchmarks = [];
         var c = 0;
                 
         data.forEach(function(d) {
@@ -132,11 +133,11 @@ function draw_pmpm(){
     	    d.date = Date.today().addMonths(d.month-12);
     	    costs.push(d.cost);
     	    times.push(d.date);
+    	    benchmarks.push({"cost":d.benchmark, "month":d.month});
     	    table[c] = d.cost;
     	    c ++;
         });
 
-    
       x.domain(d3.extent(data, function(d) { return d.date; }));
       /* y.domain(d3.extent(data, function(d) { return d.cost; })); */
     
@@ -188,6 +189,11 @@ function draw_pmpm(){
       svg.append("path")
           .datum(data)
           .attr("class", "pmpm")
+          .attr("d", line);
+            
+      svg.append("path")
+          .datum(benchmarks)
+          .attr("class", "benchmark")
           .attr("d", line);    
     
 
@@ -215,8 +221,7 @@ function draw_pmpm(){
         circle.attr("display", "none"); 
         tooltip.style("visibility", "hidden"); 
         indicator.style("visibility", "hidden");});
-    
-        
+            
     var max_score = d3.max(costs)*1.1;
     var min_score = d3.min(costs)*0.9;
     
@@ -261,6 +266,35 @@ function draw_pmpm(){
             
         }
     }
+    
+    var key = svg.append("svg:g");
+    key.append("svg:circle")
+          .attr("cy", 360 )
+          .attr("cx", 0 )
+          .attr("r", 8) // radius of circle
+          .attr("fill", '#F6BB33')
+          .attr("stroke", '#777777') 
+          .style("opacity", 0.9);
+    key.append("text")
+            .attr("y", 355)
+            .attr("x", 15)
+            .attr("dy", ".71em")
+            .attr("class", "text dark")
+            .text("Benchmark");
+    key.append("svg:circle")
+          .attr("cy", 360 )
+          .attr("cx", 100 )
+          .attr("r", 8) // radius of circle
+          .attr("fill", '#3ea4bf')
+          .attr("stroke", '#777777') 
+          .style("opacity", 0.9);
+    key.append("text")
+            .attr("y", 355)
+            .attr("x", 115)
+            .attr("dy", ".71em")
+            .attr("class", "text dark")      
+            .text("Target");
+    
     });
 }
 function draw_cumulative(){    

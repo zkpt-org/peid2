@@ -22,6 +22,9 @@
 /*     font-weight: bold; */
 }
 .hide td.status{
+    width:200px;
+}
+.hide td.percentage{
     width:150px;
 }
 .hide td.overdue{
@@ -40,6 +43,10 @@
     text-align:left;
 }
 .hide th.status{
+    width:200px;
+    text-align:left;
+}
+.hide th.percentage{
     width:150px;
     text-align:left;
 }

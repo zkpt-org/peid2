@@ -1,14 +1,14 @@
 [
-{"cost" : 477.13 , "month" : 0},
-{"cost" : 340.64 , "month" : 1},
-{"cost" : 669.75 , "month" : 2},
-{"cost" : 368.20 , "month" : 3},
-{"cost" : 470.35 , "month" : 4},
-{"cost" : 494.89 , "month" : 5},
-{"cost" : 501.95 , "month" : 6},
-{"cost" : 461.12 , "month" : 7},
-{"cost" : 544.59 , "month" : 8},
-{"cost" : 415.96 , "month" : 9},
-{"cost" : 484.69 , "month" : 10},
-{"cost" : 289.49 , "month" : 11}
+{"cost" : 477.13 , "benchmark" : 327.32, "month" : 0},
+{"cost" : 340.64 , "benchmark" : 380.20, "month" : 1},
+{"cost" : 669.75 , "benchmark" : 465.82, "month" : 2},
+{"cost" : 368.20 , "benchmark" : 478.35, "month" : 3},
+{"cost" : 470.35 , "benchmark" : 427.39, "month" : 4},
+{"cost" : 494.89 , "benchmark" : 410.68, "month" : 5},
+{"cost" : 501.95 , "benchmark" : 400.75, "month" : 6},
+{"cost" : 461.12 , "benchmark" : 425.90, "month" : 7},
+{"cost" : 544.59 , "benchmark" : 427.16, "month" : 8},
+{"cost" : 415.96 , "benchmark" : 386.95, "month" : 9},
+{"cost" : 484.69 , "benchmark" : 388.43, "month" : 10},
+{"cost" : 289.49 , "benchmark" : 321.84, "month" : 11}
 ]
