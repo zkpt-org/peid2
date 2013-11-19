@@ -1,0 +1,4 @@
+State,Inpatient,Outpatient,Office Visit,Pharmacy Claims
+Benchmark,90,160,60,50
+Comparison Period,98,170,70,55
+Reporting Period,95,175,75,48
