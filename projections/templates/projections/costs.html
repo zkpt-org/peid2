@@ -69,7 +69,9 @@ d3.csv("../public/data/costs.csv", function(error, data) {
 
   state.selectAll("rect")
       .data(function(d) { return d.ages; })
-    .enter().append("rect")
+    .enter().append("g").attr("class", "cost-bar")
+      .append("rect")
+      /* .attr("class", "bar") */
       .attr("width", x1a.rangeBand())
       .attr("x", function(d) { return x1a(d.name); })
       .attr("y", function(d) { return y(d.value); })
@@ -77,35 +79,17 @@ d3.csv("../public/data/costs.csv", function(error, data) {
       .style("fill", function(d) { return color1(d.name); })
       .attr('opacity', 0.9);
     
-/*
-  var bars = state.selectAll("rect").data(function(d) { return d.ages; }).enter();
-      
-    bars.append("g")
-      .attr("x",50)
-      .attr("y",50)
+  var bars = state.selectAll(".cost-bar")
     .append("text")
+      .attr("x", function(d) { console.log(x0a(d.name)); return x1a(d.name) +  x1a.rangeBand() -  x1a.rangeBand()/2; })
+      .attr("y", function(d) { return y(d.value) + 25; })
       .style("text-anchor", "middle")
-      .style("font-size", '16px')
-      .text(function(d){return "hello";});
-*/
+      .style("font-size", 'small')
+      .style("font-weight", "bold")
+      .style("fill", "#fff")
+      .text(function(d){return "$" + String(d.value);});
  
-/*
-state.selectAll("text").
-  data(data).
-  enter().
-  append("svg:text").
-  attr("x", function(datum, index) { return x(index) + x1a.rangeBand(); }).
-  attr("y", function(datum) { return height - y(datum.value); }).
-  attr("dx", -x1a.rangeBand()/2).
-  attr("dy", "1.2em").
-  attr("text-anchor", "middle").
-  text(function(datum) { return datum.value;}).
-  attr("fill", "white"); 
-*/
- 
- 
- 
- 
+  
   state.append("g")
     .append("text")
       .attr("x",65)

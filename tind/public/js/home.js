@@ -117,17 +117,20 @@ function draw_costs(){
     
       state.selectAll("rect")
           .data(function(d) { return d.ages; })
-        .enter().append("rect")
+        .enter().append("g").attr("class", "cost-bar")
+          .append("rect")
           .attr("width", x.rangeBand()/2)
           .attr("x", x.rangeBand()/2/2)
           .attr("y", function(d) { return y(d.y1); })
           .attr("height", function(d) { return y(d.y0) - y(d.y1); })
-          .style("fill", function(d) { return color(d.name); });
-/*
-          .append("g")
+          .style("fill", function(d) { return color(d.name); })
+      
+      state.selectAll(".cost-bar")    
           .append("text")
-          .text(function(d) { console.log(d); return d; });
-*/
+          .text(function(d) { return "$" + String(d.y1 - d.y0); })
+          .attr("x", x.rangeBand()/4 + x.rangeBand()/4 - 10)
+          .attr("y", function(d) { return y(d.y0) - ((y(d.y0)-y(d.y1))/2) + 5; })
+          ;
     
       var legend = svg.selectAll(".legend")
           .data(color.domain().slice().reverse())
