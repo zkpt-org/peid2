@@ -140,8 +140,8 @@ INSTALLED_APPS = (
     'login',
     'registration',
     'population',
-    'data',
-    'dive'
+    'dive',
+    #'data',
 )
 
 # A sample logging configuration. The only tangible logging
