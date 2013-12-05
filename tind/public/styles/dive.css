@@ -86,3 +86,21 @@ g.tick.major line{
     font-weight: bold;
     fill:#ffffff;
 }
+
+.benchmark{
+    stroke:#F6BB33;
+    fill:none;
+    stroke-width:2px;
+}
+
+.target{
+    stroke:#3ea4bf;
+    fill:none;
+    stroke-width:2px;
+}
+
+.overall{
+    stroke:#49bf92;
+    fill:none;
+    stroke-width:2px;
+}

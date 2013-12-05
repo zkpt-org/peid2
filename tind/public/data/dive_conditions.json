@@ -1,0 +1,7 @@
+[
+{"disease":"Diabetes", "target":0.21, "benchmark":0.32},
+{"disease":"High Cholesterol", "target":0.59,"benchmark":0.41},
+{"disease":"High Blood Pressure", "target":0.45, "benchmark":0.33},
+{"disease":"Heart Disease", "target":0.52,"benchmark":0.45},
+{"disease":"Metabolic Syndrome", "target":0.10, "benchmark":0.31}
+]

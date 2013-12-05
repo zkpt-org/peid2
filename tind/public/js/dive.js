@@ -58,15 +58,7 @@ function genders(){
       svg.append("g")
           .attr("class", "x axis")
           .call(xAxis)
-/*
-          .append("text")
-          .attr("y", 6)
-          .attr("x", 30)
-          .attr("dy", ".71em")
-          .style("text-anchor", "end")
-          .text("Percentage");
-*/
-    
+
       svg.append("g")
           .attr("class", "y axis")
         .append("line")
@@ -76,6 +68,158 @@ function genders(){
     
     });
 }
+
+function conditions(){
+    var margin = {top: 30, right: 20, bottom: 50, left: 120},
+        width  = 760 - margin.left - margin.right,
+        height = 400 - margin.top  - margin.bottom;
+
+
+    var x = d3.scale.linear()
+        .range([0, width]);
+    
+    var y = d3.scale.ordinal().rangeRoundBands([0,height]);
+     
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .tickFormat(d3.format(".0%"))
+        .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .orient("left");
+    
+    var line = d3.svg.line()
+        .interpolate("linear")
+        .x(function(d) { return x(d.value) })
+        .y(function(d) { return y(d.disease)+ y.rangeBand()/2; })
+        
+    if($('#conditions-graph').length)
+        $('#conditions-graph').remove()
+   
+    var svg = d3.select("#conditions").append("svg")
+        .attr("width",  width  + margin.left + margin.right)
+        .attr("height", height + margin.top  + margin.bottom)
+        .attr("id", "conditions-graph")
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    function make_x_axis() {        
+        return d3.svg.axis()
+            .scale(x)
+             .orient("bottom")
+             .ticks(20)
+    }
+    
+    function make_y_axis() {        
+        return d3.svg.axis()
+            .scale(y)
+            .orient("left")
+            .ticks(5)
+    }
+    
+    d3.json("../public/data/dive_conditions.json", function(error, data) {
+
+      var target = []
+      var benchmark = []
+        
+      data.forEach(function(d){
+        benchmark.push({disease:d.disease, value:d.benchmark})
+        target.push({disease:d.disease, value:d.target})
+      });
+            
+      x.domain([0,1]);
+      y.domain(data.map(function(d){ return d.disease; }));
+            
+      svg.append("g")
+          .attr("class", "x axis")
+          .attr("id", "x-axis")
+          .attr("transform", "translate(0," + height + ")")
+          .call(xAxis)
+          .append("text")
+          .attr("y", 25)
+          .attr("x", width)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("Percentage of population")
+          .style("opacity", "0")
+          .transition().duration(50).delay(0).ease('in')
+          .style("opacity", "1");
+    
+      svg.append("g")
+          .attr("class", "y axis")
+          /* .attr("transform", "translate(" + width + ",0)") */
+          .call(yAxis)
+/*
+        .append("text")
+          .attr("transform", "rotate(-90)")
+          .attr("y", 6)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("Disease Conditions")
+          .style("opacity", "0")
+          .transition().duration(50).delay(0).ease('in')
+          .style("opacity", "1")
+*/;
+
+      svg.append("g")         
+        .attr("class", "grid")
+        .attr("transform", "translate(0," + height + ")")
+        .call(make_x_axis()
+            .tickSize(-height, 0, 0)
+            .tickFormat("")
+        )
+      
+      svg.append("g")         
+        .attr("class", "grid")
+        .call(make_y_axis()
+            .tickSize(-width, 0, 0)
+            .tickFormat("")
+        )       
+      
+      svg.append("path")
+          .datum(target)
+          .attr("class", "target")
+          .attr("d", line);
+            
+      svg.append("path")
+          .datum(benchmark)
+          .attr("class", "benchmark")
+          .attr("d", line);
+    
+    var key = svg.append("svg:g");
+    key.append("svg:circle")
+          .attr("cy", 360 )
+          .attr("cx", 0 )
+          .attr("r", 8) // radius of circle
+          .attr("fill", '#F6BB33')
+          .attr("stroke", '#777777') 
+          .style("opacity", 0.9);
+    key.append("text")
+            .attr("y", 355)
+            .attr("x", 15)
+            .attr("dy", ".71em")
+            .attr("class", "text dark")
+            .text("Benchmark");
+    key.append("svg:circle")
+          .attr("cy", 360 )
+          .attr("cx", 100 )
+          .attr("r", 8) // radius of circle
+          .attr("fill", '#3ea4bf')
+          .attr("stroke", '#777777') 
+          .style("opacity", 0.9);
+    key.append("text")
+            .attr("y", 355)
+            .attr("x", 115)
+            .attr("dy", ".71em")
+            .attr("class", "text dark")      
+            .text("Target");
+    
+    });
+}
+
+
+
 
 
 (function() {
@@ -379,3 +523,4 @@ function boxplotQuartiles(d) {
 }
 
 })();
+

@@ -1,7 +1,10 @@
 <link type="text/css" rel="stylesheet" href="{{STATIC_URL}}styles/dive.css"/>
 {% include 'dive/box.html' %}
 {% include 'dive/age.html' %}
-<script>genders();</script>
+<script>
+genders();
+conditions();
+</script>
 
 <h3>Age Distribution</h3>
 <div class=box>
@@ -16,6 +19,10 @@
             <td class=male>Male</td>
         </tr>
     </table>
+</div>
+<h3>Disease Conditions</h3>
+<div class=box>
+    <div id=conditions></div>
 </div>
 <h3>Population Risk Assessments</h3>
 <div class=box>
