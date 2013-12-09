@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 # from data.das import Das
 
-@login_required
+#@login_required
 def index(request):
 #     status = Das()
 #     return render_to_response('data/index.html',{"status":status})
