@@ -10,4 +10,4 @@ from django.shortcuts import redirect
 def index(request):
 #     status = Das()
 #     return render_to_response('data/index.html',{"status":status})
-    return render_to_response('data/index.html',{"status":"hello"})
+    return render_to_response('data/index.html',{"status":"ST-16929-QY3QeVDdndaVqK3cLUAo-cas"})
