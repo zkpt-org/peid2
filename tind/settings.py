@@ -177,6 +177,9 @@ LOGIN_URL = '/login/'
 LOGOUT_URL = '/logout/'
 #LOGIN_REDIRECT_URL = '/home/'
 
+DAS_USER = os.environ['DAS_USER']
+DAS_PASS = os.environ['DAS_PASS']
+
 # ===================
 # = HEROKU SETTINGS =
 # ===================
