@@ -11,7 +11,7 @@ from data.das import Das
 def index(request):
     das = Das()
     proxy_ticket = das.auth(settings.DAS_USER, settings.DAS_PASS)
-    return render_to_response('data/index.html',{"status":proxy_ticket})
+    return render_to_response('data/index.html',{"status":proxy_ticket + request})
 
 def authenticate(request):
     das = Das()
