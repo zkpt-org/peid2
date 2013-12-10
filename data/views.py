@@ -9,9 +9,9 @@ from data.das import Das
 
 # @login_required
 def index(request):
-    das = Das()
-    proxy_ticket = das.auth(settings.DAS_USER, settings.DAS_PASS)
-    return render_to_response('data/index.html',{"status":proxy_ticket + request})
+    #das = Das()
+    #proxy_ticket = das.auth(settings.DAS_USER, settings.DAS_PASS)
+    return render_to_response('data/index.html',{"status":"hello"})
 
 def authenticate(request):
     das = Das()
@@ -20,3 +20,7 @@ def authenticate(request):
     
 def api(request):
     pass
+    
+    
+def proxy(request):
+    return render_to_response('data/index.html',{"status":request})

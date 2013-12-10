@@ -5,8 +5,8 @@ class Das:
     def __init__(self):        
         self.HOST     = 'tind-lite.zakipoint.com'
         self.TICKETS  = 'https://login.zakipoint.com/cas/v1/tickets'
-        self.SERVICE  = 'https://tind-lite.zakipoint.com/'
-        self.PROXY    = 'https://tind-staging.herokuapp.com/data/'
+        self.SERVICE  = 'https://tind-lite.zakipoint.com'
+        self.PROXY    = 'https://tind-staging.herokuapp.com/data/proxy'
         self.VALIDATE = 'https://login.deerwalk.com/cas/serviceValidate'
         self.API_URL  = 'https://das.deerwalk.com:8443'
         self.PT_URL   = 'https://login.deerwalk.com/cas/proxy'
@@ -20,17 +20,17 @@ class Das:
         st  = self.get_service_ticket(tgt)
         pgt = self.validate_service(st)
         
-        xml = BeautifulStoneSoup(str(pgt))
+        xml = BeautifulStoneSoup(pgt)
         iou = xml.find('cas:proxygrantingticket').string
         pt  = self.get_proxy_ticket(iou)
         
-        return pt
+        return xml
     
     def curl(self, url, p):
         response = cStringIO.StringIO()
         c = pycurl.Curl()
         c.setopt(c.URL, str(url))
-        #c.setopt(c.SSL_VERIFYPEER , 0)
+        c.setopt(c.SSL_VERIFYPEER , 0)
         c.setopt(c.POSTFIELDS, urllib.urlencode(p))
         c.setopt(c.WRITEFUNCTION, response.write)
         c.perform()
