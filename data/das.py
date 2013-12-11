@@ -18,9 +18,9 @@ class Das:
         tgt  = html.body.form["action"]
         
         st   = self.get_service_ticket(tgt)
-        path = self.validate_service(st)
+        vld  = self.validate_service(st)
         
-        pgt = self.get_proxy_granting_ticket(path)
+        pgt = self.get_proxy_granting_ticket(os.path.dirname(__file__) + '/proxy.ticket')
         #xml = BeautifulStoneSoup(vs)
         #iou = xml.find('cas:proxygrantingticket').string
         #pt  = self.get_proxy_ticket(iou)
