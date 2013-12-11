@@ -7,6 +7,7 @@ from django.shortcuts import redirect
 from django.conf import settings
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
+from django.core.files import File
 from data.das import Das
 
 # @login_required
@@ -25,5 +26,9 @@ def api(request):
     
     
 def proxy(request):
-    path = default_storage.save('/public/data/proxy.txt', ContentFile(request))
+    #path = default_storage.save('/public/data/proxy.txt', ContentFile(request))
+    path = '/public/data/proxy.ticket'
+    with open(path, 'w') as f:
+        ticket = File(f)
+        ticket.write(request)
     return render_to_response('data/index.html',{"status":path})
