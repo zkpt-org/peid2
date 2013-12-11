@@ -27,8 +27,8 @@ def api(request):
     
 def proxy(request):
     #path = default_storage.save('/public/data/proxy.txt', ContentFile(request))
-    path = '/proxy.ticket'
+    path = 'proxy.ticket'
     with open(path, 'w+') as f:
         ticket = File(f)
-        ticket.write(request)
+        ticket.write(str(request))
     return render_to_response('data/index.html',{"status":path})
