@@ -34,7 +34,7 @@ def proxy(request):
     
     with open(full, 'w+') as f:
         ticket = File(f)
-        ticket.write(str(request))
+        ticket.write(str(request.GET))
     ticket.closed
     f.closed
     

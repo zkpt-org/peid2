@@ -1,4 +1,4 @@
-import urllib, pycurl, cStringIO
+import urllib, pycurl, cStringIO, os
 from BeautifulSoup import BeautifulSoup, BeautifulStoneSoup
 
 class Das:
