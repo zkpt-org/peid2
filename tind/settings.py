@@ -139,7 +139,7 @@ INSTALLED_APPS = (
     'outlook',
     'projections',
     'login',
-    'registration',
+    #'registration',
     'population',
     'dive',
     'data',
