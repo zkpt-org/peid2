@@ -9,6 +9,7 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.core.files import File
 from data.das import Das
+import os
 
 # @login_required
 def index(request):
@@ -26,9 +27,15 @@ def api(request):
     
     
 def proxy(request):
-    #path = default_storage.save('/public/data/proxy.txt', ContentFile(request))
-    path = '/tmp/proxy.ticket'
-    with open(path, 'w+') as f:
+    #path = default_storage.save('/public/tmp/proxy.ticket', ContentFile(str(request)))
+    #dump = default_storage.open(path).read()
+    part = 'public/tmp/proxy.ticket'
+    full = os.path.join(os.path.dirname(__file__), '../tind/'+part)
+    
+    with open(full, 'w+') as f:
         ticket = File(f)
         ticket.write(str(request))
-    return render_to_response('data/index.html',{"status":path})
+    ticket.closed
+    f.closed
+    
+    return render_to_response('data/index.html',{"status":part})
