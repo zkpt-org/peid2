@@ -27,7 +27,7 @@ def api(request):
     
 def proxy(request):
     #path = default_storage.save('/public/data/proxy.txt', ContentFile(request))
-    path = settings.STATIC_URL + 'data/proxy.ticket'
+    path = '/proxy.ticket'
     with open(path, 'w+') as f:
         ticket = File(f)
         ticket.write(request)

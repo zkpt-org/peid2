@@ -52,7 +52,7 @@ class Das:
     
     def get_proxy_granting_ticket(self, path):
         p={}
-        return self.curl("http://staging.zakipoint.com/public/data/proxy.txt", p)
+        return self.curl("http://staging.zakipoint.com/proxy.ticket", p)
         
     def get_proxy_ticket(self, pgt):
         p = {'targetService':self.API_URL, 'pgt':pgt}
