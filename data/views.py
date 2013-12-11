@@ -29,13 +29,13 @@ def api(request):
 def proxy(request):
     #path = default_storage.save('/public/tmp/proxy.ticket', ContentFile(str(request)))
     #dump = default_storage.open(path).read()
-    part = 'public/tmp/proxy.ticket'
-    full = os.path.join(os.path.dirname(__file__), 'tind/'+part)
-    
-    with open(full, 'w+') as f:
+    #part = 'public/tmp/proxy.ticket'
+    #full = os.path.join(os.path.dirname(__file__), part)
+    path = os.path.dirname(__file__) + '/proxy.ticket'
+    with open(path, 'w+') as f:
         ticket = File(f)
         ticket.write(str(request.GET))
     ticket.closed
     f.closed
     
-    return render_to_response('data/index.html',{"status":part})
+    return render_to_response('data/index.html',{"status":path})

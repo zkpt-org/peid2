@@ -51,8 +51,12 @@ class Das:
         return self.curl(self.VALIDATE, p)
     
     def get_proxy_granting_ticket(self, path):
-        p={}
-        return self.curl("http://staging.zakipoint.com/"+path, p)
+        with open(path, 'r') as f:
+            ticket = f.read()
+        f.close()
+        return str(ticket)
+        
+
         
     def get_proxy_ticket(self, pgt):
         p = {'targetService':self.API_URL, 'pgt':pgt}
