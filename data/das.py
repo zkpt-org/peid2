@@ -17,12 +17,13 @@ class Das:
         html = BeautifulSoup(response)
         tgt  = html.body.form["action"]
         
-        st   = self.get_service_ticket(tgt)
-        vld  = self.validate_service(st)
+        st  = self.get_service_ticket(tgt)
+        vld = self.validate_service(st)
+        xml = BeautifulStoneSoup(vld)
+        iou = xml.find('cas:proxygrantingticket').string
         
-        pgt = self.get_proxy_granting_ticket(os.path.dirname(__file__) + '/proxy.ticket')
-        #xml = BeautifulStoneSoup(vs)
-        #iou = xml.find('cas:proxygrantingticket').string
+        pgt = self.get_proxy_granting_ticket()
+
         #pt  = self.get_proxy_ticket(iou)
         
         return pgt
@@ -50,7 +51,8 @@ class Das:
         p = {"service":self.SERVICE, "ticket":st, "pgtUrl":self.PROXY}
         return self.curl(self.VALIDATE, p)
     
-    def get_proxy_granting_ticket(self, path):
+    def get_proxy_granting_ticket(self):
+                
         with open(path, 'r') as f:
             ticket = f.read()
         f.close()
