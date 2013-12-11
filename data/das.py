@@ -50,7 +50,7 @@ class Das:
         p = {"service":self.SERVICE, "ticket":st, "pgtUrl":self.PROXY}
         return self.curl(self.VALIDATE, p)
     
-    def get_proxy_granting_ticket(self, path)
+    def get_proxy_granting_ticket(self, path):
         p={}
         return self.curl("http://staging.zakipoint.com/public/data/proxy")
         
