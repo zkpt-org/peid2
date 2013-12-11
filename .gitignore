@@ -3,3 +3,5 @@ venv
 *.pyc
 .DS_Store
 config.py
+proxy.ticket
+tmp/

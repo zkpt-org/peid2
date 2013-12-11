@@ -75,10 +75,11 @@ STATIC_ROOT = os.path.join(SUPER_DIR, "public")
 # URL prefix for static files.
 # Example: "http://example.com/static/", "http://static.example.com/"
 STATIC_URL = '/public/'
-
+TEMP_URL = '/tmp/'
 # Additional locations of static files
 STATICFILES_DIRS = (
     os.path.join(SETTINGS_ROOT, 'public'),
+    os.path.join(SETTINGS_ROOT, 'tmp'),
 )
 
 # List of finder classes that know how to find static files in
