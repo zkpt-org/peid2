@@ -30,7 +30,7 @@ def proxy(request):
     #path = default_storage.save('/public/tmp/proxy.ticket', ContentFile(str(request)))
     #dump = default_storage.open(path).read()
     part = 'public/tmp/proxy.ticket'
-    full = os.path.join(os.path.dirname(__file__), '../tind/'+part)
+    full = os.path.join(os.path.dirname(__file__), 'tind/'+part)
     
     with open(full, 'w+') as f:
         ticket = File(f)
