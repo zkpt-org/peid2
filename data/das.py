@@ -20,7 +20,7 @@ class Das:
         st   = self.get_service_ticket(tgt)
         path = self.validate_service(st)
         
-        pgt = get_proxy_granting_ticket(path)
+        pgt = self.get_proxy_granting_ticket(path)
         #xml = BeautifulStoneSoup(vs)
         #iou = xml.find('cas:proxygrantingticket').string
         #pt  = self.get_proxy_ticket(iou)
