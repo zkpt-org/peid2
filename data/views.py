@@ -5,13 +5,15 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.conf import settings
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
 from data.das import Das
 
 # @login_required
 def index(request):
     #das = Das()
     #proxy_ticket = das.auth(settings.DAS_USER, settings.DAS_PASS)
-    return render_to_response('data/index.html',{"status":"hello"})
+    return render_to_response('data/index.html',{"status":"hello world :-)"})
 
 def authenticate(request):
     das = Das()
@@ -23,4 +25,5 @@ def api(request):
     
     
 def proxy(request):
-    return render_to_response('data/index.html',{"status":request})
+    path = default_storage.save('/public/data/proxy', ContentFile(request))
+    return render_to_response('data/index.html',{"status":path})

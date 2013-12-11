@@ -17,14 +17,15 @@ class Das:
         html = BeautifulSoup(response)
         tgt  = html.body.form["action"]
         
-        st  = self.get_service_ticket(tgt)
-        pgt = self.validate_service(st)
+        st   = self.get_service_ticket(tgt)
+        path = self.validate_service(st)
         
-        xml = BeautifulStoneSoup(pgt)
-        iou = xml.find('cas:proxygrantingticket').string
-        pt  = self.get_proxy_ticket(iou)
+        pgt = get_proxy_granting_ticket(path)
+        #xml = BeautifulStoneSoup(vs)
+        #iou = xml.find('cas:proxygrantingticket').string
+        #pt  = self.get_proxy_ticket(iou)
         
-        return xml
+        return pgt
     
     def curl(self, url, p):
         response = cStringIO.StringIO()
@@ -48,6 +49,10 @@ class Das:
     def validate_service(self, st):
         p = {"service":self.SERVICE, "ticket":st, "pgtUrl":self.PROXY}
         return self.curl(self.VALIDATE, p)
+    
+    def get_proxy_granting_ticket(self, path)
+        p={}
+        return self.curl("http://staging.zakipoint.com/public/data/proxy")
         
     def get_proxy_ticket(self, pgt):
         p = {'targetService':self.API_URL, 'pgt':pgt}
