@@ -21,13 +21,15 @@ class Das:
         st  = self.get_service_ticket(tgt)
         vld = self.validate_service(st)
         xml = BeautifulStoneSoup(vld)
-        #iou = xml.find('cas:proxygrantingticket').string
-        
-        #pgt = self.get_proxy_granting_ticket()
+        if xml.find('cas:proxygrantingticket'):
+            iou = xml.find('cas:proxygrantingticket').string
+        else:
+            iou = 'test001'
+        pgt = self.get_proxy_granting_ticket(iou)
 
         #pt  = self.get_proxy_ticket(pgt)
         
-        return vld
+        return pgt
         
     def curl(self, url, p):
         response = cStringIO.StringIO()
@@ -53,9 +55,7 @@ class Das:
         return self.curl(self.VALIDATE, p)
     
     def get_proxy_granting_ticket(self, iou):
-        pt = ProxyTicket()
-        ticket = pt.objects.filter(ticket_iou=iou).ticket_id        
-
+        ticket = ProxyTicket.objects.filter(ticket_iou=iou)[0].ticket_id
         return ticket
     
     def get_proxy_ticket(self, pgt):

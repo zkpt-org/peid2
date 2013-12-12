@@ -5,9 +5,6 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import redirect
 from django.conf import settings
-from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
-from django.core.files import File
 from data.das import Das
 from data.models import ProxyTicket
 import os, json
@@ -27,10 +24,13 @@ def proxy(request):
     return render_to_response('data/index.html',{"status":"OK"})
 
 def ticket(request):
+    #query = {'ticket_iou':request.GET['iou']}
     #data = [pt.json() for pt in ProxyTicket.objects.filter(**query).order_by('id')]
-    data = [pt.json() for pt in ProxyTicket.objects.order_by('id')]
+    #return HttpResponse(json.dumps(data), content_type='application/json')
     
-    return HttpResponse(json.dumps(data), content_type='application/json')
-    
+    query = {'ticket_iou':request.GET['iou']}
+    proxy_ticket = ProxyTicket.objects.filter(**query)[0].ticket_id
+    return render_to_response('data/index.html',{"status":proxy_ticket})
+        
 def api(request):
     pass
