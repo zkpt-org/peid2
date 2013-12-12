@@ -14,8 +14,6 @@ import os, json
 
 # @login_required
 def index(request):
-    #das = Das()
-    #proxy_ticket = das.auth(settings.DAS_USER, settings.DAS_PASS)
     return render_to_response('data/index.html',{"status":"hello world :-)"})
 
 def authenticate(request):
@@ -41,7 +39,7 @@ def proxy(request):
     pt = ProxyTicket(ticket_iou=request.GET['pgtIou'], ticket_id=request.GET['pgtId'])
     pt.save()
     
-    return render_to_response('data/index.html',{"status":path})
+    return render_to_response('data/index.html',{"status":"OK"})
 
 def ticket(request):
     #data = [pt.json() for pt in ProxyTicket.objects.filter(**query).order_by('id')]

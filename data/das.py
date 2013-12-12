@@ -27,7 +27,7 @@ class Das:
 
         #pt  = self.get_proxy_ticket(pgt)
         
-        return vld
+        return st
         
     def curl(self, url, p):
         response = cStringIO.StringIO()
