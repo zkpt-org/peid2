@@ -1,5 +1,6 @@
 import urllib, pycurl, cStringIO, os
 from BeautifulSoup import BeautifulSoup, BeautifulStoneSoup
+from data.models import ProxyTicket
 
 class Das:
     def __init__(self):        
@@ -24,9 +25,9 @@ class Das:
         
         pgt = self.get_proxy_granting_ticket()
 
-        #pt  = self.get_proxy_ticket(iou)
+        pt  = self.get_proxy_ticket(pgt)
         
-        return pgt
+        return pt
     
     def curl(self, url, p):
         response = cStringIO.StringIO()
@@ -51,15 +52,14 @@ class Das:
         p = {"service":self.SERVICE, "ticket":st, "pgtUrl":self.PROXY}
         return self.curl(self.VALIDATE, p)
     
-    def get_proxy_granting_ticket(self):
-                
-        with open(path, 'r') as f:
-            ticket = f.read()
-        f.close()
-        return str(ticket)
-        
-
-        
+    def get_proxy_granting_ticket(self, iou):
+        pt = ProxyTicket()
+        ticket = pt.objects.filter(ticket_iou=iou).ticket_id        
+        #with open(path, 'r') as f:
+        #    ticket = f.read()
+        #f.close()
+        return ticket
+    
     def get_proxy_ticket(self, pgt):
         p = {'targetService':self.API_URL, 'pgt':pgt}
         return self.curl(self.PT_URL, p)
