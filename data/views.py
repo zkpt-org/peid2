@@ -10,7 +10,7 @@ from django.core.files.base import ContentFile
 from django.core.files import File
 from data.das import Das
 from data.models import ProxyTicket
-import os
+import os, json
 
 # @login_required
 def index(request):
@@ -44,4 +44,7 @@ def proxy(request):
     return render_to_response('data/index.html',{"status":path})
 
 def ticket(request):
-    pass
+    #data = [pt.json() for pt in ProxyTicket.objects.filter(**query).order_by('id')]
+    data = [pt.json() for pt in ProxyTicket.objects.order_by('id')]
+    
+    return HttpResponse(json.dumps(data), content_type='application/json')

@@ -21,14 +21,14 @@ class Das:
         st  = self.get_service_ticket(tgt)
         vld = self.validate_service(st)
         xml = BeautifulStoneSoup(vld)
-        iou = xml.find('cas:proxygrantingticket').string
+        #iou = xml.find('cas:proxygrantingticket').string
         
-        pgt = self.get_proxy_granting_ticket()
+        #pgt = self.get_proxy_granting_ticket()
 
-        pt  = self.get_proxy_ticket(pgt)
+        #pt  = self.get_proxy_ticket(pgt)
         
-        return pt
-    
+        return vld
+        
     def curl(self, url, p):
         response = cStringIO.StringIO()
         c = pycurl.Curl()
