@@ -9,6 +9,7 @@ from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
 from django.core.files import File
 from data.das import Das
+from data.models import ProxyTicket
 import os
 
 # @login_required
@@ -31,11 +32,16 @@ def proxy(request):
     #dump = default_storage.open(path).read()
     #part = 'public/tmp/proxy.ticket'
     #full = os.path.join(os.path.dirname(__file__), part)
-    path = os.path.dirname(__file__) + '/proxy.ticket'
-    with open(path, 'w+') as f:
-        ticket = File(f)
-        ticket.write(str(request.GET))
-    ticket.closed
-    f.closed
+    #path = os.path.dirname(__file__) + '/proxy.ticket'
+    #with open(path, 'w+') as f:
+    #    ticket = File(f)
+    #    ticket.write(str(request.GET))
+    #ticket.closed
+    #f.closed
+    pt = ProxyTicket(ticket_iou=request.GET['pgtIou'], ticket_id=request.GET['pgtId'])
+    pt.save()
     
     return render_to_response('data/index.html',{"status":path})
+
+def ticket(request):
+    pass
