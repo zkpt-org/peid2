@@ -21,24 +21,9 @@ def authenticate(request):
     proxy_ticket = das.auth(settings.DAS_USER, settings.DAS_PASS)
     return render_to_response('data/index.html',{"status":proxy_ticket})
     
-def api(request):
-    pass
-    
-    
 def proxy(request):
-    #path = default_storage.save('/public/tmp/proxy.ticket', ContentFile(str(request)))
-    #dump = default_storage.open(path).read()
-    #part = 'public/tmp/proxy.ticket'
-    #full = os.path.join(os.path.dirname(__file__), part)
-    #path = os.path.dirname(__file__) + '/proxy.ticket'
-    #with open(path, 'w+') as f:
-    #    ticket = File(f)
-    #    ticket.write(str(request.GET))
-    #ticket.closed
-    #f.closed
-    pt = ProxyTicket(ticket_iou=request.GET['pgtIou'], ticket_id=request.GET['pgtId'])
-    pt.save()
-    
+    ticket = ProxyTicket(ticket_iou=request.GET['pgtIou'], ticket_id=request.GET['pgtId'])
+    ticket.save()
     return render_to_response('data/index.html',{"status":"OK"})
 
 def ticket(request):
@@ -46,3 +31,6 @@ def ticket(request):
     data = [pt.json() for pt in ProxyTicket.objects.order_by('id')]
     
     return HttpResponse(json.dumps(data), content_type='application/json')
+    
+def api(request):
+    pass

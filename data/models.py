@@ -12,5 +12,4 @@ class ProxyTicket(models.Model):
             ('id', self.id),
             ('ticket_iou', self.ticket_iou),
             ('ticket_id', self.ticket_id),
-            ('created', self.created),
         ))

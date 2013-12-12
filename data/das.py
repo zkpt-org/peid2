@@ -27,7 +27,7 @@ class Das:
 
         #pt  = self.get_proxy_ticket(pgt)
         
-        return st
+        return vld
         
     def curl(self, url, p):
         response = cStringIO.StringIO()
@@ -55,9 +55,7 @@ class Das:
     def get_proxy_granting_ticket(self, iou):
         pt = ProxyTicket()
         ticket = pt.objects.filter(ticket_iou=iou).ticket_id        
-        #with open(path, 'r') as f:
-        #    ticket = f.read()
-        #f.close()
+
         return ticket
     
     def get_proxy_ticket(self, pgt):
