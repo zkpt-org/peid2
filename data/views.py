@@ -19,9 +19,12 @@ def authenticate(request):
     return render_to_response('data/index.html',{"status":proxy_ticket})
     
 def proxy(request):
-    ticket = ProxyTicket(ticket_iou=request.GET['pgtIou'], ticket_id=request.GET['pgtId'])
-    ticket.save()
-    return render_to_response('data/index.html',{"status":"OK"})
+    if 'pgtIou' in request.GET and 'pgtId' in request.GET:
+        ticket = ProxyTicket(ticket_iou=request.GET['pgtIou'], ticket_id=request.GET['pgtId'])
+        ticket.save()
+        return render_to_response('data/index.html',{"status":"OK"})
+    else:
+        return render_to_response('data/index.html',{"status":"NOT OK"})
 
 def ticket(request):
     #query = {'ticket_iou':request.GET['iou']}

@@ -21,16 +21,13 @@ class Das:
         st  = self.get_service_ticket(tgt)
         vld = self.validate_service(st)
         xml = BeautifulStoneSoup(vld)
-        if xml.find('cas:proxygrantingticket'):
-            iou = xml.find('cas:proxygrantingticket').string
-        else:
-            iou = None
+        iou = xml.find('cas:proxygrantingticket').string if xml.find('cas:proxygrantingticket') else None
         pgt = self.get_proxy_granting_ticket(iou)
 
         #pt  = self.get_proxy_ticket(pgt)
         
-        return pgt
-        
+        return xml
+
     def curl(self, url, p):
         response = cStringIO.StringIO()
         c = pycurl.Curl()
@@ -41,30 +38,30 @@ class Das:
         c.perform()
         c.close()
         return response.getvalue()
-    
+
     def get_ticket_granting_ticket(self, user, password):
         p = {'username':user, 'password':password, 'hostUrl':self.HOST}
         return self.curl(self.TICKETS, p)
-                    
+
     def get_service_ticket(self, tgt):
         p = {"service":self.SERVICE}
         return self.curl(tgt, p)
-        
+
     def validate_service(self, st):
         p = {"service":self.SERVICE, "ticket":st, "pgtUrl":self.PROXY}
         return self.curl(self.VALIDATE, p)
-    
+
     def get_proxy_granting_ticket(self, iou):
         if iou:
             ticket = ProxyTicket.objects.filter(ticket_iou=iou)[0].ticket_id
         else:
             ticket = ProxyTicket.objects.latest('created').ticket_id
         return ticket
-    
+
     def get_proxy_ticket(self, pgt):
         p = {'targetService':self.API_URL, 'pgt':pgt}
         return self.curl(self.PT_URL, p)
-        
+
     def api(self):
         pass
         
