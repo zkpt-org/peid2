@@ -7,7 +7,8 @@ class Das:
         self.HOST     = 'tind-lite.zakipoint.com'
         self.TICKETS  = 'https://login.zakipoint.com/cas/v1/tickets'
         self.SERVICE  = 'https://tind-lite.zakipoint.com'
-        self.PROXY    = 'https://tind-staging.herokuapp.com/data/proxy'
+        #self.PROXY    = 'https://tind-staging.herokuapp.com/data/proxy'
+        self.PROXY    = 'http://staging.zakipoint.com/data/proxy'
         self.VALIDATE = 'https://login.deerwalk.com/cas/serviceValidate'
         self.API_URL  = 'https://das.deerwalk.com:8443'
         self.PT_URL   = 'https://login.deerwalk.com/cas/proxy'
@@ -26,7 +27,7 @@ class Das:
 
         #pt  = self.get_proxy_ticket(pgt)
         
-        return xml
+        return pgt
 
     def curl(self, url, p):
         response = cStringIO.StringIO()
