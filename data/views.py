@@ -24,7 +24,7 @@ def proxy(request):
         ticket.save()
         return render_to_response('data/index.html',{"status":"OK"})
     else:
-        return render_to_response('data/index.html',{"status":"NOT OK"})
+        return render_to_response('data/index.html',{"status":"MISSING DATA"})
 
 def ticket(request):
     #query = {'ticket_iou':request.GET['iou']}
