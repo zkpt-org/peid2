@@ -1,0 +1,15 @@
+<script>
+var date_today = Date.today().clearTime().toString("M/d/yyyy");
+var date_yr_ago = Date.today().clearTime().addMonths(-12).toString("M/d/yyyy");
+jQuery( "[name='start']" ).val(date_yr_ago);
+jQuery( "[name='end']" ).val(date_today);
+</script>
+<div class=time-window class="k-content">
+    <form>
+        <a href="javascript:;" class="preset-window">3m</a>
+        <a href="javascript:;" class="preset-window">6m</a>
+        <a href="javascript:;" class="preset-window">1y</a>
+        <input type="text" name="start" value="" class="datepicker" style="width:110px;" /> to
+        <input type="text" name="end"   value="" class="datepicker" style="width:110px;" />
+    </form>
+</div>

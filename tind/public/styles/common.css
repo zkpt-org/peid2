@@ -155,6 +155,10 @@ nav li.selected{
     background: none;
 }
 
+.hide h3{
+    display: inline-block;
+}
+
 .box{
     width:760px;
 /* 	height:400px; */
@@ -507,4 +511,30 @@ text{
 .button-back, .button-fwd{
     font-size:xx-large;
     position:absolute;
+}
+
+.time-window{
+    display: inline-block;
+    float:right;
+}
+.k-widget .k-datepicker .k-header .datepicker{
+     height:20px;
+}
+.datepicker{
+    margin-left:5px;
+    margin-right:5px;
+    font-size: x-small;
+}
+.time-window input[type=text]{
+    text-indent: 10px;
+}
+.time-window .k-picker-wrap .k-icon{
+    margin-top:-4px;
+}
+
+.time-window .preset-window{
+    margin: 0px 10px 0px 10px;
+}
+.time-window .preset-window:hover{
+    text-decoration: underline;
 }

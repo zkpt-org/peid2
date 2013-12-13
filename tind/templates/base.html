@@ -11,18 +11,28 @@
 	<script type="text/javascript" src="{{STATIC_URL}}js/d3.v3.min.js"></script>
 	<script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.9.1.min.js"></script>
 	<script type="text/javascript" src="{{STATIC_URL}}styles/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="{{STATIC_URL}}styles/kendo/js/kendo.web.min.js" ></script>
+    <script type="text/javascript" src="{{STATIC_URL}}styles/kendo/js/kendo.datepicker.min.js" ></script>
+    <!-- <script type="text/javascript" src="{{STATIC_URL}}styles/kendo/js/kendo.userevents.min.js" ></script> -->
 	<script type="text/javascript" src="{{STATIC_URL}}js/shared.js"></script>
 	<script type="text/javascript" src="{{STATIC_URL}}js/date.js"></script>
 	<script type="text/javascript" src="{{STATIC_URL}}js/{{page}}.js"></script>
+	<script>
+        $(document).ready(function(){ $(".datepicker").kendoDatePicker(); });
+    </script>
 	{% block javascript %}{% endblock %}
 
 	<link type="text/css" rel="stylesheet" href="{{STATIC_URL}}styles/bootstrap/css/bootstrap.min.css"/>
 	<link type="text/css" rel="stylesheet" href="{{STATIC_URL}}styles/Font-Awesome/css/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="{{STATIC_URL}}styles/kendo/styles/kendo.default.min.css" >
+    <link type="text/css" rel="stylesheet" href="{{STATIC_URL}}styles/kendo/styles/kendo.common.min.css" >
 	<link type="text/css" rel="stylesheet" href="{{STATIC_URL}}styles/reset.css"/>
 	<link type="text/css" rel="stylesheet" href="{{STATIC_URL}}styles/common.css"/>
 	<link type="text/css" rel="stylesheet" href="{{STATIC_URL}}styles/layout.css"/>
 	<link type="text/css" rel="stylesheet" href="{{STATIC_URL}}styles/colors.css"/>
+	
 	<link type="text/css" rel="stylesheet" href="{{STATIC_URL}}styles/{{page}}.css"/>
+	
 	
 	{% block css %}{% endblock %}
 </head>
