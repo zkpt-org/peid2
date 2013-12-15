@@ -31,7 +31,7 @@ class Das:
         response = cStringIO.StringIO()
         c = pycurl.Curl()
         c.setopt(c.URL, str(url))
-        #c.setopt(c.SSL_VERIFYPEER , 0)
+        c.setopt(c.SSL_VERIFYPEER , 0)
         c.setopt(c.POSTFIELDS, urllib.urlencode(p))
         c.setopt(c.WRITEFUNCTION, response.write)
         c.perform()
