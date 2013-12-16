@@ -41,6 +41,7 @@ def ticket(request):
 @login_required
 def api(request):
     das = Das()
-    params = [request.GET[p] for p in request.GET if p is not 'type']
-    data = das.api(request.session['pgt'], request.GET['type'], params)
+    #params = [request.GET[p] for p in request.GET if p is not 'serv']
+    params = request.GET
+    data = das.api(request.session['pgt'], request.GET['service'], params)
     return render_to_response('data/index.html',{"status": data)

@@ -63,21 +63,22 @@ class Das:
         p = {'targetService':self.API_URL, 'pgt':pgt}
         return self.curl(self.PT_URL, p)
 
-    def api(self, pgt, request, params):
-        if request is "search":
+    def api(self, pgt, service, params):
+        if service is "search":
             url = self.API_URL + "/memberSearch"
-        elif request is "report":
+        elif service is "report":
             url = self.API_URL + "/esReport"
-        elif request is "create":
+        elif service is "create":
             url = self.API_URL + "/cohort/create"
-        elif request is "update":
+        elif service is "update":
             url = self.API_URL + "/cohort/update"
-        elif request is "delete":
+        elif service is "delete":
             url = self.API_URL + "/cohort/delete"
-        elif request is "config":
+        elif service is "config":
             url = self.API_URL + "/config"
         
         params['ticket'] = self.get_proxy_ticket(pgt)
+        del params['service']
         
         return self.curl(url, params, peer=True)
         
