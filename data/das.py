@@ -40,11 +40,11 @@ class Das:
 
     def get_ticket_granting_ticket(self, user, password):
         p = {'username':user, 'password':password, 'hostUrl':self.HOST}
-        return self.curl(self.TICKETS, p, peer=True)
+        return self.curl(self.TICKETS, p)
 
     def get_service_ticket(self, tgt):
         p = {"service":self.SERVICE}
-        return self.curl(tgt, p, peer=True)
+        return self.curl(tgt, p)
 
     def validate_service(self, st):
         p = {"service":self.SERVICE, "ticket":st, "pgtUrl":self.PROXY}
