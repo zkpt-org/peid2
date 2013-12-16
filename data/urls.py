@@ -6,4 +6,5 @@ urlpatterns = patterns('',
     url(r'^auth/', views.authenticate),
     url(r'^proxy/', views.proxy),
     url(r'^ticket/', views.ticket),
+    url(r'^api/', views.api),
 )
