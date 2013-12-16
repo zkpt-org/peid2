@@ -78,6 +78,8 @@ class Das:
             url = self.API_URL + "/cohort/delete"
         elif service is "config":
             url = self.API_URL + "/config"
+        else:
+            url = self.API_URL + "/memberSearch"
         
         params['ticket'] = self.get_proxy_ticket(pgt)
         del params['service']
