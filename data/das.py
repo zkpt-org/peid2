@@ -40,15 +40,15 @@ class Das:
 
     def get_ticket_granting_ticket(self, user, password):
         p = {'username':user, 'password':password, 'hostUrl':self.HOST}
-        return self.curl(self.TICKETS, p)
+        return self.curl(self.TICKETS, p, peer=True)
 
     def get_service_ticket(self, tgt):
         p = {"service":self.SERVICE}
-        return self.curl(tgt, p)
+        return self.curl(tgt, p, peer=True)
 
     def validate_service(self, st):
         p = {"service":self.SERVICE, "ticket":st, "pgtUrl":self.PROXY}
-        return self.curl(self.VALIDATE, p, peer=True)
+        return self.curl(self.VALIDATE, p)
 
     def get_proxy_granting_ticket(self, iou):
         if iou:
@@ -59,7 +59,7 @@ class Das:
 
     def get_proxy_ticket(self, pgt):
         p = {'targetService':self.API_URL, 'pgt':pgt}
-        return self.curl(self.PT_URL, p, peer=True)
+        return self.curl(self.PT_URL, p)
 
     def api(self):
         pass
