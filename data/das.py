@@ -65,7 +65,6 @@ class Das:
 
     def api(self, pgt, params):
         service = params['service']
-        del params['service']
         
         if service is "search":
             url = self.API_URL + "/memberSearch"
@@ -81,6 +80,7 @@ class Das:
             url = self.API_URL + "/config"
         
         params['ticket'] = self.get_proxy_ticket(pgt)
+        del params['service']
         
         return self.curl(url, params, peer=True)
         
