@@ -31,8 +31,7 @@ def ticket(request):
     #data = [pt.json() for pt in ProxyTicket.objects.filter(**query).order_by('id')]
     #return HttpResponse(json.dumps(data), content_type='application/json')
     
-    query = {'ticket_iou':request.GET['iou']}
-    proxy_ticket = ProxyTicket.objects.filter(**query)[0].ticket_id
+    proxy_ticket = ProxyTicket.objects.filter(ticket_iou=request.GET['iou'])[0].ticket_id
     return render_to_response('data/index.html',{"status":proxy_ticket})
         
 def api(request):
