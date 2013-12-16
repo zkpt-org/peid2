@@ -27,11 +27,11 @@ class Das:
         
         return vld
 
-    def curl(self, url, p):
+    def curl(self, url, p, peer=False):
         response = cStringIO.StringIO()
         c = pycurl.Curl()
         c.setopt(c.URL, str(url))
-        c.setopt(c.SSL_VERIFYPEER , 0)
+        if not peer: c.setopt(c.SSL_VERIFYPEER , 0)
         c.setopt(c.POSTFIELDS, urllib.urlencode(p))
         c.setopt(c.WRITEFUNCTION, response.write)
         c.perform()
@@ -48,7 +48,7 @@ class Das:
 
     def validate_service(self, st):
         p = {"service":self.SERVICE, "ticket":st, "pgtUrl":self.PROXY}
-        return self.curl(self.VALIDATE, p)
+        return self.curl(self.VALIDATE, p, peer=True)
 
     def get_proxy_granting_ticket(self, iou):
         if iou:
@@ -59,7 +59,7 @@ class Das:
 
     def get_proxy_ticket(self, pgt):
         p = {'targetService':self.API_URL, 'pgt':pgt}
-        return self.curl(self.PT_URL, p)
+        return self.curl(self.PT_URL, p, peer=True)
 
     def api(self):
         pass
