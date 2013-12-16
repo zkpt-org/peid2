@@ -143,6 +143,7 @@ INSTALLED_APPS = (
     'population',
     'dive',
     'data',
+    'south',
 )
 
 # A sample logging configuration. The only tangible logging
