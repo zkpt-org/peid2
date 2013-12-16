@@ -9,7 +9,7 @@ class Das:
         self.SERVICE  = 'https://tind-lite.zakipoint.com'
         self.PROXY    = 'https://tind-staging.herokuapp.com/data/proxy'
         self.VALIDATE = 'https://login.deerwalk.com/cas/serviceValidate'
-        self.API_URL  = 'https://das.deerwalk.com:8443/'
+        self.API_URL  = 'https://das.deerwalk.com:8443'
         self.PT_URL   = 'https://login.deerwalk.com/cas/proxy'
         self.TICKET   = 'https://tind-staging.herokuapp.com/data/ticket/'
 
@@ -82,7 +82,7 @@ class Das:
             url = self.API_URL + "/memberSearch"
         
         params['ticket'] = self.get_proxy_ticket(pgt)
-        #del params['service']
+        del params['service']
         
-        return self.curl(url, params)
+        return self.curl(url, params, peer=True)
         
