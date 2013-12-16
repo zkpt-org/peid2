@@ -1,8 +1,8 @@
 from django.db import models
 
 class ProxyTicket(models.Model):
-    ticket_iou = models.CharField(max_length=32)
-    ticket_id  = models.CharField(max_length=32)
+    ticket_iou = models.CharField(max_length=64)
+    ticket_id  = models.CharField(max_length=64)
     created    = models.DateTimeField(auto_now_add=True)
     
     def json(self):
