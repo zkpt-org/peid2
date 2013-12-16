@@ -11,6 +11,7 @@ class Das:
         self.VALIDATE = 'https://login.deerwalk.com/cas/serviceValidate'
         self.API_URL  = 'https://das.deerwalk.com:8443'
         self.PT_URL   = 'https://login.deerwalk.com/cas/proxy'
+        self.TICKET   = 'https://tind-staging.herokuapp.com/data/ticket'
 
     def auth(self, user, password):
         response = self.get_ticket_granting_ticket(user, password)
@@ -25,7 +26,7 @@ class Das:
         pgt = self.get_proxy_granting_ticket(iou)
         #pt  = self.get_proxy_ticket(pgt)
         
-        return vld
+        return pgt
 
     def curl(self, url, p, peer=False):
         response = cStringIO.StringIO()
@@ -51,10 +52,12 @@ class Das:
         return self.curl(self.VALIDATE, p)
 
     def get_proxy_granting_ticket(self, iou):
-        if iou:
-            ticket = ProxyTicket.objects.filter(ticket_iou=iou)[0].ticket_id
-        else:
-            ticket = ProxyTicket.objects.latest('created').ticket_id
+        p = {"iou":iou}
+        ticket = self.curl(self.TICKET, p)
+        #if iou:
+        #    ticket = ProxyTicket.objects.filter(ticket_iou=iou)[0].ticket_id
+        #else:
+        #    ticket = ProxyTicket.objects.latest('created').ticket_id
         return ticket
 
     def get_proxy_ticket(self, pgt):
