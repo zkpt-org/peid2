@@ -13,10 +13,12 @@ import os, json
 def index(request):
     return render_to_response('data/index.html',{"status":"hello world :-)"})
 
+@login_required
 def authenticate(request):
     das = Das()
-    proxy_ticket = das.auth(settings.DAS_USER, settings.DAS_PASS)
-    return render_to_response('data/index.html',{"status":proxy_ticket})
+    proxy_granting_ticket = das.auth(settings.DAS_USER, settings.DAS_PASS)
+    request.session['pgt'] = proxy_granting_ticket
+    return render_to_response('data/index.html',{"status":proxy_granting_ticket})
     
 def proxy(request):
     if 'pgtIou' in request.GET and 'pgtId' in request.GET:
@@ -26,6 +28,7 @@ def proxy(request):
     else:
         return render_to_response('data/index.html',{"status":"MISSING DATA"})
 
+@login_required
 def ticket(request):
     #query = {'ticket_iou':request.GET['iou']}
     #data = [pt.json() for pt in ProxyTicket.objects.filter(**query).order_by('id')]
@@ -34,6 +37,10 @@ def ticket(request):
     tickets = ProxyTicket.objects.filter(ticket_iou=request.GET['iou'])
     proxy_ticket = tickets[0].ticket_id if tickets else "Ticket not found."
     return render_to_response('data/index.html',{"status":proxy_ticket})
-        
+
+@login_required
 def api(request):
-    pass
+    das = Das()
+    params = [request.GET[p] for p in request.GET if p is not 'type']
+    data = das.api(request.session['pgt'], request.GET['type'], params)
+    return render_to_response('data/index.html',{"status": data)

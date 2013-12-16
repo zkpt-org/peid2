@@ -24,9 +24,8 @@ class Das:
         xml = BeautifulStoneSoup(vld)
         iou = xml.find('cas:proxygrantingticket').string if xml.find('cas:proxygrantingticket') else None
         pgt = self.get_proxy_granting_ticket(iou)
-        pt  = self.get_proxy_ticket(pgt)
         
-        return pt
+        return pgt
 
     def curl(self, url, p, peer=False):
         response = cStringIO.StringIO()
@@ -64,6 +63,21 @@ class Das:
         p = {'targetService':self.API_URL, 'pgt':pgt}
         return self.curl(self.PT_URL, p)
 
-    def api(self):
-        pass
+    def api(self, pgt, request, params):
+        if request is "search":
+            url = self.API_URL + "/memberSearch"
+        elif request is "report":
+            url = self.API_URL + "/esReport"
+        elif request is "create":
+            url = self.API_URL + "/cohort/create"
+        elif request is "update":
+            url = self.API_URL + "/cohort/update"
+        elif request is "delete":
+            url = self.API_URL + "/cohort/delete"
+        elif request is "config":
+            url = self.API_URL + "/config"
+        
+        params['ticket'] = self.get_proxy_ticket(pgt)
+        
+        return self.curl(url, params, peer=True)
         
