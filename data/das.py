@@ -11,7 +11,7 @@ class Das:
         self.VALIDATE = 'https://login.deerwalk.com/cas/serviceValidate'
         self.API_URL  = 'https://das.deerwalk.com:8443'
         self.PT_URL   = 'https://login.deerwalk.com/cas/proxy'
-        self.TICKET   = 'https://tind-staging.herokuapp.com/data/ticket'
+        self.TICKET   = 'https://tind-staging.herokuapp.com/data/ticket/'
 
     def auth(self, user, password):
         response = self.get_ticket_granting_ticket(user, password)
