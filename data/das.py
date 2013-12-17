@@ -85,5 +85,5 @@ class Das:
         del params['service']
         
         #return self.curl(url, params, peer=True)
-        return params
+        return self.get_proxy_ticket(pgt)
         
