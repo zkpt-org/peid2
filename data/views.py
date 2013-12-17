@@ -39,7 +39,7 @@ def ticket(request):
     tickets = ProxyTicket.objects.latest('created')
     proxy_ticket = tickets[0].ticket_id if tickets else "Ticket not found."
     return render_to_response('data/index.html',{"status":proxy_ticket})
-ticket = csrf_exempt(ticket)
+#ticket = csrf_exempt(ticket)
 
 @login_required
 def api(request):

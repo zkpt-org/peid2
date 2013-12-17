@@ -85,5 +85,5 @@ class Das:
         del params['service']
         
         #return self.curl(url, params, peer=True)
-        return url
+        return params
         
