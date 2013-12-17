@@ -3,6 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
+from django.contrib.csrf.middleware import csrf_exempt
 from django.shortcuts import redirect
 from django.conf import settings
 from data.das import Das
@@ -28,7 +29,7 @@ def proxy(request):
     else:
         return render_to_response('data/index.html',{"status":"MISSING DATA"})
 
-@login_required
+#@login_required
 def ticket(request):
     #query = {'ticket_iou':request.GET['iou']}
     #data = [pt.json() for pt in ProxyTicket.objects.filter(**query).order_by('id')]
@@ -37,6 +38,7 @@ def ticket(request):
     tickets = ProxyTicket.objects.filter(ticket_iou=request.GET['iou'])
     proxy_ticket = tickets[0].ticket_id if tickets else "Ticket not found."
     return render_to_response('data/index.html',{"status":proxy_ticket})
+ticket = csrf_exempt(ticket)
 
 @login_required
 def api(request):
