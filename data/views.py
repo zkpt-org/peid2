@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
-from django.contrib.csrf.middleware import csrf_exempt
+#from django.contrib.csrf.middleware import csrf_exempt
 from django.shortcuts import redirect
 from django.conf import settings
 from data.das import Das
