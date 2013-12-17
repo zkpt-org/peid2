@@ -82,8 +82,9 @@ class Das:
             url = self.API_URL + "/memberSearch"
         
         params['ticket'] = self.get_proxy_ticket(pgt)
+        params['clientName'] = 'zakipoint'
         del params['service']
         
-        #return self.curl(url, params, peer=True)
-        return self.get_proxy_ticket(pgt)
+        return self.curl(url, params, peer=True)
+        #return self.get_proxy_ticket(pgt)
         

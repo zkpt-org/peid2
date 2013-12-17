@@ -12,7 +12,7 @@ import os, json
 
 # @login_required
 def index(request):
-    return render_to_response('data/index.html',{"status":"hello world :-)"})
+    return render_to_response('data/index.html',{"status":"hav sum moar data."})
 
 @login_required
 def authenticate(request):
