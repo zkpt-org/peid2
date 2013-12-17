@@ -84,5 +84,6 @@ class Das:
         params['ticket'] = self.get_proxy_ticket(pgt)
         del params['service']
         
-        return self.curl(url, params, peer=True)
+        #return self.curl(url, params, peer=True)
+        return url
         

@@ -35,7 +35,8 @@ def ticket(request):
     #data = [pt.json() for pt in ProxyTicket.objects.filter(**query).order_by('id')]
     #return HttpResponse(json.dumps(data), content_type='application/json')
     
-    tickets = ProxyTicket.objects.filter(ticket_iou=request.GET['iou'])
+    #tickets = ProxyTicket.objects.filter(ticket_iou=request.GET['iou'])
+    tickets = ProxyTicket.objects.latest('created')
     proxy_ticket = tickets[0].ticket_id if tickets else "Ticket not found."
     return render_to_response('data/index.html',{"status":proxy_ticket})
 ticket = csrf_exempt(ticket)
