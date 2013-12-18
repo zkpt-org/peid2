@@ -25,7 +25,7 @@ class Das:
         iou = xml.find('cas:proxygrantingticket').string if xml.find('cas:proxygrantingticket') else None
         pgt = self.get_proxy_granting_ticket(iou)
         
-        return vld
+        return str(vld)
 
     def curl(self, url, p, peer=False):
         response = cStringIO.StringIO()
