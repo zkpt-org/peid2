@@ -36,7 +36,7 @@ function onready() {
 
 function fold(e){
     $(e+' .hide').toggle();
-    $(e+' .show-hide-toggle i').toggleClass('icon-caret-right');
+    $(e+' .show-hide-toggle i').toggleClass('fa-caret-right');
 }
 
 function dropdown(elem, num){

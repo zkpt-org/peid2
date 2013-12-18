@@ -4,7 +4,7 @@
     <li {% if page == "population"   %} class="selected " {% else %} class=" " {% endif %}><a href="/population">Population</a></li>
     <li {% if page == "compliance"   %} class="selected " {% else %} class=" " {% endif %}><a href="/compliance">Compliance</a></li>
 <!--     <li {% if page == "outlook"      %} class="selected " {% else %} class=" " {% endif %}><a href="/outlook">Engagement</a></li> -->
-    <li {% if page == "providers"    %} class="selected " {% else %} class=" " {% endif %}><a href="https://tind-lite.zakipoint.com/" target="_blank">Providers</a></li>
+    <li {% if page == "providers"    %} class="selected " {% else %} class=" " {% endif %}><a href="/providers">Providers</a></li>
     <li {% if page == "returns"      %} class="selected " {% else %} class=" " {% endif %}><a href="/projections">Predicted Costs</a></li>
     <li {% if page == "outcomes"     %} class="selected " {% else %} class=" " {% endif %}><a href="/outcomes">Outcomes</a></li>    
     <li class="dropdown">
@@ -14,12 +14,13 @@
         <b class="caret"></b>
       </a>
     <ul class="dropdown-menu dropdown-menu-arrow">
-      <li><a><i class=icon-dashboard></i> Account</a></li>
-      <li><a><i class=icon-wrench></i> Settings</a></li>
-      <li><a><i class=icon-question-sign></i> Help</a></li>
-      <li><a href="../public/data/report.pdf"><i class=icon-cloud-download></i> Download PDF</a></li>
+      <li><a href="https://tind-lite.zakipoint.com/" target="_blank"><i class="fa fa-flask"></i> Tind Lite</a></li>
+      <!-- <li><a><i class="fa fa-dashboard"></i> Account</a></li> -->
+      <li><a><i class="fa fa-question-circle"></i> Help</a></li>
+      <li><a href="../public/data/report.pdf"><i class="fa fa-cloud-download"></i> Download PDF</a></li>
+      <li><a><i class="fa fa-wrench"></i> Settings</a></li>
       <li class="divider"></li>
-      <li><a href="/logout"> <i class=icon-off></i> Logout</a></li>
+      <li><a href="/logout"> <i class="fa fa-power-off"></i> Logout</a></li>
     </ul>
     </li>
 </ul>

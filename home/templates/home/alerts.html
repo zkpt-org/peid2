@@ -1,8 +1,8 @@
 <div id=alerts-tab>
     <a href="javascript:;" onclick="ToggleAlertsBox();">
-       <i class="icon-bell" 
-          onmouseover="$(this).toggleClass('icon-bell');"
-          onmouseout="$(this).toggleClass('icon-bell-alt');"></i>
+       <i class="fa fa-bell-o" 
+          onmouseover="$(this).toggleClass('fa-bell-o fa-bell');"
+          onmouseout="$(this).toggleClass('fa-bell-o fa-bell');"></i>
     </a>
     <div id=alerts-label>alerts</div>
 </div>
@@ -12,7 +12,7 @@
     <script>show_alerts = false;</script>
     <div class="alert alert-info" id="no-alerts">
         <button type="button" class="close" onclick="ToggleAlertsBox();">&times;</button>
-        <i class="icon-bell"></i>
+        <i class="fa fa-bell-o"></i>
         <strong>There are currently no alerts.</strong>
     </div>
 {% elif alerts != "none" %}
@@ -24,20 +24,30 @@
     <!-- EXAMPLE RED AND GREEN ALERT -->
     <div class="alert alert-error">
         <button type="button" class="close" onclick="ToggleAlertsBox();">&times;</button>
-        <i class="icon-warning-sign"></i>
-        <strong>There are over 20 claims above $50,000 in the previous month</strong>
+        <i class="fa fa-warning"></i>
+        <strong>There are over 20 claims above $50,000 in the previous month.</strong>
     </div>
-
-    <!-- <div class="alert alert-success">
-        <i class="icon-ok"></i>
-        <strong>70% of users from Program B are now in the green zone.</strong>
-    </div>  -->       
+    <div class="alert alert-error">
+        <button type="button" class="close" onclick="ToggleAlertsBox();">&times;</button>
+        <i class="fa fa-warning"></i>
+        <strong>Male ages 40-55 in Boston office have a average risk score of above 2.4</strong>
+    </div>
+        <div class="alert alert-error">
+        <button type="button" class="close" onclick="ToggleAlertsBox();">&times;</button>
+        <i class="fa fa-warning"></i>
+        <strong>Over 60% of the prescription drugs from your provider A are branded drugs.</strong>
+    </div>
+    <div class="alert alert-success">
+        <button type="button" class="close" onclick="ToggleAlertsBox();">&times;</button>
+        <i class="fa fa-check"></i>
+        <strong>Compliance in your weight management program has reached 55%</strong>
+    </div>
 
     <!-- EXAMPLE YELLOW ALERT -->
     <!--
     <div class="alert alert-warning">
         <button type="button" class="close" onclick="ToggleAlertsBox();">&times;</button>
-        <i class="icon-bell"></i>
+        <i class="fa fa-bell"></i>
         <strong>60% of users in Program A are in the yellow zone.</strong>
     </div>
     -->
