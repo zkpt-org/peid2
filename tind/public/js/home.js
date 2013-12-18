@@ -127,7 +127,9 @@ function draw_costs(){
       
       state.selectAll(".cost-bar")    
           .append("text")
-          .text(function(d) { return "$" + String(d.y1 - d.y0); })
+          .text(function(d) { 
+            if (d.y1 - d.y0 > 10)
+                return "$" + String(d.y1 - d.y0); })
           .attr("x", x.rangeBand()/4 + x.rangeBand()/4 - 10)
           .attr("y", function(d) { return y(d.y0) - ((y(d.y0)-y(d.y1))/2) + 5; })
           ;
