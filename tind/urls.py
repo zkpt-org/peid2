@@ -24,7 +24,8 @@ urlpatterns = patterns('',
     url(r'^login/', login.views.login),
     url(r'^logout/', login.views.logout),
     url(r'^data/', include('data.urls')),
-    url(r'^dive/', include('dive.urls'))
+    url(r'^dive/', include('dive.urls')),
+    url(r'^providers/', include('providers.urls'))
     
 )
 urlpatterns += staticfiles_urlpatterns()

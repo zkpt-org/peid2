@@ -144,6 +144,7 @@ INSTALLED_APPS = (
     'dive',
     'data',
     'south',
+    'providers'
 )
 
 # A sample logging configuration. The only tangible logging

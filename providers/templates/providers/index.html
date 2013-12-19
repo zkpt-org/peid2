@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% block title %}Providers{% endblock %}
+
+{% block javascript %}{% endblock %}
+
+{% block css %}{% endblock %}
+
+{% block content %}
+	{% include 'filters.html' %}
+        <div id="graph-1">
+            <div class="show-hide-toggle">
+                <a href="javascript:;" onclick="fold('#graph-1');">
+                <i class="fa fa-caret-down"></i></a>
+                <hr/>
+            </div>
+            <div class="hide">
+                <h3>Comparison Chart on Providers</h3>
+                <div class="box">
+                <table id=providers-comparison>
+                <th></th>
+                <th>Muscuo-skeletal</th>
+                <th>Gastro-intestinal</th>
+                <th>Pregnancy</th>
+                <th>Cancer</th>
+                <th>Cardiac</th>
+                <th>Spinal</th>
+                <th>Pulmonary</th>
+                <th>Trauma</th>
+                <th>Neuro-logical</th>
+                <th>Others</th>
+                <tr>
+                    <th>Memorial Hospital</th>
+                    <td class=yellow>1.3</td>
+                    <td class=red>1.5</td>
+                    <td class=green>1.2</td>
+                    <td class=red>1.5</td>
+                    <td class=green>1.1</td>
+                    <td class=green>1.2</td>
+                    <td class=red>1.6</td>
+                    <td class=yellow>1.3</td>
+                    <td class=yellow>1.4</td>
+                    <td class=green>1.0</td>
+                </tr>
+                <tr>
+                    <th>Regional Medical Center</th>
+                    <td class=green>1.0</td>
+                    <td class=yellow>1.3</td>
+                    <td class=red>1.6</td>
+                    <td class=yellow>1.3</td>
+                    <td class=red>1.8</td>
+                    <td class=yellow>1.3</td>
+                    <td class=yellow>1.4</td>
+                    <td class=green>1.1</td>
+                    <td class=red>1.5</td>
+                    <td class=green>1.0</td>
+                </tr>
+                <tr>
+                    <th>Small Town Hospital</th>
+                    <td class=yellow>1.3</td>
+                    <td class=yellow>1.4</td>
+                    <td class=red>1.7</td>
+                    <td class=green>1.0</td>
+                    <td class=yellow>1.3</td>
+                    <td class=red>1.5</td>
+                    <td class=red>1.6</td>
+                    <td class=green>1.1</td>
+                    <td class=green>1.0</td>
+                    <td class=red>1.5</td>
+                </tr>
+                <tr>
+                    <th>Small State Hospital</th>
+                    <td class=green>1.0</td>
+                    <td class=red>1.5</td>
+                    <td class=green>1.2</td>
+                    <td class=yellow>1.3</td>
+                    <td class=yellow>1.3</td>
+                    <td class=red>1.7</td>
+                    <td class=green>1.0</td>
+                    <td class=green>1.1</td>
+                    <td class=red>1.5</td>
+                    <td class=green>1.0</td>
+                </tr>
+                <tr>
+                    <th>Cancer Center</th>
+                    <td class=green>1.1</td>
+                    <td class=red>1.5</td>
+                    <td class=green>1.2</td>
+                    <td class=yellow>1.3</td>
+                    <td class=red>1.8</td>
+                    <td class=green>1.0</td>
+                    <td class=red>1.6</td>
+                    <td class=green>1.1</td>
+                    <td class=green>1.1</td>
+                    <td class=green>1.0</td>
+                </tr>
+                <tr>
+                    <th>St Mary's</th>
+                    <td class=yellow>1.3</td>
+                    <td class=green>1.1</td>
+                    <td class=green>1.0</td>
+                    <td class=yellow>1.4</td>
+                    <td class=green>1.1</td>
+                    <td class=yellow>1.3</td>
+                    <td class=green>1.0</td>
+                    <td class=yellow>1.3</td>
+                    <td class=green>1.0</td>
+                    <td class=green>1.0</td>
+                </tr>
+                <tr>
+                    <th>St Vincents</th>
+                    <td class=red>1.8</td>
+                    <td class=yellow>1.4</td>
+                    <td class=green>1.0</td>
+                    <td class=green>1.1</td>
+                    <td class=red>1.6</td>
+                    <td class=yellow>1.3</td>
+                    <td class=green>1.0</td>
+                    <td class=green>1.0</td>
+                    <td class=red>1.5</td>
+                    <td class=yellow>1.4</td>
+                </tr>
+                <tr>
+                    <th>Riverdale Clinic</th>
+                    <td class=green>1.1</td>
+                    <td class=green>1.1</td>
+                    <td class=yellow>1.3</td>
+                    <td class=green>1.0</td>
+                    <td class=red>1.6</td>
+                    <td class=green>1.2</td>
+                    <td class=yellow>1.4</td>
+                    <td class=green>1.1</td>
+                    <td class=green>1.0</td>
+                    <td class=red>1.7</td>
+                </tr>
+                <tr>
+                    <th>Medical Center 55</th>
+                    <td class=green>1.0</td>
+                    <td class=green>1.0</td>
+                    <td class=yellow>1.3</td>
+                    <td class=green>1.1</td>
+                    <td class=yellow>1.3</td>
+                    <td class=green>1.0</td>
+                    <td class=green>1.1</td>
+                    <td class=yellow>1.4</td>
+                    <td class=green>1.0</td>
+                    <td class=red>1.7</td>
+
+                </tr>
+                <tr>
+                    <th>Ambulance Company</th>
+                    <td class=green>1.1</td>
+                    <td class=red>1.7</td>
+                    <td class=yellow>1.3</td>
+                    <td class=yellow>1.3</td>
+                    <td class=green>1.0</td>
+                    <td class=yellow>1.4</td>
+                    <td class=green>1.0</td>
+                    <td class=red>1.5</td>
+                    <td class=green>1.1</td>
+                    <td class=green>1.1</td>
+                </tr>
+                </table>
+                </div>
+            </div>
+        </div>        
+{% endblock %}
