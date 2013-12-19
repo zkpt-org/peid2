@@ -220,3 +220,70 @@
     font-size:small;
     text-align: center;
 }
+
+
+
+
+#summary-table{
+    padding:20px;
+    width:720px;
+}
+
+.hide table{
+    width:720px;
+    margin-bottom: 20px;
+    /* margin-left:10px; */
+}
+.hide tr{
+    border-bottom: 1px #ddd solid;
+}
+.hide td{
+    padding:35px 0px 5px 0px;
+    font-size: small;
+    /* color:#777; */
+    font-weight: bold;
+    vertical-align: middle;
+    border-right:1px solid #eee;
+    padding-left: 10px;  
+}
+.hide td.screening{
+    width:150px;
+/*     font-weight: bold; */
+}
+.hide td.status{
+    width:200px;
+}
+.hide td.percentage{
+    width:150px;
+    border-right:none;
+}
+.hide td.overdue{
+    width:200px;
+    text-align:right;
+}
+
+.hide th h3{
+   color: #aaa;
+   /* color:#57a1ff; */
+   font-weight: bold;
+   font-size: large;
+}
+.hide th.screening{
+    width:150px;
+    text-align:left;
+}
+.hide th.status{
+    width:200px;
+    text-align:left;
+}
+.hide th.percentage{
+    width:150px;
+    text-align:left;
+}
+
+.hide td.hi-lite{
+    color:#57a1ff;
+    font-weight:bolder;
+    font-size: medium;
+}
+
