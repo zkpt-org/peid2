@@ -47,6 +47,7 @@ function redraw(){
     $(".tooltip-1").remove();
     $("#graph-1 .box svg").remove();
     $("#graph-2 .box svg").remove();
+    /* $("#graph-3 .box svg").remove(); */
     $("#graph-5 .box svg").remove();
     draw_pmpm();
     draw_cumulative();

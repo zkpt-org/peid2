@@ -226,7 +226,15 @@
 
 #summary-table{
     padding:20px;
+/*     width:720px; */
     width:720px;
+/* 	height:400px; */
+	margin-top:10px;
+	border-radius: 5px;
+	border:1px solid #ddd;
+	background-color: #fff;
+	/* overflow: hidden; */
+
 }
 
 .hide table{
