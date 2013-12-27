@@ -68,7 +68,8 @@ class Das:
 
     def api(self, pgt, p):
         params = dict(p.iterlists())
-        for k, v in params.iteritems(): params[k] = str(v)
+        for k, v in params.iteritems(): 
+            if isinstance(v, list): params[k] = str(v[0])
         service = params['service']
         
         if service is "search":
