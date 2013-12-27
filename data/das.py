@@ -66,7 +66,8 @@ class Das:
         pt = xml.find('cas:proxyticket').string if xml.find('cas:proxyticket') else None
         return str(pt)
 
-    def api(self, pgt, params):
+    def api(self, pgt, p):
+        params = dict(p.iterlists())
         service = params['service']
         
         if service is "search":
