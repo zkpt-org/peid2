@@ -85,6 +85,6 @@ class Das:
         params['clientName'] = 'tind'
         del params['service']
         
-        #return self.curl(url, params, peer=True)
-        return self.get_proxy_ticket(pgt)
+        return self.curl(url, params, peer=True)
+        #return self.get_proxy_ticket(pgt)
         
