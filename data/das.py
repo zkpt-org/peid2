@@ -73,26 +73,26 @@ class Das:
         service = params['service']
         
         if service is "search":
-            url = self.API_URL + "/memberSearch"
+            url = self.API_URL + "/das/memberSearch"
         elif service is "report":
-            url = self.API_URL + "/esReport"
+            url = self.API_URL + "/das/esReport"
         elif service is "create":
-            url = self.API_URL + "/cohort/create"
+            url = self.API_URL + "/das/cohort/create"
         elif service is "update":
-            url = self.API_URL + "/cohort/update"
+            url = self.API_URL + "/das/cohort/update"
         elif service is "delete":
-            url = self.API_URL + "/cohort/delete"
+            url = self.API_URL + "/das/cohort/delete"
         elif service is "config":
-            url = self.API_URL + "/config"
+            url = self.API_URL + "/das/config"
         else:
-            url = self.API_URL + "/memberSearch"
+            url = self.API_URL + "/das/memberSearch"
         
         params['ticket'] = self.get_proxy_ticket(pgt)
         params['clientName'] = 'tind'
         del params['service']
         #import urllib
         #return urllib.urlencode(params)
-        return self.curl(url, params, peer=True)
+        return self.curl(url, params)
         #return self.get_proxy_ticket(pgt)
         #return params
         
