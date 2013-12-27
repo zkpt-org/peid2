@@ -64,7 +64,7 @@ class Das:
         rsp = self.curl(self.PT_URL, p)
         xml = BeautifulStoneSoup(rsp)
         pt = xml.find('cas:proxyticket').string if xml.find('cas:proxyticket') else None
-        return pt
+        return str(pt)
 
     def api(self, pgt, params):
         service = params['service']
@@ -88,6 +88,7 @@ class Das:
         params['clientName'] = 'tind'
         del params['service']
         
-        return self.curl(url, params, peer=False)
+        #return self.curl(url, params, peer=False)
         #return self.get_proxy_ticket(pgt)
+        return params
         
