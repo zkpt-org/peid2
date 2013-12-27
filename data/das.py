@@ -83,13 +83,14 @@ class Das:
         elif service is "config":
             url = self.API_URL + "/config"
         else:
-            url = self.API_URL + "/memberSearch"
+            url = self.API_URL + "/das/memberSearch"
         
         params['ticket'] = self.get_proxy_ticket(pgt)
         params['clientName'] = 'tind'
         del params['service']
-        
-        return self.curl(url, params, peer=True)
+        import urllib
+        return urllib.urlencode(params)
+        #return self.curl(url, params, peer=True)
         #return self.get_proxy_ticket(pgt)
         #return params
         
