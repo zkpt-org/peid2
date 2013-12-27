@@ -73,7 +73,7 @@ class Das:
         service = params['service']
         
         if service is "search":
-            url = self.API_URL + "/das/memberSearch"
+            url = self.API_URL + "/memberSearch"
         elif service is "report":
             url = self.API_URL + "/esReport"
         elif service is "create":
@@ -85,7 +85,7 @@ class Das:
         elif service is "config":
             url = self.API_URL + "/config"
         else:
-            url = self.API_URL + "/das/memberSearch"
+            url = self.API_URL + "/memberSearch"
         
         params['ticket'] = self.get_proxy_ticket(pgt)
         params['clientName'] = 'tind'
