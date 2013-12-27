@@ -72,6 +72,8 @@ class Das:
             if isinstance(v, list): params[k] = str(v[0])
         service = params['service']
         
+        del params['service']
+        
         if service is "search":
             url = self.API_URL + "/das/memberSearch"
         elif service is "report":
@@ -87,9 +89,10 @@ class Das:
         else:
             url = self.API_URL + "/das/memberSearch"
         
-        params['ticket'] = self.get_proxy_ticket(pgt)
+        params['ticket']     = self.get_proxy_ticket(pgt)
         params['clientName'] = 'tind'
-        del params['service']
+        params['clientId']   = '2000'
+        
         import urllib
         return urllib.urlencode(params)
         #return self.curl(url, params, peer=True)
