@@ -90,9 +90,9 @@ class Das:
         params['ticket'] = self.get_proxy_ticket(pgt)
         params['clientName'] = 'tind'
         del params['service']
-        #import urllib
-        #return urllib.urlencode(params)
-        return self.curl(url, params, peer=True)
+        import urllib
+        return urllib.urlencode(params)
+        #return self.curl(url, params, peer=True)
         #return self.get_proxy_ticket(pgt)
         #return params
         
