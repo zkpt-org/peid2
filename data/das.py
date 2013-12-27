@@ -5,7 +5,7 @@ from data.models import ProxyTicket
 class Das:
     def __init__(self):        
         self.HOST     = 'tind-lite.zakipoint.com'
-        self.TICKETS  = 'https://login.deerwalk.com/cas/v1/tickets'
+        self.TICKETS  = 'https://login.zakipoint.com/cas/v1/tickets'
         self.SERVICE  = 'https://tind-lite.zakipoint.com'
         self.PROXY    = 'https://tind-staging.herokuapp.com/data/proxy'
         self.VALIDATE = 'https://login.deerwalk.com/cas/serviceValidate'
@@ -90,9 +90,9 @@ class Das:
         params['ticket'] = self.get_proxy_ticket(pgt)
         params['clientName'] = 'tind'
         del params['service']
-        #import urllib
-        #return urllib.urlencode(params)
-        return self.curl(url, params, peer=True)
+        import urllib
+        return urllib.urlencode(params)
+        #return self.curl(url, params, peer=True)
         #return self.get_proxy_ticket(pgt)
         #return params
         
