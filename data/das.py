@@ -25,7 +25,7 @@ class Das:
         iou = xml.find('cas:proxygrantingticket').string if xml.find('cas:proxygrantingticket') else None
         pgt = self.get_proxy_granting_ticket(iou)
         
-        return pgt
+        return iou
 
     def curl(self, url, p, peer=False):
         response = cStringIO.StringIO()
@@ -82,7 +82,7 @@ class Das:
             url = self.API_URL + "/memberSearch"
         
         params['ticket'] = self.get_proxy_ticket(pgt)
-        params['clientName'] = 'zakipoint'
+        params['clientName'] = 'tind'
         del params['service']
         
         #return self.curl(url, params, peer=True)
