@@ -3,7 +3,7 @@
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
-import os
+import os, sys
 # Passwords stored in venv/bin/activate for local, 
 # heroku config:add SECRET=secret_pass for production.
 DB_PASS = os.environ['DB_PASS']
@@ -172,7 +172,7 @@ LOGGING = {
         'console':{
             'level':'INFO',
             'class':'logging.StreamHandler',
-            'strm': sys.stdout
+            'stream': sys.stdout
         },
     },
     'loggers': {
