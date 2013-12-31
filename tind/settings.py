@@ -207,7 +207,13 @@ BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 # = REGISTRATION SETTINGS =
 # =========================
 ACCOUNT_ACTIVATION_DAYS=7
+
+# =========================
+# = EMAIL SETTINGS        =
+# =========================
 EMAIL_HOST=os.environ['EMAIL_HOST']
 EMAIL_PORT=os.environ['EMAIL_PORT']
 EMAIL_HOST_USER=os.environ['EMAIL_HOST_USER']
 EMAIL_HOST_PASSWORD=os.environ['EMAIL_HOST_PASSWORD']
+EMAIL_SUBJECT_PREFIX = 'Tind:'
+EMAIL_USE_TLS = True
