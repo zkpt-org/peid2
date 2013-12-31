@@ -8,6 +8,7 @@ from django.shortcuts import redirect
 from django.conf import settings
 from data.das import Das
 from data.models import ProxyTicket
+from django.core.mail import mail_admins
 import os, json
 
 # @login_required
@@ -22,13 +23,13 @@ def authenticate(request):
     return render_to_response('data/index.html',{"status":proxy_granting_ticket})
     
 def proxy(request):
-    django.core.mail.mail_admins("proxy error", str(request.GET), fail_silently=False)
+    mail_admins("proxy error", str(request.GET), fail_silently=False)
     if 'pgtIou' in request.GET and 'pgtId' in request.GET:
         ticket = ProxyTicket(ticket_iou=request.GET['pgtIou'], ticket_id=request.GET['pgtId'])
         ticket.save()
         return render_to_response('data/index.html',{"status":"OK"})
     else:
-        django.core.mail.mail_admins("proxy error", str(request.GET), fail_silently=False)
+        mail_admins("proxy error", str(request.GET), fail_silently=False)
         return render_to_response('data/index.html',{"status":"MISSING DATA"})
 
 #@login_required
