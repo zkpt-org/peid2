@@ -56,7 +56,8 @@ class Das:
         if iou:
            ticket = ProxyTicket.objects.filter(ticket_iou=iou)[0].ticket_id
         else:
-           ticket = ProxyTicket.objects.latest('created').ticket_id
+           #ticket = ProxyTicket.objects.latest('created').ticket_id
+           ticket = None
         return ticket
 
     def get_proxy_ticket(self, pgt):
