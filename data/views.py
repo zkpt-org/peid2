@@ -29,7 +29,6 @@ def proxy(request):
         ticket.save()
         return render_to_response('data/index.html',{"status":"OK"})
     else:
-        mail_admins("proxy error", str(request.GET), fail_silently=False)
         return render_to_response('data/index.html',{"status":"MISSING DATA"})
 
 #@login_required
