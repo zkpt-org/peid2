@@ -23,12 +23,13 @@ def authenticate(request):
     return render_to_response('data/index.html',{"status":proxy_granting_ticket})
     
 def proxy(request):
-    mail_admins("proxy error", str(request.GET), fail_silently=False)
     if 'pgtIou' in request.GET and 'pgtId' in request.GET:
         ticket = ProxyTicket(ticket_iou=request.GET['pgtIou'], ticket_id=request.GET['pgtId'])
         ticket.save()
+        mail_admins("proxy success", str(request.GET), fail_silently=False)
         return render_to_response('data/index.html',{"status":"OK"})
     else:
+        mail_admins("proxy error", str(request.GET), fail_silently=False)
         return render_to_response('data/index.html',{"status":"MISSING DATA"})
 
 #@login_required
