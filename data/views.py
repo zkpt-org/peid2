@@ -13,7 +13,7 @@ import os, json
 
 # @login_required
 def index(request):
-    return render_to_response('data/index.html',{"status":"can haz sum moar data?"})
+    return render_to_response('data/index.html',{"status":"can i haz sum moar data?"})
 
 @login_required
 def authenticate(request):
@@ -31,18 +31,6 @@ def proxy(request):
     else:
         #mail_admins("proxy error", str(request.GET), fail_silently=False)
         return render_to_response('data/index.html',{"status":"OK"})
-
-#@login_required
-def ticket(request):
-    #query = {'ticket_iou':request.GET['iou']}
-    #data = [pt.json() for pt in ProxyTicket.objects.filter(**query).order_by('id')]
-    #return HttpResponse(json.dumps(data), content_type='application/json')
-    
-    #tickets = ProxyTicket.objects.filter(ticket_iou=request.GET['iou'])
-    tickets = ProxyTicket.objects.latest('created')
-    proxy_ticket = tickets.ticket_id if tickets else "Ticket not found."
-    return render_to_response('data/index.html',{"status":proxy_ticket})
-#ticket = csrf_exempt(ticket)
 
 @login_required
 def api(request):

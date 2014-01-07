@@ -5,13 +5,12 @@ from data.models import ProxyTicket
 class Das:
     def __init__(self):        
         self.HOST     = 'tind-lite.zakipoint.com'
-        self.TICKETS  = 'https://login.deerwalk.com/cas/v1/tickets/'
+        self.TICKETS  = 'https://login.deerwalk.com/cas/v1/tickets'
         self.SERVICE  = 'https://tind-lite.zakipoint.com'
         self.PROXY    = 'https://tind-staging.herokuapp.com/data/proxy/'
-        self.VALIDATE = 'https://login.deerwalk.com/cas/serviceValidate/'
+        self.VALIDATE = 'https://login.deerwalk.com/cas/serviceValidate'
         self.API_URL  = 'https://das.deerwalk.com:8443'
-        self.PT_URL   = 'https://login.deerwalk.com/cas/proxy/'
-        self.TICKET   = 'https://tind-staging.herokuapp.com/data/ticket/'
+        self.PT_URL   = 'https://login.deerwalk.com/cas/proxy'
 
     def auth(self, user, password):
         response = self.get_ticket_granting_ticket(user, password)
@@ -51,8 +50,6 @@ class Das:
         return self.curl(self.VALIDATE, p)
 
     def get_proxy_granting_ticket(self, iou):
-        #p = {"iou":iou}
-        #ticket = self.curl(self.TICKET, p)
         if iou:
            ticket = ProxyTicket.objects.filter(ticket_iou=iou)[0].ticket_id
         else:
