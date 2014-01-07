@@ -27,10 +27,7 @@ def proxy(request):
         ticket = ProxyTicket(ticket_iou=request.GET['pgtIou'], ticket_id=request.GET['pgtId'])
         ticket.save()
         #mail_admins("proxy success", str(request.GET), fail_silently=False)
-        return render_to_response('data/index.html',{"status":"OK"})
-    else:
-        #mail_admins("proxy error", str(request.GET), fail_silently=False)
-        return render_to_response('data/index.html',{"status":"OK"})
+    return render_to_response('data/index.html',{"status":"OK"})
 
 @login_required
 def api(request):
