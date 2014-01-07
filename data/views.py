@@ -13,7 +13,7 @@ import os, json
 
 # @login_required
 def index(request):
-    return render_to_response('data/index.html',{"status":"hav sum moar data."})
+    return render_to_response('data/index.html',{"status":"can haz sum moar data?"})
 
 @login_required
 def authenticate(request):
@@ -26,11 +26,11 @@ def proxy(request):
     if 'pgtIou' in request.GET and 'pgtId' in request.GET:
         ticket = ProxyTicket(ticket_iou=request.GET['pgtIou'], ticket_id=request.GET['pgtId'])
         ticket.save()
-        mail_admins("proxy success", str(request.GET), fail_silently=False)
+        #mail_admins("proxy success", str(request.GET), fail_silently=False)
         return render_to_response('data/index.html',{"status":"OK"})
     else:
-        mail_admins("proxy error", str(request.GET), fail_silently=False)
-        return render_to_response('data/index.html',{"status":"MISSING DATA"})
+        #mail_admins("proxy error", str(request.GET), fail_silently=False)
+        return render_to_response('data/index.html',{"status":"OK"})
 
 #@login_required
 def ticket(request):
