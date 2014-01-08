@@ -7,7 +7,8 @@ class Das:
         self.HOST     = 'tind-lite.zakipoint.com'
         self.TICKETS  = 'https://login.deerwalk.com/cas/v1/tickets'
         self.SERVICE  = 'https://tind-lite.zakipoint.com'
-        self.PROXY    = 'https://tind-staging.herokuapp.com/data/proxy/'
+        #self.PROXY    = 'https://tind-staging.herokuapp.com/data/proxy/'
+        self.PROXY    = 'https://proxy.zakipoint.com/'
         self.VALIDATE = 'https://login.deerwalk.com/cas/serviceValidate'
         self.API_URL  = 'https://das.deerwalk.com:8443'
         self.PT_URL   = 'https://login.deerwalk.com/cas/proxy'
@@ -50,12 +51,8 @@ class Das:
         return self.curl(self.VALIDATE, p)
 
     def get_proxy_granting_ticket(self, iou):
-        if iou:
-           ticket = ProxyTicket.objects.filter(ticket_iou=iou)[0].ticket_id
-        else:
-           #ticket = ProxyTicket.objects.latest('created').ticket_id
-           ticket = None
-        return ticket
+        p = {"iou":iou}
+        return self.curl('http://proxy.zakipoint.com/ticket/get/', p)
 
     def get_proxy_ticket(self, pgt):
         p = {'targetService':self.API_URL, 'pgt':pgt}
@@ -91,8 +88,6 @@ class Das:
         params['clientName'] = 'tind'
         params['clientId']   = '2000'
                 
-        return url + "?" + urllib.urlencode(params)
-        #return self.curl(url, params, peer=True)
-        #return self.get_proxy_ticket(pgt)
-        #return params
+        #return url + "?" + urllib.urlencode(params)
+        return self.curl(url, params, peer=True)
         
