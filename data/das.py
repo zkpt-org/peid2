@@ -10,7 +10,7 @@ class Das:
         #self.PROXY    = 'https://tind-staging.herokuapp.com/data/proxy/'
         self.PROXY    = 'https://proxy.zakipoint.com/'
         self.VALIDATE = 'https://login.deerwalk.com/cas/serviceValidate'
-        self.API_URL  = 'https://das.deerwalk.com:8443'
+        self.API_URL  = 'https://das.deerwalk.com'
         self.PT_URL   = 'https://login.deerwalk.com/cas/proxy'
 
     def auth(self, user, password):
@@ -65,24 +65,27 @@ class Das:
         params = dict(p.iterlists())
         for k, v in params.iteritems(): 
             if isinstance(v, list): params[k] = str(v[0])
-        service = params['service']
         
-        del params['service']
+        if 'service' in params:
+            service = params['service']
+            del params['service']
+        else:
+            service = 'default'
         
         if service is "search":
-            url = self.API_URL + "/das/memberSearch"
+            url = self.API_URL + "/memberSearch/"
         elif service is "report":
-            url = self.API_URL + "/das/esReport"
+            url = self.API_URL + "/esReport/"
         elif service is "create":
-            url = self.API_URL + "/das/cohort/create"
+            url = self.API_URL + "/cohort/create/"
         elif service is "update":
-            url = self.API_URL + "/das/cohort/update"
+            url = self.API_URL + "/cohort/update/"
         elif service is "delete":
-            url = self.API_URL + "/das/cohort/delete"
+            url = self.API_URL + "/cohort/delete/"
         elif service is "config":
-            url = self.API_URL + "/das/config"
+            url = self.API_URL + "/config/"
         else:
-            url = self.API_URL + "/das/memberSearch"
+            url = self.API_URL + "/memberSearch/"
         
         params['ticket']     = self.get_proxy_ticket(pgt)
         params['clientName'] = 'tind'
