@@ -295,3 +295,14 @@
     font-size: medium;
 }
 
+.segments{
+   text-anchor: middle;
+   fill:#fff; 
+}
+
+.total{
+    text-anchor: middle;
+    font-weight: bold;
+    font-size: 14px;
+    fill: #57a1ff;
+}

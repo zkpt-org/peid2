@@ -10,6 +10,7 @@ from data.das import Das
 from data.models import ProxyTicket
 from django.core.mail import mail_admins
 import os, json
+#import simplejson as json
 
 # @login_required
 def index(request):
@@ -22,6 +23,7 @@ def authenticate(request):
     request.session['pgt'] = proxy_granting_ticket
     return render_to_response('data/index.html',{"status":proxy_granting_ticket})
     
+
 def proxy(request):
     if 'pgtIou' in request.GET and 'pgtId' in request.GET:
         ticket = ProxyTicket(ticket_iou=request.GET['pgtIou'], ticket_id=request.GET['pgtId'])
@@ -30,8 +32,11 @@ def proxy(request):
     return render_to_response('data/index.html',{"status":"OK"})
 
 @login_required
-def api(request):
+def api(request, service=None):
     das = Das()
     params = request.GET.copy()
+    if service: params['service'] = service
     data = das.api(request.session['pgt'], params)
-    return render_to_response('data/index.html',{"status": data})
+    return HttpResponse(data, content_type='application/json')
+    #return HttpResponse(json.dumps(data, sort_keys=True, indent=4), content_type='application/json')
+    #return render_to_response('data/index.html',{"status": data})

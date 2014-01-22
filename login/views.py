@@ -2,6 +2,8 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.http import HttpResponseRedirect
 from django.contrib import auth
+from django.conf import settings
+from data.das import Das
 
 def index(request):
     return login(request)
@@ -19,6 +21,9 @@ def login(request):
         if user is not None:
             if user.is_active:
                 auth.login(request, user)
+                das = Das()
+                proxy_granting_ticket = das.auth(settings.DAS_USER, settings.DAS_PASS)
+                request.session['pgt'] = proxy_granting_ticket
                 # state = "You're successfully logged in!"
                 return HttpResponseRedirect(next)
             else:

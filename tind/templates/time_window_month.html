@@ -1,0 +1,11 @@
+<num class=time-window class="k-content" id="datepicker-{{num}}">
+    <form>
+        <a href="javascript:;" class="preset-window" onclick="set_months(3, '{{num}}')" >3m</a>
+        <a href="javascript:;" class="preset-window" onclick="set_months(6, '{{num}}')" >6m</a>
+        <a href="javascript:;" class="preset-window" onclick="set_year(1, '{{num}}')" >1y</a>
+        <input type="text" name="start" value="" class="monthpicker start" id="datepicker-{{num}}-start" style="width:110px;" 
+            onchange="set_time_window('{{num}}')" /> to
+        <input type="text" name="end"   value="" class="monthpicker end" id="datepicker-{{num}}-end" style="width:110px;" 
+            onchange="set_time_window('{{num}}')" />
+    </form>
+</num>

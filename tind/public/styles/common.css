@@ -525,6 +525,12 @@ text{
     margin-right:5px;
     font-size: x-small;
 }
+.monthpicker{
+    margin-left:5px;
+    margin-right:5px;
+    font-size: x-small;
+}
+
 .time-window input[type=text]{
     text-indent: 10px;
 }

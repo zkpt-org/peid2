@@ -16,10 +16,8 @@
     <!-- <script type="text/javascript" src="{{STATIC_URL}}styles/kendo/js/kendo.userevents.min.js" ></script> -->
 	<script type="text/javascript" src="{{STATIC_URL}}js/shared.js"></script>
 	<script type="text/javascript" src="{{STATIC_URL}}js/date.js"></script>
+	<script type="text/javascript" src="{{STATIC_URL}}js/monthpicker.js"></script>
 	<script type="text/javascript" src="{{STATIC_URL}}js/{{page}}.js"></script>
-	<script>
-        $(document).ready(function(){ $(".datepicker").kendoDatePicker(); });
-    </script>
 	{% block javascript %}{% endblock %}
 
 	<link type="text/css" rel="stylesheet" href="{{STATIC_URL}}styles/bootstrap/css/bootstrap.min.css"/>

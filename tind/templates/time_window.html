@@ -1,15 +1,35 @@
 <script>
-var date_today = Date.today().clearTime().toString("M/d/yyyy");
-var date_yr_ago = Date.today().clearTime().addMonths(-12).toString("M/d/yyyy");
+var date_today  = Date.today().addMonths(-1).clearTime().toString("M/d/yyyy");
+var date_yr_ago = Date.today().clearTime().addMonths(-13).toString("M/d/yyyy");
+var time_window_start = Date.parse(date_yr_ago).toString("yyyy-MM-dd");
+var time_window_end   = Date.parse(date_today).toString("yyyy-MM-dd");
+
 jQuery( "[name='start']" ).val(date_yr_ago);
 jQuery( "[name='end']" ).val(date_today);
+
+function set_time_window(months){
+    if(!months){
+        time_window_start = Date.parse(jQuery( "[name='start']" ).val()).toString("yyyy-MM-dd");
+        time_window_end   = Date.parse(jQuery( "[name='end']" ).val()).toString("yyyy-MM-dd");
+    }
+    else{
+/*
+        switch(months){
+            case "3m":
+                
+        }
+*/
+    }
+    redraw();
+}
+
 </script>
 <div class=time-window class="k-content">
     <form>
-        <a href="javascript:;" class="preset-window">3m</a>
-        <a href="javascript:;" class="preset-window">6m</a>
-        <a href="javascript:;" class="preset-window">1y</a>
-        <input type="text" name="start" value="" class="datepicker" style="width:110px;" /> to
-        <input type="text" name="end"   value="" class="datepicker" style="width:110px;" />
+        <a href="javascript:;" class="preset-window" onclick="" >3m</a>
+        <a href="javascript:;" class="preset-window" onclick="" >6m</a>
+        <a href="javascript:;" class="preset-window" onclick="" >1y</a>
+        <input type="text" name="start" value="" class="datepicker" style="width:110px;" onchange="set_time_window()" /> to
+        <input type="text" name="end"   value="" class="datepicker" style="width:110px;" onchange="set_time_window()" />
     </form>
 </div>

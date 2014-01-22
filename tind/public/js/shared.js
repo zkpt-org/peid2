@@ -1,12 +1,25 @@
 /* Shared Javascript functions */
 var shadowbox = false;
 
+//var today    = Date.today().clearTime();
+//var year_ago = Date.today().clearTime().addMonths(-12);
+//var start_of_month = Date.today().clearTime().moveToFirstDayOfMonth();
+
+function monthDiff(d1, d2) {
+    var months;
+    months = (d2.getFullYear() - d1.getFullYear()) * 12;
+    months -= d1.getMonth();
+    months += d2.getMonth()+1;
+    return months <= 0 ? 0 : months;
+}
+
 if( !window.isLoaded )
 	window.addEventListener("load", function(){ onready(); }, false);
 else
 	onready();
 	
-function onready() {    
+function onready() {
+
     $(function () {$("[data-toggle='tooltip']").tooltip(
        { delay: { show: 1000, hide: 0 } }
     );});
@@ -34,6 +47,10 @@ function onready() {
     });
 }
 
+function check_session(response){if("session" in response && response["session"]=="expired") end_of_session();}
+
+function end_of_session(){document.location = "/login/"}
+    
 function fold(e){
     $(e+' .hide').toggle();
     $(e+' .show-hide-toggle i').toggleClass('fa-caret-right');

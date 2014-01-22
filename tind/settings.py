@@ -111,9 +111,12 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'tind.middleware.AutoLogout',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
+# Auto logout delay in minutes
+AUTO_LOGOUT_DELAY = 30 #equivalent to 5 minutes
 
 ROOT_URLCONF = 'tind.urls'
 
