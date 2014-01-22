@@ -68,10 +68,10 @@ def graph1(request):
         },
         {
             "Period"         : "Benchmark",
-            "Inpatient"      : 90,
-            "Outpatient"     : 160,
-            "Office Visit"   : 60,
-            "Pharmacy Claims": 50
+            "Inpatient"      : round(reporting["Inpatient"] / reporting["members"] / months) - round((reporting["Inpatient"] / reporting["members"] / months) * 0.10),
+            "Outpatient"     : round(reporting["Outpatient"] / reporting["members"] / months) - round((reporting["Outpatient"] / reporting["members"] / months) * 0.12),
+            "Office Visit"   : round(reporting["Office"] / reporting["members"] / months) - round((reporting["Office"] / reporting["members"] / months) * 0.2),
+            "Pharmacy Claims": round(reporting["totalPharmacyPaidAmount"] / reporting["members"] / months) - round((reporting["totalPharmacyPaidAmount"] / reporting["members"] / months) * 0.15)
         }
     ]
     
