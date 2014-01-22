@@ -127,6 +127,40 @@ function graph1(){
           .attr("class", "x axis")
           .attr("transform", "translate(0," + height + ")")
           .call(xAxis);
+
+      d3.select(".x.axis")    
+        .append("g")
+        .append("text")
+          .text((time_window_start) +" \u2013 "+ (time_window_end)) 
+          .attr("id", "daterange-1")
+          .attr("y", 30)
+          .attr("x", (x.rangeBand() - x.rangeBand()/2 - d3.select("#daterange-1").node().getComputedTextLength()/2 + 20))
+          .attr("dy", ".71em")
+          /* .style("text-anchor", "center") */;
+      
+      d3.select(".x.axis")  
+        .append("g")
+        .append("text")
+          .text((time_window_start_minus_year) +" \u2013 "+ (time_window_end_minus_year))
+          .attr("id", "daterange-2")
+          .attr("y", 30)
+          .attr("x", (x.rangeBand()*2 - x.rangeBand()/4) - (d3.select("#daterange-2").node().getComputedTextLength()/2))
+          .attr("dy", ".71em")
+          /* .style("text-anchor", "center") */
+          ;
+      
+      d3.select(".x.axis")  
+        .append("g")
+        .append("text")
+          .text((time_window_start) +" \u2013 "+ (time_window_end))
+          .attr("id", "daterange-3")
+          .attr("y", 30)
+          .attr("x", (x.rangeBand()*3 - x.rangeBand()/6)  - (d3.select("#daterange-3").node().getComputedTextLength()/2))
+          .attr("dy", ".71em")
+          /* .style("text-anchor", "center") */
+          ;    
+    
+    
     
       svg.append("g")
           .attr("class", "y axis")
@@ -189,6 +223,7 @@ function graph1(){
           .style("text-anchor", "end")
           .text(function(d) { return d; });
           
+/*
       svg.append("g")
         .append("text")
           .attr("y", 350)
@@ -204,6 +239,7 @@ function graph1(){
           .attr("dy", ".71em")
           .style("text-anchor", "end")
           .text((time_window_start_minus_year) +" \u2013 "+ (time_window_end_minus_year));
+*/
     });    
 }
 
