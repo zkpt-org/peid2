@@ -3,7 +3,34 @@
 
 {% block javascript %}{% endblock %}
 
-{% block css %}{% endblock %}
+{% block css %}
+    <style>
+      rect.bordered {
+        stroke: #E6E6E6;
+        stroke-width:2px;   
+      }
+
+      text.mono {
+        font-size: 9pt;
+        font-family: Consolas, courier;
+        fill: #aaa;
+        text-align: center;
+      }
+
+      text.axis-workweek {
+        /* fill: #000; */
+      }
+
+      text.axis-worktime {
+        /* fill: #000; */
+      }
+      .score{
+        /* fill:#fff; */
+        font-weight: bold;
+        font-size: 16px;    
+      }
+    </style>
+{% endblock %}
 
 {% block content %}
 	{% include 'filters.html' %}
@@ -15,7 +42,8 @@
             </div>
             <div class="hide">
                 <h3>Comparison Chart on Providers</h3>
-                <div class="box">
+                <div class="box">     
+                    <!--  
                 <table id=providers-comparison>
                 <th></th>
                 <th>Muscuo-skeletal</th>
@@ -160,6 +188,8 @@
                     <td class=green>1.1</td>
                 </tr>
                 </table>
+                -->
+                    <div id="heatmap"></div>
                 </div>
             </div>
         </div>        

@@ -6,6 +6,8 @@ from models import *
 from data.das import Das
 import json
 from datetime import datetime, timedelta
+#from collections import OrderedDict
+
 
 @login_required #(redirect_field_name='login/')
 def index(request):
@@ -46,6 +48,9 @@ def graph1(request):
     if 'pgt' in request.session:
         response = das.json_to_dict(request.session['pgt'], params)
     else:
+        return HttpResponse(json.dumps({"session":"expired"}))
+        
+    if "comparison" not in response:
         return HttpResponse(json.dumps({"session":"expired"}))
     
     comparison = response["comparison"][0]
