@@ -61,7 +61,7 @@ function redraw(num){
     width  = 760 - margin.left - margin.right,
     height = 400 - margin.top  - margin.bottom;
     
-    $(".tooltip-1").remove();
+    //$(".tooltip-1").remove();
         
     if(num){
         $("#graph-"+num+" .box svg").remove()
@@ -83,8 +83,10 @@ function graph1(){
         .rangeRound([height, 0]);
     
     var color = d3.scale.ordinal()
-        /* .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]); */
-        /* .range(['#3ea4bf','#F6BB33', '#49bf92', '#a084bf', '#FF6A13']) */
+        /* 
+        .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]); 
+        .range(['#3ea4bf','#F6BB33', '#49bf92', '#a084bf', '#FF6A13']) 
+        */
         .range(colors);
     
     var xAxis = d3.svg.axis()
@@ -245,8 +247,8 @@ function graph1(){
 
 function graph2(){
 
-    var minDate = Date.today().clearTime().moveToFirstDayOfMonth().addMonths(-12);
-    var maxDate = Date.today().clearTime().moveToFirstDayOfMonth();
+    var minDate = Date.parse(time_window_start) //Date.today().clearTime().moveToFirstDayOfMonth().addMonths(-12);
+    var maxDate = Date.parse(time_window_end)  //Date.today().clearTime().moveToFirstDayOfMonth();
     
     var x = d3.time.scale().domain([minDate, maxDate])
         .range([0, width]);
@@ -270,7 +272,7 @@ function graph2(){
     
     var line = d3.svg.line()
         .interpolate("monotone")
-        .x(function(d) { return x(Date.today().addMonths(d.month-12)); })
+        .x(function(d) { return x(d.date); })
         .y(function(d) { return y(d.cost); });
         
     if($('#pmpm-graph').length)
@@ -310,7 +312,11 @@ function graph2(){
         
     //});
     
-    d3.json("../public/data/pmpm.json", function(error, data) {
+    d3.json("/home/graph2/?reportingTo="    + time_window_end   +
+                         "&reportingFrom="  + time_window_start +
+                         "&comparisonFrom=" + time_window_start_minus_year +
+                         "&comparisonTo="   + time_window_end_minus_year, 
+        function(error, data) {
                            
         /* color.domain(d3.keys(data[0]).filter(function(key) { return eval(ex); })); */
         
@@ -321,11 +327,11 @@ function graph2(){
         var c = 0;
                 
         data.forEach(function(d) {
-    	    d.cost = d.cost;
-    	    d.date = Date.today().addMonths(d.month-12);
+    	    d.cost = d.total;
+    	    d.date = Date.parse(d.date)//maxDate.addMonths(-d.month);//Date.today().addMonths(d.month-12);
     	    costs.push(d.cost);
     	    times.push(d.date);
-    	    benchmarks.push({"cost":d.benchmark, "month":d.month});
+    	    //benchmarks.push({"cost":d.benchmark, "month":d.month});
     	    table[c] = d.cost;
     	    c ++;
         });

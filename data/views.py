@@ -40,3 +40,49 @@ def api(request, service=None):
     return HttpResponse(data, content_type='application/json')
     #return HttpResponse(json.dumps(data, sort_keys=True, indent=4), content_type='application/json')
     #return render_to_response('data/index.html',{"status": data})
+
+@login_required
+def lastdate(request, format="Ymd"):
+    das = Das()
+    
+    params = {
+    "service"  : "search", 
+    "table"    : "smc",
+    "page"     : "1",
+    "pageSize" : "1",
+    "order"    : "paidDate:desc"
+    }
+    
+    if 'pgt' in request.session:
+        response = das.json_to_dict(request.session['pgt'], params)["result_sets"]["0"]
+    else:
+        return HttpResponse(json.dumps({"session":"expired"}))
+    
+    #if "paidDate" not in response:
+    #    return HttpResponse(json.dumps({"session":"expired"}))
+        
+    #return HttpResponse(json.dumps(response["paidDate"]))
+    return HttpResponse(response["paidDate"])
+    
+@login_required
+def firstdate(request, format="Ymd"):
+    das = Das()
+    
+    params = {
+    "service"  : "search", 
+    "table"    : "smc",
+    "page"     : "1",
+    "pageSize" : "1",
+    "order"    : "paidDate:asc"
+    }
+    
+    if 'pgt' in request.session:
+        response = das.json_to_dict(request.session['pgt'], params)["result_sets"]["0"]
+    else:
+        return HttpResponse(json.dumps({"session":"expired"}))
+    
+    #if "paidDate" not in response:
+    #    return HttpResponse(json.dumps({"session":"expired"}))
+        
+    #return HttpResponse(json.dumps({"date":response["paidDate"]}))
+    return HttpResponse(response["paidDate"])

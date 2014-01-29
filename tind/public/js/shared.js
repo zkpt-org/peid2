@@ -145,3 +145,11 @@ function details_reset(){
     });
     
 }
+
+function first_date(){
+    return Date.parse($.ajax({type: "GET", url: "/data/firstdate/", async: false}).responseText);
+}
+
+function last_date(){
+    return Date.parse($.ajax({type: "GET", url: "/data/lastdate/", async: false}).responseText);
+}

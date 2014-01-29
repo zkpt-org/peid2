@@ -8,4 +8,6 @@ urlpatterns = patterns('',
     url(r'^api/(?P<service>.*)/', views.api),
     url(r'^api/(?P<service>.*)', views.api),
     url(r'^api/', views.api),
+    url(r'^lastdate/', views.lastdate),
+    url(r'^firstdate/', views.firstdate),
 )

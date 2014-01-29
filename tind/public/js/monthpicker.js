@@ -79,8 +79,8 @@ $(document).ready(function(){
             depth: "year",
             // display month and year in the input
             format: "MMM yyyy",
-            max: Date.today().clearTime().moveToFirstDayOfMonth().addDays(-1),
-            min: new Date(2011, 0, 1)
+            max: last_date().moveToLastDayOfMonth(),  //Date.today().clearTime().moveToFirstDayOfMonth().addDays(-1),
+            min: first_date().moveToFirstDayOfMonth(), //new Date(2011, 0, 1)
     });
     monthpicker_init();
 });
