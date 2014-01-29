@@ -544,3 +544,15 @@ text{
 .time-window .preset-window:hover{
     text-decoration: underline;
 }
+
+.loader{
+    display:none;
+    font-size:xx-large;
+    opacity:0.3;
+    z-index:11;
+    position:absolute;
+    width:760px;
+    /* height:400px; */
+    text-align: center;
+    margin-top:180px;
+}

@@ -4,7 +4,6 @@ import json, calendar, datetime
 #from collections import OrderedDict
 
 def graph1(request):
-    
     das = Das()
     
     params = {
@@ -56,7 +55,6 @@ def graph1(request):
     
     return data
 
-
 def graph2(request):
     das = Das()
     data = []
@@ -91,8 +89,7 @@ def graph2(request):
         response = das.json_to_dict(request.session['pgt'], params)
         #else: return {"session":"expired"}
             
-        if "comparison" not in response:
-            return {"session":"expired"}
+        if "comparison" not in response: return {"session":"expired"}
         
         comparison = response["comparison"][0]
         reporting  = response["reporting"][0]

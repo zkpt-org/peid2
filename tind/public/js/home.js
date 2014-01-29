@@ -66,12 +66,16 @@ function redraw(num){
     if(num){
         $("#graph-"+num+" .box svg").remove()
         eval('graph'+num+'()')
+        startload(num)
     }
     else{
         $(".box svg").remove();
         graph1();
         graph2();
         graph4();
+        startload(1)
+        startload(2)
+        //startload(4)
     }
 }
 
@@ -109,9 +113,11 @@ function graph1(){
             "&reportingFrom="  + time_window_start +
             "&comparisonFrom=" + time_window_start_minus_year +
             "&comparisonTo="   + time_window_end_minus_year, 
-            function(error, data){
+      function(error, data){
       
       check_session(data)
+      endload(1)
+      
       color.domain(d3.keys(data[0]).filter(function(key) { return key !== "Period"; }));      
       
       data.forEach(function(d){
@@ -319,6 +325,9 @@ function graph2(){
         function(error, data) {
                            
         /* color.domain(d3.keys(data[0]).filter(function(key) { return eval(ex); })); */
+        
+        check_session(data)
+        endload(2)
         
         var table = [];
         var times = [];

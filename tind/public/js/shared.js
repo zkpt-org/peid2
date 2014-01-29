@@ -1,5 +1,6 @@
 /* Shared Javascript functions */
 var shadowbox = false;
+var counter   = 0;
 
 //var today    = Date.today().clearTime();
 //var year_ago = Date.today().clearTime().addMonths(-12);
@@ -153,3 +154,21 @@ function first_date(){
 function last_date(){
     return Date.parse($.ajax({type: "GET", url: "/data/lastdate/", async: false}).responseText);
 }
+
+function startload(num){
+    window['timer' + num] = setInterval(function(){loading(num);},80);
+}
+
+function loading(num){
+    $('#loader-'+num).fadeIn(100);
+    $('#loader-'+num).text(counter);
+    counter++;
+    if(counter == 7)
+        counter = 0;
+}
+
+function endload(num, timer){
+   $('#loader-'+num).fadeOut(1000);
+   clearInterval(eval("timer"+num));
+}
+
