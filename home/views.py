@@ -20,7 +20,9 @@ def index(request):
         data = process.graph3(request)
     else:
         data = {"session":"expired"}
-    # return HttpResponse(json.dumps(data))
+        data["reporting"]  = {}
+        data["comparison"] = {}
+    #return HttpResponse(json.dumps(data))
     return render_to_response('home/index.html',{
                 "page"       : "home", 
                 "user"       : request.user, 
