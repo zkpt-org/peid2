@@ -6,7 +6,8 @@ from django.shortcuts import redirect
 
 @login_required
 def index(request):
-    if 'alerts' not in request.session:
-        request.session['alerts'] = "show"
-        request.session.modified = True
-    return render_to_response('home/index.html',{"page":"home","user":request.user, "alerts":request.session['alerts']}, context_instance=RequestContext(request))
+    #     if 'alerts' not in request.session:
+    #         request.session['alerts'] = "show"
+    #         request.session.modified = True
+    #     return render_to_response('home/index.html',{"page":"home","user":request.user, "alerts":request.session['alerts'] }, context_instance=RequestContext(request))
+    pass

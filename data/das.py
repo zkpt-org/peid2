@@ -102,3 +102,31 @@ class Das:
         data = self.api(pgt, p)
         return json.loads(data)
     
+    def api_call(self, pgt, p):       
+        params = dict(p.iterlists()) if isinstance(p, QueryDict) else p
+        
+        for k, v in params.iteritems(): 
+            if isinstance(v, list): params[k] = str(v[0])
+                
+        if params['service'] == "search":
+            url = self.API_URL + "/memberSearch/"
+        elif params['service'] == "report":
+            url = self.API_URL + "/esReport/"
+        elif params['service'] == "create":
+            url = self.API_URL + "/cohort/create/"
+        elif params['service'] == "update":
+            url = self.API_URL + "/cohort/update/"
+        elif params['service'] == "delete":
+            url = self.API_URL + "/cohort/delete/"
+        elif params['service'] == "config":
+            url = self.API_URL + "/config/"
+        else:
+            url = self.API_URL + "/memberSearch/"
+        
+        del params['service']
+        
+        params['ticket']     = self.get_proxy_ticket(pgt)
+        params['clientName'] = self.CLIENT_NAME
+        params['clientId']   = self.CLIENT_ID
+                
+        return url + "?" + urllib.urlencode(params)

@@ -1,5 +1,3 @@
-var time_window_start, time_window_end, time_window_start_minus_year, time_window_end_minus_year, months_diff;
-
 function monthpicker_init(){
     
     time_window_start = last_date().moveToLastDayOfMonth().addDays(1).addMonths(-12).toString("yyyy-MM-dd");
@@ -57,7 +55,10 @@ function to_month_year(ymd){
     return Date.parse(ymd).toString("MMM yyyy");
 }
 
-
+if( !window.isLoaded )
+	window.addEventListener("load", function(){ onreadyMonthPicker(); }, false);
+else
+	onreadyMonthPicker();
 
 /*---- HERE THERE BE EXECUTION ----*/
 $(document).ready(function(){ 
@@ -74,3 +75,6 @@ $(document).ready(function(){
     });
     monthpicker_init();
 });
+function onreadyMonthPicker(){
+    monthpicker_init();
+}

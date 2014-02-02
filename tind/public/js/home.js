@@ -50,9 +50,8 @@ function ToggleAlertsBox(){
         $("#alerts-box").animate( {width:0, opacity:0.5}, 1000, 
             function(){
                 $("#alerts-box").css("display","none");
-                $.get('/home/hide_alerts/');
-            }    
-        );        
+                $.get('/home/hide_alerts/');   
+        });        
     }
 }
 
@@ -62,7 +61,7 @@ function redraw(num){
     height = 400 - margin.top  - margin.bottom;
     
     //$(".tooltip-1").remove();
-        
+    
     if(num){
         $("#graph-"+num+" .box svg").remove()
         eval('graph'+num+'()')
@@ -115,8 +114,8 @@ function graph1(){
             "&comparisonTo="   + time_window_end_minus_year, 
       function(error, data){
       
-      check_session(data)
       endload(1)
+      check_session(data)
       
       color.domain(d3.keys(data[0]).filter(function(key) { return key !== "Period"; }));      
       
@@ -326,8 +325,8 @@ function graph2(){
                            
         /* color.domain(d3.keys(data[0]).filter(function(key) { return eval(ex); })); */
         
-        check_session(data)
         endload(2)
+        check_session(data)
         
         var table = [];
         var times = [];
@@ -340,17 +339,20 @@ function graph2(){
     	    d.date = Date.parse(d.date)//maxDate.addMonths(-d.month);//Date.today().addMonths(d.month-12);
     	    costs.push(d.cost);
     	    times.push(d.date);
-    	    //benchmarks.push({"cost":d.benchmark, "month":d.month});
+    	    benchmarks.push({"cost":d.benchmark, "date":d.date});
     	    table[c] = d.cost;
     	    c ++;
         });
-
+      
+      var bench_costs = [] 
+      benchmarks.forEach(function(d){bench_costs.push(d.cost)})
+      
       x.domain(d3.extent(data, function(d) { return d.date; }));
       /* y.domain(d3.extent(data, function(d) { return d.cost; })); */
     
       y.domain([
         d3.min(costs)*0.90,
-        d3.max(costs)*1.1
+        d3.max(costs.concat(bench_costs))*1.1
       ]);
     
     
@@ -429,8 +431,8 @@ function graph2(){
         tooltip.style("visibility", "hidden"); 
         indicator.style("visibility", "hidden");});
             
-    var max_score = d3.max(costs)*1.1;
-    var min_score = d3.min(costs)*0.9;
+    var max_score = d3.max(costs.concat(bench_costs))*1.1;
+    var min_score = d3.min(costs.concat(bench_costs))*0.9;
     
     var spacing = 100;
     
@@ -454,7 +456,7 @@ function graph2(){
             } 
             else{
 */
-                ypos = height - ((table[Math.floor(index)] - min_score) / ((max_score- min_score) / height));
+                ypos = height - ((table[Math.floor(index)] - min_score) / ((max_score - min_score) / height));
             //}
             circle
             .attr("cx", xpos)
@@ -479,7 +481,7 @@ function graph2(){
           .attr("cy", 360 )
           .attr("cx", 0 )
           .attr("r", 8) // radius of circle
-          .attr("fill", '#F6BB33')
+          .attr("fill", '#3ea4bf')
           .attr("stroke", '#777777') 
           .style("opacity", 0.9);
     key.append("text")
@@ -487,12 +489,12 @@ function graph2(){
             .attr("x", 15)
             .attr("dy", ".71em")
             .attr("class", "text dark")
-            .text("Benchmark");
+            .text("Reporting");
     key.append("svg:circle")
           .attr("cy", 360 )
           .attr("cx", 100 )
           .attr("r", 8) // radius of circle
-          .attr("fill", '#3ea4bf')
+          .attr("fill", '#F6BB33')
           .attr("stroke", '#777777') 
           .style("opacity", 0.9);
     key.append("text")
@@ -500,7 +502,7 @@ function graph2(){
             .attr("x", 115)
             .attr("dy", ".71em")
             .attr("class", "text dark")      
-            .text("Target");
+            .text("Comparison");
     
     });
 }

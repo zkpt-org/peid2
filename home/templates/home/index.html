@@ -55,49 +55,49 @@
             </tr>
             <tr>
                 <td class="screening">Employees</td>
-                <td class="hi-lite">5465</td>
-                <td class="percentage hi-lite">5016</td>
+                <td class="hi-lite">{{ reporting.employees }}</td>
+                <td class="percentage hi-lite">{{ comparison.employees }}</td>
 
             </tr>
             <tr>
                 <td class="screening">Members</td>
-                <td class="hi-lite">13,063</td>
-                <td class="percentage hi-lite">12,033</td>
+                <td class="hi-lite">{{ reporting.members }}</td>
+                <td class="percentage hi-lite">{{ comparison.members }}</td>
             </tr>
             <tr>
                 <td class="screening">Claimants</td>
-                <td class="hi-lite">12,508</td>
-                <td class="percentage hi-lite">11,303</td>
+                <td class="hi-lite"></td>
+                <td class="percentage hi-lite"></td>
 
             </tr>
             <tr>
                 <td class="screening">Claims</td>
-                <td class="hi-lite">346,683</td>
-                <td class="percentage hi-lite">314,039</td>
+                <td class="hi-lite">{{ reporting.claims }}</td>
+                <td class="percentage hi-lite">{{ comparison.claims }}</td>
 
             </tr>
             <tr>
                 <td class="screening">Total Dollars</td>
-                <td class="hi-lite">$44,583.55</td>
-                <td class="percentage hi-lite">$42,734.66</td>
+                <td class="hi-lite">${{ reporting.totalcost }}</td>
+                <td class="percentage hi-lite">${{ comparison.totalcost }}</td>
 
             </tr>
             <tr>
                 <td class="screening">Avg. Claims per Member</td>
-                <td class="hi-lite">26.54</td>
-                <td class="percentage hi-lite">26.10</td>
+                <td class="hi-lite">{{ reporting.avg_claims }}</td>
+                <td class="percentage hi-lite">{{ comparison.avg_claims }}</td>
 
             </tr>
             <tr>
                 <td class="screening">ER Visits</td>
-                <td class="hi-lite">28,421.49</td>
-                <td class="percentage hi-lite">27,862.77</td>
+                <td class="hi-lite">{{ reporting.er_visits }}</td>
+                <td class="percentage hi-lite">{{ comparison.er_visits }}</td>
   
             </tr>
             <tr>
                 <td class="screening">Avg Claim Cost</td>
-                <td class="hi-lite">$128.60</td>
-                <td class="percentage hi-lite">$136.08</td>
+                <td class="hi-lite">${{ reporting.avg_claim_cost }}</td>
+                <td class="percentage hi-lite">${{ comparison.avg_claim_cost}}</td>
 
             </tr>
             </table>
