@@ -100,7 +100,15 @@ def graph2(request):
     return data
 
 def graph3(request):
-    locale.setlocale(locale.LC_ALL, 'en_US')
+    #locale.setlocale(locale.LC_ALL, 'en_US.utf8')
+    try:
+        import locale
+        locale.setlocale(locale.LC_ALL, 'en_US.utf8')
+    except Exception:
+        try:
+            locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
+        except Exception as e:
+            messages.error(request, 'An error occurred: {0}'.format(e))
     das = Das()
     
     params = {
