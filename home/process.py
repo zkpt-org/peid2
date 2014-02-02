@@ -100,7 +100,7 @@ def graph2(request):
     return data
 
 def graph3(request):
-    locale.setlocale(locale.LC_ALL, 'en_US.utf8')
+    locale.setlocale(locale.LC_ALL, 'en_US')
     das = Das()
     
     params = {
