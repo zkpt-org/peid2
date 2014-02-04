@@ -106,12 +106,14 @@ TEMPLATE_LOADERS = (
 )
 
 MIDDLEWARE_CLASSES = (
+    'django.middleware.cache.UpdateCacheMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'tind.middleware.AutoLogout',
+    'django.middleware.cache.FetchFromCacheMiddleware',
     # Uncomment the next line for simple clickjacking protection:
     # 'django.middleware.clickjacking.XFrameOptionsMiddleware',
 )
@@ -189,6 +191,14 @@ LOGGING = {
         },
     }
 }
+
+# ==================
+# = CACHE SETTINGS =
+# ==================
+CACHE_BACKEND = 'db://cache_table'
+CACHE_MIDDLEWARE_SECONDS = 60 * 5
+
+
 
 LOGIN_URL = '/login/'
 LOGOUT_URL = '/logout/'

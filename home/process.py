@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from dateutil.relativedelta import relativedelta
 from data.das import Das
 import json, calendar, datetime, locale #, timedelta
-
+import pandas as pd
 #from collections import OrderedDict
 
 def graph1(request):
@@ -100,7 +100,6 @@ def graph2(request):
     return data
 
 def graph3(request):
-    #locale.setlocale(locale.LC_ALL, 'en_US.utf8')
     try:
         import locale
         locale.setlocale(locale.LC_ALL, 'en_US.utf8')
@@ -109,8 +108,10 @@ def graph3(request):
             locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
         except Exception as e:
             messages.error(request, 'An error occurred: {0}'.format(e))
+    
     das = Das()
     
+    """Get the last date recorded in the dataset."""
     params = {
         "service"  : "search", 
         "table"    : "smc",
@@ -122,6 +123,7 @@ def graph3(request):
     d = datetime.datetime.strptime(lastdate, "%Y-%m-%d")
     last = datetime.date(d.year, d.month, calendar.monthrange(d.year, d.month)[1])
     
+    """Get data from summary table."""
     reporting_to    = last.strftime("%Y-%m-%d")
     reporting_from  = (last-relativedelta(years=1)+relativedelta(days=1)).strftime("%Y-%m-%d") 
     comparison_from = (last-relativedelta(years=2)+relativedelta(days=1)).strftime("%Y-%m-%d")
@@ -143,37 +145,40 @@ def graph3(request):
         comparison = response["comparison"][0]
         reporting  = response["reporting"][0]
         
+        """Calculate the number of claims for reporting Period."""
         params = {
             "service"  : "search", 
             "table"    : "smc",
             "page"     : "1",
             "pageSize" : "0",
-            #"order"    : "serviceDate:desc",
             "query"    : "{'and':[{'serviceDate.gte':'" + reporting_from + "'},{'serviceDate.lte':'" + reporting_to + "'}]}"}
         
         response = das.json_to_dict(request.session['pgt'], params)
         claims = response["summary"]["totalCounts"]    
         
+        """Calculate the number of claimants for Reporting Period."""
         # psize = 1000
         # mod   = response["summary"]["totalCounts"]%psize
         # pages = (response["summary"]["totalCounts"]/psize) + 1 if mod == 1 else (response["summary"]["totalCounts"]/psize) + 2
         # results = []
         #         
-        # for i in range(1, pages):
+        # for i in range(1, 2):
         #    params = {
         #    "service"  : "search", 
         #    "table"    : "smc",
         #    "page"     : str(i),
         #    "pageSize" : str(psize),
         #    "query"    : "{'and':[{'serviceDate.gte':'" + reporting_from + "'},{'serviceDate.lte':'" + reporting_to + "'}]}"}
-        #    
-        #    #return das.api_call(request.session['pgt'], params)
-        #    
+        #               
         #    response = das.json_to_dict(request.session['pgt'], params)["result_sets"]
         #    results += [response[row] for row in response]
         # 
-        # return results
+        # ac = pd.DataFrame(results)[['memberId','memberLastName']]
+        # # ddup = ac.drop_duplicates()
+        # claimants = ac.memberId.nunique()
+        # return claimants
         
+        """Calculate the number of claims Comparison Period."""
         params = {
             "service"  : "search",
             "table"    : "smc",
@@ -184,6 +189,7 @@ def graph3(request):
         response = das.json_to_dict(request.session['pgt'], params)
         claims2 = response["summary"]["totalCounts"]
         
+        """Calculate the number of ER visits for Reporting Period."""
         params = {
             "service"  : "search", 
             "table"    : "smc",
@@ -194,6 +200,7 @@ def graph3(request):
         response = das.json_to_dict(request.session['pgt'], params)
         er_visit = response["summary"]["totalCounts"]
         
+        """Calculate the number of ER visits for Comparison Period."""
         params = {
             "service"  : "search", 
             "table"    : "smc",
