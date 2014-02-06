@@ -64,18 +64,18 @@ function redraw(num){
     
     if(num){
         $("#graph-"+num+" .box svg").remove()
-        eval('graph'+num+'()')
         startload(num)
+        eval('graph'+num+'()')
     }
     else{
         $(".box svg").remove();
+        startload(1);
+        startload(2);
+        startload(3);
         graph1();
         graph2();
         graph3();
         graph4();
-        startload(1)
-        startload(2)
-        startload(3)
         //startload(4)
     }
 }
@@ -523,7 +523,7 @@ function graph3(){
 function graph4(){
     /* var formatPercent = d3.format(".0%"); */
     var x = d3.scale.ordinal()
-        .rangeRoundBands([1, width+15], .1);
+        .rangeRoundBands([0, width+15], .1);
     
     var y = d3.scale.linear()
         .range([height, 0]);

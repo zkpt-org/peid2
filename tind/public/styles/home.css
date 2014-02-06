@@ -156,7 +156,8 @@
 
 #cumulative .bar {
   /* fill: #49bf92; */
-  fill:orange;
+  /* fill:orange; */
+  fill:#f6bb33;
   /* fill:#7abfff; */
   /* fill:#fd889b; */
   
@@ -296,6 +297,16 @@
     color:#57a1ff;
     font-weight:bolder;
     font-size: medium;
+}
+.hide td.hi-lite.comparison{
+    /* color:#F6BB33; */
+    /* color:#ffb300; */
+    /* color:#ffb700; */
+    color:#ffae00;
+}
+
+.hide td.hi-lite.reporting{
+    color:#3ea4bf;
 }
 
 .segments{
