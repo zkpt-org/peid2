@@ -107,7 +107,8 @@ function graph1(){
       .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     
-    d3.json("/home/graph1/?months=" + months_diff  +
+    d3.json("/home/graph1/?"   +
+            /* "months="          + months_diff  + */
             "&reportingTo="    + time_window_end   +
             "&reportingFrom="  + time_window_start +
             "&comparisonFrom=" + time_window_start_minus_year +

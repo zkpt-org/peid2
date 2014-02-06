@@ -95,6 +95,12 @@ nav .dropdown{
     position: relative;
 }
 
+#alerts-button{
+    font-size: 21px;
+    margin-top: -10px;
+    margin-right: -20px;
+}
+
 
 #filter-controls{
     width:780px;

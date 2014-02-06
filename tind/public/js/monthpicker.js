@@ -6,7 +6,7 @@ function monthpicker_init(){
     time_window_start_minus_year = Date.parse(time_window_start).addMonths(-12).toString("yyyy-MM-dd");
     time_window_end_minus_year   = Date.parse(time_window_end).addMonths(-12).toString("yyyy-MM-dd");
 
-    months_diff = monthDiff(Date.parse(time_window_start), Date.parse(time_window_end));
+    //months_diff = monthDiff(Date.parse(time_window_start), Date.parse(time_window_end));
         
     $(".monthpicker .start").each(function(){
         $( this ).data("kendoDatePicker").value(Date.parse(time_window_start))
@@ -24,7 +24,7 @@ function set_time_window(num){
     time_window_start_minus_year = Date.parse(time_window_start).addMonths(-12).toString("yyyy-MM-dd");
     time_window_end_minus_year   = Date.parse(time_window_end).addMonths(-12).toString("yyyy-MM-dd");
     
-    months_diff = monthDiff(Date.parse(time_window_start), Date.parse(time_window_end));
+    //months_diff = monthDiff(Date.parse(time_window_start), Date.parse(time_window_end));
     
     $("#datepicker-" + num + "-start").data("kendoDatePicker").value(Date.parse(time_window_start))
     $("#datepicker-" + num + "-end").data("kendoDatePicker").value(Date.parse(time_window_end))
@@ -70,8 +70,8 @@ $(document).ready(function(){
             depth: "year",
             // display month and year in the input
             format: "MMM yyyy",
-            max: last_date().moveToLastDayOfMonth(),  //Date.today().clearTime().moveToFirstDayOfMonth().addDays(-1),
-            min: first_date().moveToFirstDayOfMonth(), //new Date(2011, 0, 1)
+            max: (lastdate)  ? lastdate  : last_date().moveToLastDayOfMonth(),
+            min: (firstdate) ? firstdate : first_date().moveToFirstDayOfMonth(),
     });
     monthpicker_init();
 });

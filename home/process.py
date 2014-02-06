@@ -74,8 +74,7 @@ def graph2(request):
     dates = [datetime.datetime(year=yr, month=mn, day=1) for (yr, mn) in (
          ((m - 1) / 12 + start.year, (m - 1) % 12 + 1) for m in range(start_month, end_months))]
     
-    for d in dates:
-                 
+    for d in dates:                 
         params = {
             "service"       : "report", 
             "report"        : "summary",
@@ -110,6 +109,7 @@ def graph3(request):
             messages.error(request, 'An error occurred: {0}'.format(e))
     
     das = Das()
+    ticket = request.session['pgt']
     
     """Get the last date recorded in the dataset."""
     params = {
@@ -118,76 +118,45 @@ def graph3(request):
         "page"     : "1",
         "pageSize" : "1",
         "order"    : "paidDate:desc"}
-    
-    lastdate = das.json_to_dict(request.session['pgt'], params)["result_sets"]["0"]["paidDate"]
-    d = datetime.datetime.strptime(lastdate, "%Y-%m-%d")
-    last = datetime.date(d.year, d.month, calendar.monthrange(d.year, d.month)[1])
-    
-    """Get data from summary table."""
-    reporting_to    = last.strftime("%Y-%m-%d")
-    reporting_from  = (last-relativedelta(years=1)+relativedelta(days=1)).strftime("%Y-%m-%d") 
-    comparison_from = (last-relativedelta(years=2)+relativedelta(days=1)).strftime("%Y-%m-%d")
-    comparison_to   = (last-relativedelta(years=1)).strftime("%Y-%m-%d")
+    try:
+        lastdate = das.json_to_dict(request.session['pgt'], params)["result_sets"]["0"]["serviceDate"]
+        d = datetime.datetime.strptime(lastdate, "%Y-%m-%d")
+        last = datetime.date(d.year, d.month, calendar.monthrange(d.year, d.month)[1])
         
-    params = {
-        "service"       : "report", 
-        "report"        : "summary",
-        "reportingBasis": "ServiceDate",
-        "eligibilityType":"[medical]",
-        "reportingFrom" : reporting_from,
-        "reportingTo"   : reporting_to,
-        "comparisonFrom": comparison_from,
-        "comparisonTo"  : comparison_to}
+        """Get data from summary table."""
+        reporting_to    = last.strftime("%Y-%m-%d")
+        reporting_from  = (last-relativedelta(years=1)+relativedelta(days=1)).strftime("%Y-%m-%d") 
+        comparison_from = (last-relativedelta(years=2)+relativedelta(days=1)).strftime("%Y-%m-%d")
+        comparison_to   = (last-relativedelta(years=1)).strftime("%Y-%m-%d")
+            
+        params = {
+            "service"       : "report", 
+            "report"        : "summary",
+            "reportingBasis": "ServiceDate",
+            "eligibilityType":"[medical]",
+            "reportingFrom" : reporting_from,
+            "reportingTo"   : reporting_to,
+            "comparisonFrom": comparison_from,
+            "comparisonTo"  : comparison_to}
+        
+        response = das.json_to_dict(ticket, params)
     
-    response = das.json_to_dict(request.session['pgt'], params)
+    except:
+        response = None
     
     if response:    
         comparison = response["comparison"][0]
         reporting  = response["reporting"][0]
         
         """Calculate the number of claims for reporting Period."""
-        params = {
-            "service"  : "search", 
-            "table"    : "smc",
-            "page"     : "1",
-            "pageSize" : "0",
-            "query"    : "{'and':[{'serviceDate.gte':'" + reporting_from + "'},{'serviceDate.lte':'" + reporting_to + "'}]}"}
-        
-        response = das.json_to_dict(request.session['pgt'], params)
-        claims = response["summary"]["totalCounts"]    
-        
+        claims = count_claims(reporting_from, reporting_to, ticket, das)        
         """Calculate the number of claimants for Reporting Period."""
-        # psize = 1000
-        # mod   = response["summary"]["totalCounts"]%psize
-        # pages = (response["summary"]["totalCounts"]/psize) + 1 if mod == 1 else (response["summary"]["totalCounts"]/psize) + 2
-        # results = []
-        #         
-        # for i in range(1, 2):
-        #    params = {
-        #    "service"  : "search", 
-        #    "table"    : "smc",
-        #    "page"     : str(i),
-        #    "pageSize" : str(psize),
-        #    "query"    : "{'and':[{'serviceDate.gte':'" + reporting_from + "'},{'serviceDate.lte':'" + reporting_to + "'}]}"}
-        #               
-        #    response = das.json_to_dict(request.session['pgt'], params)["result_sets"]
-        #    results += [response[row] for row in response]
-        # 
-        # ac = pd.DataFrame(results)[['memberId','memberLastName']]
-        # # ddup = ac.drop_duplicates()
-        # claimants = ac.memberId.nunique()
-        # return claimants
+        claimants = count_claimants(claims, reporting_from, reporting_to, ticket, das)
         
         """Calculate the number of claims Comparison Period."""
-        params = {
-            "service"  : "search",
-            "table"    : "smc",
-            "page"     : "1",
-            "pageSize" : "0",
-            "query"    : "{'and':[{'serviceDate.gte':'" + comparison_from + "'},{'serviceDate.lte':'" + comparison_to + "'}]}"}
-        
-        response = das.json_to_dict(request.session['pgt'], params)
-        claims2 = response["summary"]["totalCounts"]
+        claims2 = count_claims(comparison_from, comparison_to, ticket, das)
+        """Calculate the number of claimants for Reporting Period."""
+        claimants2 = count_claimants(claims, comparison_from, comparison_to, ticket, das)
         
         """Calculate the number of ER visits for Reporting Period."""
         params = {
@@ -197,7 +166,7 @@ def graph3(request):
             "pageSize" : "0",
             "query"    : "{'and':[{'serviceDate.gte':'" + reporting_from + "'},{'serviceDate.lte':'" + reporting_to + "'},{'erVisit.gt':0}]}"}
         
-        response = das.json_to_dict(request.session['pgt'], params)
+        response = das.json_to_dict(ticket, params)
         er_visit = response["summary"]["totalCounts"]
         
         """Calculate the number of ER visits for Comparison Period."""
@@ -208,7 +177,7 @@ def graph3(request):
             "pageSize" : "0",
             "query"    : "{'and':[{'serviceDate.gte':'" + comparison_from + "'},{'serviceDate.lte':'" + comparison_to + "'},{'erVisit.gt':0}]}"}
         
-        response = das.json_to_dict(request.session['pgt'], params)
+        response = das.json_to_dict(ticket, params)
         er_visit2 = response["summary"]["totalCounts"]
         
         data = {
@@ -217,6 +186,7 @@ def graph3(request):
                 "members"   : locale.format("%d", reporting["members"], grouping=True),
                 "totalcost" : locale.format("%d", reporting["totalMedicalPaidAmount"] + reporting["totalPharmacyPaidAmount"], grouping=True),
                 "claims"    : locale.format("%d", claims, grouping=True),
+                "claimants" : locale.format("%d", claimants, grouping=True),
                 "avg_claims": int(round(claims / reporting["members"])),
                 "er_visits" : locale.format("%d", er_visit, grouping=True),
                 "avg_claim_cost": int(round((reporting["totalMedicalPaidAmount"] + reporting["totalPharmacyPaidAmount"]) / claims))
@@ -226,6 +196,7 @@ def graph3(request):
                 "members"   : locale.format("%d", comparison["members"], grouping=True),
                 "totalcost" : locale.format("%d", comparison["totalMedicalPaidAmount"] + comparison["totalPharmacyPaidAmount"], grouping=True),
                 "claims"    : locale.format("%d", claims2, grouping=True),
+                "claimants" : locale.format("%d", claimants2, grouping=True),
                 "avg_claims": int(round(claims2 / comparison["members"])),
                 "er_visits" : locale.format("%d", er_visit2, grouping=True),
                 "avg_claim_cost": int(round((comparison["totalMedicalPaidAmount"] + comparison["totalPharmacyPaidAmount"]) / claims))
@@ -255,3 +226,37 @@ def graph3(request):
         }
     
     return data
+
+def count_claims(_from, _to, ticket, das):
+    params = {
+        "service"  : "search", 
+        "table"    : "smc",
+        "page"     : "1",
+        "pageSize" : "0",
+        "query"    : "{'and':[{'serviceDate.gte':'" + _from + "'},{'serviceDate.lte':'" + _to + "'}]}"}
+        
+    response = das.json_to_dict(ticket, params)
+    return response["summary"]["totalCounts"]
+
+def count_claimants(total, _from, _to, ticket, das):
+    psize = 100
+    mod   = total%psize
+    pages = (total/psize) + 1 if mod == 1 else (total/psize) + 2
+    results = []
+    
+    for i in range(1, 2):
+       params = {
+       "service"  : "search", 
+       "table"    : "smc",
+       "page"     : str(i),
+       "pageSize" : str(psize),
+       "query"    : "{'and':[{'serviceDate.gte':'" + _from + "'},{'serviceDate.lte':'" + _to + "'}]}",
+       "fields"   : "[memberId]"}
+        
+       response = das.json_to_dict(ticket, params)["result_sets"]
+       results += [response[row] for row in response]
+    
+    ac = pd.DataFrame(results)[['memberId']]
+    # ddup = ac.drop_duplicates()
+    claimants = ac.memberId.nunique()
+    return claimants

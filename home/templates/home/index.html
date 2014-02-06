@@ -2,13 +2,14 @@
 {% block title %}Costs{% endblock %}
 
 {% block javascript %}
-<script type="text/javascript" src="{{STATIC_URL}}js/d3-tip.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}js/d3-tip.js"></script>
 {% endblock %}
 
 {% block css %}{% endblock %}
-
 {% block content %}
-    {% include 'home/alerts.html' %}
+        {#{% load clearcache %}#}
+        {#{% clearcache alertcache %}#}
+        {% include 'home/alerts.html' %}
     {% include 'filters.html' %}
     <div id="graph-1" class="">
         <div class="show-hide-toggle">
@@ -57,50 +58,41 @@
                 <td class="screening">Employees</td>
                 <td class="hi-lite">{{ reporting.employees }}</td>
                 <td class="percentage hi-lite">{{ comparison.employees }}</td>
-
             </tr>
             <tr>
                 <td class="screening">Members</td>
                 <td class="hi-lite">{{ reporting.members }}</td>
                 <td class="percentage hi-lite">{{ comparison.members }}</td>
             </tr>
-<!--
             <tr>
                 <td class="screening">Claimants</td>
-                <td class="hi-lite"></td>
-                <td class="percentage hi-lite"></td>
-
+                <td class="hi-lite">{{ reporting.claimants }}</td>
+                <td class="percentage hi-lite">{{ comparison.claimants }}</td>
             </tr>
--->
             <tr>
                 <td class="screening">Claims</td>
                 <td class="hi-lite">{{ reporting.claims }}</td>
                 <td class="percentage hi-lite">{{ comparison.claims }}</td>
-
             </tr>
             <tr>
                 <td class="screening">Total Dollars</td>
                 <td class="hi-lite">${{ reporting.totalcost }}</td>
                 <td class="percentage hi-lite">${{ comparison.totalcost }}</td>
-
             </tr>
             <tr>
                 <td class="screening">Avg. Claims per Member</td>
                 <td class="hi-lite">{{ reporting.avg_claims }}</td>
                 <td class="percentage hi-lite">{{ comparison.avg_claims }}</td>
-
             </tr>
             <tr>
                 <td class="screening">ER Visits</td>
                 <td class="hi-lite">{{ reporting.er_visits }}</td>
-                <td class="percentage hi-lite">{{ comparison.er_visits }}</td>
-  
+                <td class="percentage hi-lite">{{ comparison.er_visits }}</td> 
             </tr>
             <tr>
                 <td class="screening">Avg Claim Cost</td>
                 <td class="hi-lite">${{ reporting.avg_claim_cost }}</td>
                 <td class="percentage hi-lite">${{ comparison.avg_claim_cost}}</td>
-
             </tr>
             </table>
             </div>

@@ -6,14 +6,15 @@ from models import *
 from data.das import Das
 from home import process
 import json, calendar, datetime
-#from datetime import datetime, timedelta, date
+from django.core.cache import cache
+#from django.views.decorators.cache import never_cache
 #from collections import OrderedDict
 
-
-@login_required #(redirect_field_name='login/')
+#@never_cache
+@login_required
 def index(request):
     if 'alerts' not in request.session:
-        request.session['alerts'] = "show"
+        request.session['alerts'] = "hide"
         request.session.modified = True
 
     if 'pgt' in request.session:
@@ -32,15 +33,11 @@ def index(request):
            }, context_instance=RequestContext(request))
 
 def hide_alerts(request):
-    #     if not request.is_ajax() or not request.method=='POST':
-    #         return HttpResponseNotAllowed(['POST'])
     request.session['alerts'] = 'hide'
     request.session.modified = True
     return HttpResponse(request.session['alerts'])
 
 def show_alerts(request):
-    #     if not request.is_ajax() or not request.method=='POST':
-    #         return HttpResponseNotAllowed(['POST'])
     request.session['alerts'] = 'show'
     request.session.modified = True
     return HttpResponse(request.session['alerts'])

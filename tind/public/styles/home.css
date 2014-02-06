@@ -1,3 +1,4 @@
+/*
 #alerts-tab{
     position: relative;
     font-size: medium;
@@ -13,7 +14,7 @@
 }
 
 #alerts-tab i{
-    /* color:#a1cdf3; */
+    //color:#a1cdf3;
     color:#bbb;
     margin-left: 6px;
     position: relative;
@@ -34,7 +35,7 @@
     top:48px;
     color:#ccc;
 }
-
+*/
 #alerts-label.active-alerts{
     /* color:#83c0ff; */
 }
@@ -42,14 +43,14 @@
 #alerts-box{
     width:0px;
     min-height:30px;
-    margin-bottom:30px;    
+    margin-bottom:10px;    
     border: 1px solid #ddd;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
     border-left-style: none;
     position: relative;
     left: -20px;
-    top:-32px;
+    top:-10px;
     display: none;
     opacity: 0.2;
     overflow: hidden;
@@ -70,10 +71,12 @@
     white-space: nowrap;   
 }
 
+/*
 #filter-controls{
     width:780px;
     margin:-32px auto 0 -7px;
 }
+*/
 
 
 .pmpm{

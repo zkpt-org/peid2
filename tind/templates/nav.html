@@ -7,9 +7,18 @@
     <li {% if page == "providers"    %} class="selected " {% else %} class=" " {% endif %}><a href="/providers">Providers</a></li>
     <li {% if page == "returns"      %} class="selected " {% else %} class=" " {% endif %}><a href="/projections">Predicted Costs</a></li>
     <li {% if page == "outcomes"     %} class="selected " {% else %} class=" " {% endif %}><a href="/outcomes">Outcomes</a></li>    
+    {% if page == "home" %}
+    <li id="alerts-button">
+        <a href="javascript:;" onclick="ToggleAlertsBox();">
+           <i class="fa fa-bell-o" 
+              onmouseover="$(this).toggleClass('fa-bell-o fa-bell');"
+              onmouseout="$(this).toggleClass('fa-bell-o fa-bell');"></i>
+        </a>
+    </li>
+    {% endif %}
     <li class="dropdown">
         <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-        <i class="webfont">U </i>
+        <!-- <i class="webfont">U </i> -->
         {{user.first_name}} {{user.last_name}}
         <b class="caret"></b>
       </a>
