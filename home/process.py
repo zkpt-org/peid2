@@ -271,7 +271,7 @@ def count_claimants(total, _from, _to, ticket, das):
     pages = (total/psize) + 1 if mod == 1 else (total/psize) + 2
     results = []
     
-    for i in range(1, pages):
+    for i in range(1, 10):
        params = {
        "service"  : "search", 
        "table"    : "smc",
