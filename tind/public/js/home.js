@@ -71,9 +71,11 @@ function redraw(num){
         $(".box svg").remove();
         graph1();
         graph2();
+        graph3();
         graph4();
         startload(1)
         startload(2)
+        startload(3)
         //startload(4)
     }
 }
@@ -506,6 +508,16 @@ function graph2(){
             .text("Comparison");
     
     });
+}
+
+function graph3(){
+    $.getJSON("/home/graph3", function(data){
+        endload(3)
+        check_session(data)
+        for(period in data)
+            for( n in data[period] )
+                $("td." + period + "." + n)[0].innerText = data[period][n]   
+    }) 
 }
 
 function graph4(){

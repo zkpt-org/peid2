@@ -48,51 +48,52 @@
         <div class="hide">
             <h3>Costs Summary</h3>
             <div  class="" id=summary-table>
+            <div class="webfont loader" id="loader-3"></div>
             <table class="fadeIn fadeIn-1s">
             <tr>
-                <th class="screening"><h3>Category</h3></th>
-                <th class="status"><h3>Reporting Period</h3></th>
-                <th class="percentage hi-lite"><h3>Comparison Period</h3></th>
+                <th class="category"><h3>Category</h3></th>
+                <th class="reporting"><h3>Reporting Period</h3></th>
+                <th class="comparison hi-lite"><h3>Comparison Period</h3></th>
             </tr>
             <tr>
-                <td class="screening">Employees</td>
-                <td class="hi-lite">{{ reporting.employees }}</td>
-                <td class="percentage hi-lite">{{ comparison.employees }}</td>
+                <td class="category">Employees</td>
+                <td class="reporting hi-lite employees">{{ reporting.employees }}</td>
+                <td class="comparison hi-lite employees">{{ comparison.employees }}</td>
             </tr>
             <tr>
-                <td class="screening">Members</td>
-                <td class="hi-lite">{{ reporting.members }}</td>
-                <td class="percentage hi-lite">{{ comparison.members }}</td>
+                <td class="category">Members</td>
+                <td class="reporting hi-lite members">{{ reporting.members }}</td>
+                <td class="comparison hi-lite members">{{ comparison.members }}</td>
             </tr>
             <tr>
-                <td class="screening">Claimants</td>
-                <td class="hi-lite">{{ reporting.claimants }}</td>
-                <td class="percentage hi-lite">{{ comparison.claimants }}</td>
+                <td class="category">Claimants</td>
+                <td class="reporting hi-lite claimants">{{ reporting.claimants }}</td>
+                <td class="comparison hi-lite claimants">{{ comparison.claimants }}</td>
             </tr>
             <tr>
-                <td class="screening">Claims</td>
-                <td class="hi-lite">{{ reporting.claims }}</td>
-                <td class="percentage hi-lite">{{ comparison.claims }}</td>
+                <td class="category">Claims</td>
+                <td class="reporting hi-lite claims">{{ reporting.claims }}</td>
+                <td class="comparison hi-lite claims">{{ comparison.claims }}</td>
             </tr>
             <tr>
-                <td class="screening">Total Dollars</td>
-                <td class="hi-lite">${{ reporting.totalcost }}</td>
-                <td class="percentage hi-lite">${{ comparison.totalcost }}</td>
+                <td class="category">Total Dollars</td>
+                <td class="reporting hi-lite totalcost">{{ reporting.totalcost }}</td>
+                <td class="comparison hi-lite totalcost">{{ comparison.totalcost }}</td>
             </tr>
             <tr>
-                <td class="screening">Avg. Claims per Member</td>
-                <td class="hi-lite">{{ reporting.avg_claims }}</td>
-                <td class="percentage hi-lite">{{ comparison.avg_claims }}</td>
+                <td class="category">Avg. Claims per Member</td>
+                <td class="reporting hi-lite avg_claims">{{ reporting.avg_claims }}</td>
+                <td class="comparison hi-lite avg_claims">{{ comparison.avg_claims }}</td>
             </tr>
             <tr>
-                <td class="screening">ER Visits</td>
-                <td class="hi-lite">{{ reporting.er_visits }}</td>
-                <td class="percentage hi-lite">{{ comparison.er_visits }}</td> 
+                <td class="category">ER Visits</td>
+                <td class="reporting hi-lite er_visits">{{ reporting.er_visits }}</td>
+                <td class="comparison hi-lite er_visits">{{ comparison.er_visits }}</td> 
             </tr>
             <tr>
-                <td class="screening">Avg Claim Cost</td>
-                <td class="hi-lite">${{ reporting.avg_claim_cost }}</td>
-                <td class="percentage hi-lite">${{ comparison.avg_claim_cost}}</td>
+                <td class="category">Avg Claim Cost</td>
+                <td class="reporting hi-lite avg_claim_cost">{{ reporting.avg_claim_cost }}</td>
+                <td class="comparison  hi-lite avg_claim_cost">{{ comparison.avg_claim_cost}}</td>
             </tr>
             </table>
             </div>

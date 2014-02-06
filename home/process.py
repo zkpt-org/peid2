@@ -184,22 +184,22 @@ def graph3(request):
             "reporting":{
                 "employees" : locale.format("%d", reporting["subscribers"], grouping=True),
                 "members"   : locale.format("%d", reporting["members"], grouping=True),
-                "totalcost" : locale.format("%d", reporting["totalMedicalPaidAmount"] + reporting["totalPharmacyPaidAmount"], grouping=True),
+                "totalcost" : "$" + locale.format("%d", reporting["totalMedicalPaidAmount"] + reporting["totalPharmacyPaidAmount"], grouping=True),
                 "claims"    : locale.format("%d", claims, grouping=True),
                 "claimants" : locale.format("%d", claimants, grouping=True),
                 "avg_claims": int(round(claims / reporting["members"])),
                 "er_visits" : locale.format("%d", er_visit, grouping=True),
-                "avg_claim_cost": int(round((reporting["totalMedicalPaidAmount"] + reporting["totalPharmacyPaidAmount"]) / claims))
+                "avg_claim_cost": "$" + str(int(round((reporting["totalMedicalPaidAmount"] + reporting["totalPharmacyPaidAmount"]) / claims)))
             },
             "comparison":{
                 "employees" : locale.format("%d", comparison["subscribers"], grouping=True),
                 "members"   : locale.format("%d", comparison["members"], grouping=True),
-                "totalcost" : locale.format("%d", comparison["totalMedicalPaidAmount"] + comparison["totalPharmacyPaidAmount"], grouping=True),
+                "totalcost" : "$" + locale.format("%d", comparison["totalMedicalPaidAmount"] + comparison["totalPharmacyPaidAmount"], grouping=True),
                 "claims"    : locale.format("%d", claims2, grouping=True),
                 "claimants" : locale.format("%d", claimants2, grouping=True),
                 "avg_claims": int(round(claims2 / comparison["members"])),
                 "er_visits" : locale.format("%d", er_visit2, grouping=True),
-                "avg_claim_cost": int(round((comparison["totalMedicalPaidAmount"] + comparison["totalPharmacyPaidAmount"]) / claims))
+                "avg_claim_cost": "$" + str(int(round((comparison["totalMedicalPaidAmount"] + comparison["totalPharmacyPaidAmount"]) / claims)))
             }
         }
     
@@ -210,6 +210,7 @@ def graph3(request):
                 "members"   : 0,
                 "totalcost" : 0,
                 "claims"    : 0,
+                "claimants" : 0,
                 "avg_claims": 0,
                 "er_visits" : 0,
                 "avg_claim_cost": 0
@@ -219,12 +220,38 @@ def graph3(request):
                 "members"   : 0,
                 "totalcost" : 0,
                 "claims"    : 0,
+                "claimants" : 0,
                 "avg_claims": 0,
                 "er_visits" : 0,
                 "avg_claim_cost": 0
             }
         }
     
+    return data
+
+def graph3init():
+    data = {
+        "reporting":{
+            "employees" : "",
+            "members"   : "",
+            "totalcost" : "",
+            "claims"    : "",
+            "claimants" : "",
+            "avg_claims": "",
+            "er_visits" : "",
+            "avg_claim_cost": ""
+        },
+        "comparison":{
+            "employees" : "",
+            "members"   : "",
+            "totalcost" : "",
+            "claims"    : "",
+            "claimants" : "",
+            "avg_claims": "",
+            "er_visits" : "",
+            "avg_claim_cost": ""
+        }
+    }
     return data
 
 def count_claims(_from, _to, ticket, das):
@@ -244,7 +271,7 @@ def count_claimants(total, _from, _to, ticket, das):
     pages = (total/psize) + 1 if mod == 1 else (total/psize) + 2
     results = []
     
-    for i in range(1, 2):
+    for i in range(1, 10):
        params = {
        "service"  : "search", 
        "table"    : "smc",

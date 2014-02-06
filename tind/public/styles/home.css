@@ -262,14 +262,14 @@
 /*     font-weight: bold; */
 }
 .hide td.status{
-    width:200px;
+    width:150px;
 }
-.hide td.percentage{
+.hide td.comparison{
     width:150px;
     border-right:none;
 }
 .hide td.overdue{
-    width:200px;
+    width:150px;
     text-align:right;
 }
 
@@ -279,15 +279,15 @@
    font-weight: bold;
    font-size: large;
 }
-.hide th.screening{
+.hide th.category{
     width:150px;
     text-align:left;
 }
-.hide th.status{
-    width:200px;
+.hide th.reporting{
+    width:150px;
     text-align:left;
 }
-.hide th.percentage{
+.hide th.comparison{
     width:150px;
     text-align:left;
 }

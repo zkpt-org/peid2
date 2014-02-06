@@ -7,4 +7,5 @@ urlpatterns = patterns('',
     url(r'^show_alerts/', views.show_alerts, name='show_alerts'),
     url(r'^graph1/$', views.graph1),
     url(r'^graph2/$', views.graph2),
+    url(r'^graph3/$', views.graph3),
 )

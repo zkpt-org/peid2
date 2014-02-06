@@ -18,7 +18,8 @@ def index(request):
         request.session.modified = True
 
     if 'pgt' in request.session:
-        data = process.graph3(request)
+        #data = process.graph3(request)
+        data = process.graph3init()
     else:
         data = {"session":"expired"}
         data["reporting"]  = {}
@@ -42,6 +43,7 @@ def show_alerts(request):
     request.session.modified = True
     return HttpResponse(request.session['alerts'])
 
+@login_required
 def graph1(request):
     #months = int(request.GET["months"])
     if 'pgt' in request.session:
@@ -50,10 +52,19 @@ def graph1(request):
         data = {"session":"expired"}
     return HttpResponse(json.dumps(data))
 
+@login_required
 def graph2(request):
     #months = int(request.GET["months"])
     if 'pgt' in request.session:
         data = process.graph2(request)
+    else:
+        data = {"session":"expired"}    
+    return HttpResponse(json.dumps(data))
+
+@login_required
+def graph3(request):
+    if 'pgt' in request.session:
+        data = process.graph3(request)
     else:
         data = {"session":"expired"}    
     return HttpResponse(json.dumps(data))
