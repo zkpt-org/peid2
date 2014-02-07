@@ -266,24 +266,38 @@ def count_claims(_from, _to, ticket, das):
     return response["summary"]["totalCounts"]
 
 def count_claimants(total, _from, _to, ticket, das):
-    psize = 100
-    mod   = total%psize
-    pages = (total/psize) + 1 if mod == 1 else (total/psize) + 2
-    results = []
-    
-    for i in range(1, 10):
-       params = {
-       "service"  : "search", 
-       "table"    : "smc",
-       "page"     : str(i),
-       "pageSize" : str(psize),
-       "query"    : "{'and':[{'serviceDate.gte':'" + _from + "'},{'serviceDate.lte':'" + _to + "'}]}",
-       "fields"   : "[memberId]"}
-        
-       response = das.json_to_dict(ticket, params)["result_sets"]
-       results += [response[row] for row in response]
-    
-    ac = pd.DataFrame(results)[['memberId']]
-    # ddup = ac.drop_duplicates()
-    claimants = ac.memberId.nunique()
-    return claimants
+    params = {
+    "service"     : "search", 
+    "table"       : "ms",
+    "page"        : "1",
+    "pageSize"    : "1",
+    "query"       : "{'and':[{'serviceDate.gte':'" + _from + "'},{'serviceDate.lte':'" + _to + "'}]}",
+    "fields"      : "[memberId]",
+    "report"      : "viewMemberSearch",
+    "recordTypes" : "smc"}
+
+    response = das.json_to_dict(ticket, params)["summary"]["totalCounts"]
+    return response
+
+# def count_claimants(total, _from, _to, ticket, das):
+#     psize = 100
+#     mod   = total%psize
+#     pages = (total/psize) + 1 if mod == 1 else (total/psize) + 2
+#     results = []
+# 
+#     for i in range(1, 10):
+#        params = {
+#        "service"  : "search", 
+#        "table"    : "smc",
+#        "page"     : str(i),
+#        "pageSize" : str(psize),
+#        "query"    : "{'and':[{'serviceDate.gte':'" + _from + "'},{'serviceDate.lte':'" + _to + "'}]}",
+#        "fields"   : "[memberId]"}
+# 
+#        response = das.json_to_dict(ticket, params)["result_sets"]
+#        results += [response[row] for row in response]
+# 
+#     ac = pd.DataFrame(results)[['memberId']]
+#     # ddup = ac.drop_duplicates()
+#     claimants = ac.memberId.nunique()
+#     return claimants
