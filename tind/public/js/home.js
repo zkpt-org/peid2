@@ -552,14 +552,15 @@ function graph4(){
     
     svg.call(tip);
     
-    /* d3.csv("../public/data/cumulative.csv", function(error, data) { */
-    
+    d3.json("../public/data/cumulative.json", function(error, data) {
+/*
     d3.json("/home/graph4/"   +
            "?reportingTo="    + time_window_end   +
            "&reportingFrom="  + time_window_start +
            "&comparisonFrom=" + time_window_start_minus_year +
            "&comparisonTo="   + time_window_end_minus_year, 
       function(error, data){
+*/
       
       endload(4)
       check_session(data)
