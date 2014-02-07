@@ -169,9 +169,7 @@ function graph1(){
           .attr("dy", ".71em")
           /* .style("text-anchor", "center") */
           ;    
-    
-    
-    
+        
       svg.append("g")
           .attr("class", "y axis")
           .call(yAxis)
@@ -554,12 +552,16 @@ function graph4(){
     
     svg.call(tip);
     
-    d3.json("/home/graph4/?"   +
-            "reportingTo="    + time_window_end   +
+    d3.csv("../public/data/cumulative.csv", function(error, data) {
+    
+/*
+    d3.json("/home/graph4/"   +
+           "?reportingTo="    + time_window_end   +
            "&reportingFrom="  + time_window_start +
            "&comparisonFrom=" + time_window_start_minus_year +
            "&comparisonTo="   + time_window_end_minus_year, 
       function(error, data){
+*/
       
       endload(4)
       check_session(data)
