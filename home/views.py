@@ -68,3 +68,11 @@ def graph3(request):
     else:
         data = {"session":"expired"}    
     return HttpResponse(json.dumps(data))
+    
+@login_required
+def graph4(request):
+    if 'pgt' in request.session:
+        data = process.graph4(request)
+    else:
+        data = {"session":"expired"}    
+    return HttpResponse(json.dumps(data))

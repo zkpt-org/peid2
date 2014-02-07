@@ -72,11 +72,11 @@ function redraw(num){
         startload(1);
         startload(2);
         startload(3);
+        startload(4);
         graph1();
         graph2();
         graph3();
         graph4();
-        //startload(4)
     }
 }
 
@@ -554,7 +554,16 @@ function graph4(){
     
     svg.call(tip);
     
-    d3.csv("../public/data/cumulative.csv", function(error, data) {
+    d3.json("/home/graph4/?"   +
+            "reportingTo="    + time_window_end   +
+           "&reportingFrom="  + time_window_start +
+           "&comparisonFrom=" + time_window_start_minus_year +
+           "&comparisonTo="   + time_window_end_minus_year, 
+      function(error, data){
+      
+      endload(4)
+      check_session(data)
+           
       x.domain(data.map(function(d) { return d.perc; }));
       y.domain([0, d3.max(data, function(d) { return d.frequency; })]);      
       

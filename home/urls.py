@@ -8,4 +8,5 @@ urlpatterns = patterns('',
     url(r'^graph1/$', views.graph1),
     url(r'^graph2/$', views.graph2),
     url(r'^graph3/$', views.graph3),
+    url(r'^graph4/$', views.graph4),
 )

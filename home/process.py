@@ -3,6 +3,7 @@ from dateutil.relativedelta import relativedelta
 from data.das import Das
 import json, calendar, datetime, locale #, timedelta
 import pandas as pd
+import numpy as np
 #from collections import OrderedDict
 
 def graph1(request):
@@ -254,6 +255,46 @@ def graph3init():
     }
     return data
 
+def graph4(request):
+    das = Das()
+    ticket = request.session['pgt']
+    
+    reporting_from  = request.GET["reportingFrom"]
+    reporting_to    = request.GET["reportingTo"]
+    
+    comparison_from = request.GET["comparisonFrom"]
+    comparison_to   = request.GET["comparisonTo"]
+    
+    params = {
+        "service"       : "report", 
+        "report"        : "summary",
+        "reportingBasis": "ServiceDate",
+        "eligibilityType":"[medical]",
+        "reportingFrom" : reporting_from,
+        "reportingTo"   : reporting_to,
+        "comparisonFrom": comparison_from,
+        "comparisonTo"  : comparison_to}
+    
+    response   = das.json_to_dict(request.session['pgt'], params)
+    comparison = response["comparison"][0]
+    reporting  = response["reporting"][0]
+    
+    """reporting period."""
+    total_cost   = reporting["totalMedicalPaidAmount"] #+ reporting["totalPharmacyPaidAmount"]
+    total_claims = count_claims(reporting_from, reporting_to, ticket, das)
+    
+    psize = total_claims / 99 if total_claims % 100 > 0 else total_claims / 100
+    pages = 100
+    total = 0
+    results = []
+    
+    for p in range(1, pages+1):
+        cuml = cumulative(reporting_from, reporting_to, ticket, das, p, psize)
+        clms = pd.DataFrame(cuml)[['paidAmount']]
+        total += np.asscalar(clms.sum())
+        results.append({"perc" : p, "frequency" : round(total/total_cost*100, 2)})
+    return results
+
 def count_claims(_from, _to, ticket, das):
     params = {
         "service"  : "search", 
@@ -270,19 +311,34 @@ def count_claimants(total, _from, _to, ticket, das):
     "service"     : "search", 
     "table"       : "ms",
     "page"        : "1",
-    "pageSize"    : "1",
+    "pageSize"    : "0",
     "query"       : "{'and':[{'serviceDate.gte':'" + _from + "'},{'serviceDate.lte':'" + _to + "'}]}",
     "fields"      : "[memberId]",
     "report"      : "viewMemberSearch",
     "recordTypes" : "smc"}
-
+    
     response = das.json_to_dict(ticket, params)["summary"]["totalCounts"]
     return response
 
+def cumulative(_from, _to, ticket, das, page, psize):
+    results = []
+    params = {
+    "service"  : "search", 
+    "table"    : "smc",
+    "page"     : str(page),
+    "pageSize" : str(psize),
+    "order"    : "paidAmount:desc",
+    "query"    : "{'and':[{'serviceDate.gte':'" + _from + "'},{'serviceDate.lte':'" + _to + "'}]}",
+    "fields"   : "[paidAmount]"
+    }
+    response = das.json_to_dict(ticket, params)["result_sets"]
+    results += [response[row] for row in response]
+    return results
+    
 # def count_claimants(total, _from, _to, ticket, das):
 #     psize = 100
 #     mod   = total%psize
-#     pages = (total/psize) + 1 if mod == 1 else (total/psize) + 2
+#     pages = (total/psize) + 1 if mod == 0 else (total/psize) + 2
 #     results = []
 # 
 #     for i in range(1, 10):
