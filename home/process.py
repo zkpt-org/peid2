@@ -266,14 +266,14 @@ def graph4(request):
     comparison_to   = request.GET["comparisonTo"]
     
     params = {
-        "service"       : "report", 
-        "report"        : "summary",
-        "reportingBasis": "ServiceDate",
-        "eligibilityType":"[medical]",
-        "reportingFrom" : reporting_from,
-        "reportingTo"   : reporting_to,
-        "comparisonFrom": comparison_from,
-        "comparisonTo"  : comparison_to}
+        "service"         : "report", 
+        "report"          : "summary",
+        "reportingBasis"  : "ServiceDate",
+        "eligibilityType" :"[medical]",
+        "reportingFrom"   : reporting_from,
+        "reportingTo"     : reporting_to,
+        "comparisonFrom"  : comparison_from,
+        "comparisonTo"    : comparison_to}
     
     response   = das.json_to_dict(request.session['pgt'], params)
     comparison = response["comparison"][0]
@@ -301,7 +301,7 @@ def count_claims(_from, _to, ticket, das):
         "table"    : "smc",
         "page"     : "1",
         "pageSize" : "0",
-        "query"    : "{'and':[{'serviceDate.gte':'" + _from + "'},{'serviceDate.lte':'" + _to + "'}]}"}
+        "query"    : "{'and':[{'serviceDate.gte':'" + _from + "'},{'serviceDate.lte':'" + _to + "'},{'paidAmount.gt':'0'}]}"}
         
     response = das.json_to_dict(ticket, params)
     return response["summary"]["totalCounts"]
@@ -312,13 +312,28 @@ def count_claimants(total, _from, _to, ticket, das):
     "table"       : "ms",
     "page"        : "1",
     "pageSize"    : "0",
-    "query"       : "{'and':[{'serviceDate.gte':'" + _from + "'},{'serviceDate.lte':'" + _to + "'}]}",
+    "query"       : "{'and':[{'serviceDate.gte':'" + _from + "'},{'serviceDate.lte':'" + _to + "'},{'paidAmount.gt':'0'}]}",
     "fields"      : "[memberId]",
     "report"      : "viewMemberSearch",
     "recordTypes" : "smc"}
     
     response = das.json_to_dict(ticket, params)["summary"]["totalCounts"]
     return response
+
+def neg_claims(_from, _to, ticket, das, page, psize):
+    results = []
+    params = {
+    "service"  : "search", 
+    "table"    : "smc",
+    "page"     : "1",
+    "pageSize" : "1000",
+    "order"    : "paidAmount:asc",
+    "query"    : "{'and':[{'serviceDate.gte':'" + _from + "'},{'serviceDate.lte':'" + _to + "'},{'paidAmount.lt':'0'}]}",
+    "fields"   : "[paidAmount]"
+    }
+    response = das.json_to_dict(ticket, params)["result_sets"]
+    results += [response[row] for row in response]
+    return results
 
 def cumulative(_from, _to, ticket, das, page, psize):
     results = []
@@ -328,7 +343,7 @@ def cumulative(_from, _to, ticket, das, page, psize):
     "page"     : str(page),
     "pageSize" : str(psize),
     "order"    : "paidAmount:desc",
-    "query"    : "{'and':[{'serviceDate.gte':'" + _from + "'},{'serviceDate.lte':'" + _to + "'}]}",
+    "query"    : "{'and':[{'serviceDate.gte':'" + _from + "'},{'serviceDate.lte':'" + _to + "'},{'paidAmount.gt':'0'}]}",
     "fields"   : "[paidAmount]"
     }
     response = das.json_to_dict(ticket, params)["result_sets"]
