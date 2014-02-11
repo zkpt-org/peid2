@@ -57,13 +57,8 @@ def graph1(request):
 def graph2(request):
     #months = int(request.GET["months"])
     if 'pgt' in request.session:
-        # q = Queue(connection=conn, default_timeout=600)
-        # job = q.enqueue_call(func=process.graph2, args=(request.GET, request.session), timeout=600)
-        # while job.result is None:
-        #     time.sleep(1)
-        # data = job.result
-        #data = process.graph2(request.GET, request.session)
-        data = queue.send(process.graph2, (request.GET, request.session), 600)
+        data = process.graph2(request.GET, request.session)
+        #data = queue.send(process.graph2, (request.GET, request.session), 600)
     else:
         data = {"session":"expired"}    
     return HttpResponse(json.dumps(data))
