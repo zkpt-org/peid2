@@ -41,7 +41,6 @@ def api(request, service=None):
     #return HttpResponse(json.dumps(data, sort_keys=True, indent=4), content_type='application/json')
     #return render_to_response('data/index.html',{"status": data})
 
-@login_required
 def lastdate(request, format="Ymd"):
     das = Das()
     
@@ -64,7 +63,7 @@ def lastdate(request, format="Ymd"):
     #return HttpResponse(json.dumps(response["paidDate"]))
     return HttpResponse(response["paidDate"])
     
-@login_required
+
 def firstdate(request, format="Ymd"):
     das = Das()
     

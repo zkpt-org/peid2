@@ -58,12 +58,12 @@ def graph1(request):
     
     return data
 
-def graph2(request):
+def graph2(window, session):
     das = Das()
     data = []
     
-    start = datetime.date(*map(int, request.GET["reportingFrom"].split("-")))
-    end   = datetime.date(*map(int, request.GET["reportingTo"].split("-")))
+    start = datetime.date(*map(int, window["reportingFrom"].split("-")))
+    end   = datetime.date(*map(int, window["reportingTo"].split("-")))
     
     m = end-start
     
@@ -86,7 +86,7 @@ def graph2(request):
             "comparisonFrom": (d - relativedelta(years=1)).strftime("%Y-%m-%d"),
             "comparisonTo"  : datetime.date(d.year-1, d.month, calendar.monthrange(d.year, d.month)[1]).strftime("%Y-%m-%d")}
         
-        response = das.json_to_dict(request.session['pgt'], params)
+        response = das.json_to_dict(session['pgt'], params)
         #if "comparison" not in response: return {"session":"expired"}
         comparison = response["comparison"][0]
         reporting  = response["reporting"][0]
@@ -320,24 +320,9 @@ def count_claimants(total, _from, _to, ticket, das):
     response = das.json_to_dict(ticket, params)["summary"]["totalCounts"]
     return response
 
-def neg_claims(_from, _to, ticket, das, page, psize):
-    results = []
-    params = {
-    "service"  : "search", 
-    "table"    : "smc",
-    "page"     : "1",
-    "pageSize" : "1000",
-    "order"    : "paidAmount:asc",
-    "query"    : "{'and':[{'serviceDate.gte':'" + _from + "'},{'serviceDate.lte':'" + _to + "'},{'paidAmount.lt':'0'}]}",
-    "fields"   : "[paidAmount]"
-    }
-    response = das.json_to_dict(ticket, params)["result_sets"]
-    results += [response[row] for row in response]
-    return results
-
 def cumulative(_from, _to, ticket, das, page, psize):
     results = []
-    params = {
+    params  = {
     "service"  : "search", 
     "table"    : "smc",
     "page"     : str(page),
@@ -349,7 +334,22 @@ def cumulative(_from, _to, ticket, das, page, psize):
     response = das.json_to_dict(ticket, params)["result_sets"]
     results += [response[row] for row in response]
     return results
-    
+
+# def neg_claims(_from, _to, ticket, das, page, psize):
+#     results = []
+#     params = {
+#     "service"  : "search", 
+#     "table"    : "smc",
+#     "page"     : "1",
+#     "pageSize" : "1000",
+#     "order"    : "paidAmount:asc",
+#     "query"    : "{'and':[{'serviceDate.gte':'" + _from + "'},{'serviceDate.lte':'" + _to + "'},{'paidAmount.lt':'0'}]}",
+#     "fields"   : "[paidAmount]"
+#     }
+#     response = das.json_to_dict(ticket, params)["result_sets"]
+#     results += [response[row] for row in response]
+#     return results    
+
 # def count_claimants(total, _from, _to, ticket, das):
 #     psize = 100
 #     mod   = total%psize
