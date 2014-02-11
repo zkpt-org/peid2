@@ -1,5 +1,5 @@
 from rq import Queue
-from tind.worker import conn
+from worker import conn
 import time
 
 def send(func, args, timeout=600):
