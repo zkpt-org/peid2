@@ -49,7 +49,12 @@ function onready() {
     });
 }
 
-function check_session(response){if("session" in response && response["session"]=="expired") end_of_session();}
+function check_session(response){
+    if(typeof response === 'string')
+        return response;
+    else if("session" in response && response["session"]=="expired")
+        end_of_session();
+}
 
 function end_of_session(){document.location = "/login/"}
     
@@ -149,12 +154,16 @@ function details_reset(){
 }
 
 function first_date(){
-    firstdate = Date.parse($.ajax({type: "GET", url: "/data/firstdate/", async: false}).responseText);
+    response = $.ajax({type: "GET", url: "/data/firstdate/", async: false}).responseText;
+    check_session(response);
+    firstdate = Date.parse(response);
     return firstdate
 }
 
 function last_date(){
-    lastdate = Date.parse($.ajax({type: "GET", url: "/data/lastdate/", async: false}).responseText);
+    response = $.ajax({type: "GET", url: "/data/lastdate/", async: false}).responseText;
+    check_session(response)
+    lastdate = Date.parse(response)
     return lastdate
 }
 

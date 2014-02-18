@@ -252,7 +252,6 @@ function graph1(){
 }
 
 function graph2(){
-
     var minDate = Date.parse(time_window_start) //Date.today().clearTime().moveToFirstDayOfMonth().addMonths(-12);
     var maxDate = Date.parse(time_window_end)  //Date.today().clearTime().moveToFirstDayOfMonth();
     
@@ -541,7 +540,7 @@ function graph4(){
       .attr('class', 'd3-tip')
       .offset([-10, 0])
       .html(function(d) {
-        return '<strong>Cost:</strong> <span style="color:orange">' + d.frequency + "%</span>";
+        return '<strong>Cost:</strong> <span style="color:orange">' + d.cost + "%</span>";
       })
     
     var svg = d3.select("#cumulative").append("svg")
@@ -565,8 +564,8 @@ function graph4(){
       endload(4)
       check_session(data)
            
-      x.domain(data.map(function(d) { return d.perc; }));
-      y.domain([0, d3.max(data, function(d) { return d.frequency; })]);      
+      x.domain(data.map(function(d) { return d.claims; }));
+      y.domain([0, d3.max(data, function(d) { return d.cost; })]);      
       
       svg.append("g")
           .attr("class", "x axis")
@@ -594,10 +593,10 @@ function graph4(){
           .data(data)
         .enter().append("rect")
           .attr("class", "bar")
-          .attr("x", function(d) { return x(d.perc)-5; })
+          .attr("x", function(d) { return x(d.claims)-5; })
           .attr("width", x.rangeBand())
-          .attr("y", function(d) { return y(d.frequency); })
-          .attr("height", function(d) { return height - y(d.frequency); })
+          .attr("y", function(d) { return y(d.cost); })
+          .attr("height", function(d) { return height - y(d.cost); })
           .on('mouseover', tip.show)
           .on('mouseout', tip.hide)
     
