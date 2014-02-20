@@ -155,6 +155,7 @@ function details_reset(){
 
 function first_date(){
     response = $.ajax({type: "GET", url: "/data/firstdate/", async: false}).responseText;
+    console.log(response)
     check_session(response);
     firstdate = Date.parse(response);
     return firstdate
@@ -162,6 +163,7 @@ function first_date(){
 
 function last_date(){
     response = $.ajax({type: "GET", url: "/data/lastdate/", async: false}).responseText;
+    console.log(response)
     check_session(response)
     lastdate = Date.parse(response)
     return lastdate

@@ -520,7 +520,7 @@ function graph3(){
 function graph4(){
     /* var formatPercent = d3.format(".0%"); */
     var x = d3.scale.ordinal()
-        .rangeRoundBands([0, width+15], .1);
+        .rangeRoundBands([0, width+15], .08);
     
     var y = d3.scale.linear()
         .range([height, 0]);
@@ -552,14 +552,13 @@ function graph4(){
     svg.call(tip);
     
     d3.json("../public/data/cumulative.json", function(error, data) {
-/*
-    d3.json("/home/graph4/"   +
-           "?reportingTo="    + time_window_end   +
-           "&reportingFrom="  + time_window_start +
-           "&comparisonFrom=" + time_window_start_minus_year +
-           "&comparisonTo="   + time_window_end_minus_year, 
-      function(error, data){
-*/
+    // d3.json("/home/graph4/"   +
+    //        "?reportingTo="    + time_window_end   +
+    //        "&reportingFrom="  + time_window_start +
+    //        "&comparisonFrom=" + time_window_start_minus_year +
+    //        "&comparisonTo="   + time_window_end_minus_year +
+    //        "&" + query_string, 
+    //   function(error, data){
       
       endload(4)
       check_session(data)

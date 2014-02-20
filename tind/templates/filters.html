@@ -1,8 +1,8 @@
 <script type="text/javascript" src="{{STATIC_URL}}js/filters.js"></script>
 <script type="text/javascript">
     filter_default_labels = ["Client", "Office", "Level", "Condition", "Gender", "Age Group"];
-    filter_query = {"client":"ALL", "gender":"ALL", "age":"ALL", "condition":"ALL", "tenure":"ALL"};
-    filter_keys = ["client", "gender", "age", "condition", "tenure"]
+    filter_query = {"client":"ALL", "gender":"ALL", "age":"ALL", "condition":"ALL", "level":"ALL", "office":"ALL", "client":"ALL"};
+    filter_keys = ["client", "office", "level", "condition", "gender", "age"]
     query_string = query(filter_query);
 </script>
 <div id="filter-controls">
@@ -14,9 +14,8 @@
       <ul class="dropdown-menu">
         <li onclick="reset_filter(this, 0)"><a>All Clients</a></li>
         <li class="divider"></li>
-        <li onclick="filter(this, 0);"><a>Client A</a></li>
-        <li onclick="filter(this, 0);"><a>Client B</a></li>
-        <li onclick="filter(this, 0);"><a>Client C</a></li>
+        <li onclick="filter(this, 0);"><a>ABC corporation</a></li>
+        <li onclick="filter(this, 0);"><a>XYZ private ltd</a></li>
       </ul>
     </div>
     <div class="btn-group" id="filter-1">
@@ -84,11 +83,12 @@
       <ul class="dropdown-menu">
         <li onclick="reset_filter(this, 5)"><a>All Ages</a></li>
         <li class="divider"></li>
-        <li onclick="filter(this, 5)"><a>18-30</a></li>
-        <li onclick="filter(this, 5)"><a>31-45</a></li>
-        <li onclick="filter(this, 5)"><a>46-60</a></li>
-        <li onclick="filter(this, 5)"><a>61-75</a></li>
-        <li onclick="filter(this, 5)"><a>76+</a></li>
+        <li onclick="filter(this, 5)"><a>18-29</a></li>
+        <li onclick="filter(this, 5)"><a>30-39</a></li>
+        <li onclick="filter(this, 5)"><a>40-49</a></li>
+        <li onclick="filter(this, 5)"><a>50-59</a></li>
+        <li onclick="filter(this, 5)"><a>60-69</a></li>
+        <li onclick="filter(this, 5)"><a>70+</a></li>
       </ul>
     </div>
 </div>

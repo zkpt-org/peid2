@@ -157,10 +157,11 @@
 #cumulative .bar {
   /* fill: #49bf92; */
   /* fill:orange; */
-  fill:#f6bb33;
-  /* fill:#7abfff; */
-  /* fill:#fd889b; */
   
+  /*fill:#7abfff;*/
+  /*fill:#fd889b;*/
+  /*fill:#3ea4bf;*/
+  fill:#f6bb33;
 }
 
 #cumulative .bar:hover {

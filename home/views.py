@@ -8,6 +8,7 @@ from data import queue
 from home import process
 import json, calendar, datetime
 from django.core.cache import cache
+from django.core.exceptions import ObjectDoesNotExist
 #from django.views.decorators.cache import never_cache
 #from collections import OrderedDict
 
@@ -73,8 +74,20 @@ def graph3(request):
     
 @login_required
 def graph4(request):
+    # try:
+    #     data = Graph4.objects.get(
+    #         client = request.GET["client"],
+    #         office = request.GET["office"],
+    #         level  = request.GET["level"],
+    #         gender = request.GET["gender"],
+    #         age    = request.GET["age"],
+    #         condition  = request.GET["condition"],
+    #         start_date = request.GET["reportingFrom"],
+    #         end_date   = request.GET["reportingTo"]).data
+    # 
+    # except ObjectDoesNotExist:
     if 'pgt' in request.session:
         data = process.graph4(request)
     else:
         data = {"session":"expired"}    
-    return HttpResponse(json.dumps(data))
+    return HttpResponse(data)

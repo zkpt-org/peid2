@@ -41,11 +41,12 @@ table {border-collapse: collapse;border-spacing: 0;}
 
 @font-face{ 
     font-family: 'WebFont'; 
-    src: url('Webfont/webfont.eot'); 
-    src: url('Webfont/webfont.eot?#iefix') format('embedded-opentype'), 
-    url('Webfont/webfont.woff') format('woff'), 
-    url('Webfont/webfont.ttf') format('truetype'), 
-    url('Webfont/webfont.svg#webfont') format('svg');
+    src: url('Webfont/webfont.eot');
+    src: local(Web Symbols Regular), local(WebSymbols-Regular), 
+        url('Webfont/webfont.eot?#iefix') format('embedded-opentype'), 
+        url('Webfont/webfont.woff') format('woff'), 
+        url('Webfont/webfont.ttf') format('truetype'), 
+        url('Webfont/webfont.svg#webfont') format('svg');
 }
 
 .webfont{
