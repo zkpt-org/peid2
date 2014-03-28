@@ -183,6 +183,7 @@ function loading(num){
 
 function endload(num, timer){
    $('#loader-'+num).fadeOut(1000);
+   // $('#loader-'+num).css("display","none");
    clearInterval(eval("timer"+num));
 }
 

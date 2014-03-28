@@ -552,52 +552,57 @@ function graph4(){
     svg.call(tip);
     
     d3.json("../public/data/cumulative.json", function(error, data) {
-    // d3.json("/home/graph4/"   +
-    //        "?reportingTo="    + time_window_end   +
-    //        "&reportingFrom="  + time_window_start +
-    //        "&comparisonFrom=" + time_window_start_minus_year +
-    //        "&comparisonTo="   + time_window_end_minus_year +
-    //        "&" + query_string, 
-    //   function(error, data){
+/*
+    d3.json("/home/graph4/"   +
+           "?reportingTo="    + time_window_end   +
+           "&reportingFrom="  + time_window_start +
+           "&comparisonFrom=" + time_window_start_minus_year +
+           "&comparisonTo="   + time_window_end_minus_year +
+           "&" + query_string, 
+      function(error, data){
+*/
       
-      endload(4)
-      check_session(data)
-           
-      x.domain(data.map(function(d) { return d.claims; }));
-      y.domain([0, d3.max(data, function(d) { return d.cost; })]);      
+      endload(4);
+      check_session(data);
       
-      svg.append("g")
-          .attr("class", "x axis")
-          .attr("transform", "translate(-5," + height + ")")
-          .call(xAxis)
-          .append("text")
-          .attr("y", 30)
-          .attr("x", 690)
-          .attr("dy", ".71em")
-          .style("text-anchor", "end")
-          .text("Claims %");
+      if(data == "No Data")
+        console.log("No Data. Handle it.")
+      else{    
+          x.domain(data.map(function(d) { return d.claims; }));
+          y.domain([0, d3.max(data, function(d) { return d.cost; })]);      
+      
+          svg.append("g")
+              .attr("class", "x axis")
+              .attr("transform", "translate(-5," + height + ")")
+              .call(xAxis)
+              .append("text")
+              .attr("y", 30)
+              .attr("x", 690)
+              .attr("dy", ".71em")
+              .style("text-anchor", "end")
+              .text("Claims %");
     
-      svg.append("g")
-          .attr("class", "y axis")
-          .call(yAxis)
-          .attr("transform", "translate(-1," + 0 + ")")
-        .append("text")
-          .attr("y", 5)
-          .attr("x", 40)
-          .attr("dy", ".71em")
-          .style("text-anchor", "end")
-          .text("Cost %");
+          svg.append("g")
+              .attr("class", "y axis")
+              .call(yAxis)
+              .attr("transform", "translate(-1," + 0 + ")")
+            .append("text")
+              .attr("y", 5)
+              .attr("x", 40)
+              .attr("dy", ".71em")
+              .style("text-anchor", "end")
+              .text("Cost %");
     
-      svg.selectAll(".bar")
-          .data(data)
-        .enter().append("rect")
-          .attr("class", "bar")
-          .attr("x", function(d) { return x(d.claims)-5; })
-          .attr("width", x.rangeBand())
-          .attr("y", function(d) { return y(d.cost); })
-          .attr("height", function(d) { return height - y(d.cost); })
-          .on('mouseover', tip.show)
-          .on('mouseout', tip.hide)
-    
+          svg.selectAll(".bar")
+              .data(data)
+            .enter().append("rect")
+              .attr("class", "bar")
+              .attr("x", function(d) { return x(d.claims)-5; })
+              .attr("width", x.rangeBand())
+              .attr("y", function(d) { return y(d.cost); })
+              .attr("height", function(d) { return height - y(d.cost); })
+              .on('mouseover', tip.show)
+              .on('mouseout', tip.hide)
+        }
     });
 }
