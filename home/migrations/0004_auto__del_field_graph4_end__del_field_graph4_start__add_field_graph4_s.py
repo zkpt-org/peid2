@@ -24,12 +24,12 @@ class Migration(SchemaMigration):
                       self.gf('django.db.models.fields.CharField')(default='', max_length=10),
                       keep_default=False)
 
-        # db.execute("ALTER TABLE tind.home_graph4 ALTER COLUMN client SET DEFAULT 'ALL'")
-        # db.execute("ALTER TABLE tind.home_graph4 ALTER COLUMN office SET DEFAULT 'ALL'")
-        # db.execute("ALTER TABLE tind.home_graph4 ALTER COLUMN level SET DEFAULT 'ALL'")
-        # db.execute("ALTER TABLE tind.home_graph4 ALTER COLUMN condition SET DEFAULT 'ALL'")
-        # db.execute("ALTER TABLE tind.home_graph4 ALTER COLUMN gender SET DEFAULT 'ALL'")
-        # db.execute("ALTER TABLE tind.home_graph4 ALTER COLUMN age SET DEFAULT 'ALL'")
+        # db.execute("ALTER TABLE home_graph4 ALTER COLUMN client SET DEFAULT 'ALL'")
+        # db.execute("ALTER TABLE home_graph4 ALTER COLUMN office SET DEFAULT 'ALL'")
+        # db.execute("ALTER TABLE home_graph4 ALTER COLUMN level SET DEFAULT 'ALL'")
+        # db.execute("ALTER TABLE home_graph4 ALTER COLUMN condition SET DEFAULT 'ALL'")
+        # db.execute("ALTER TABLE home_graph4 ALTER COLUMN gender SET DEFAULT 'ALL'")
+        # db.execute("ALTER TABLE home_graph4 ALTER COLUMN age SET DEFAULT 'ALL'")
         
     def backwards(self, orm):
         # Adding field 'Graph4.end'

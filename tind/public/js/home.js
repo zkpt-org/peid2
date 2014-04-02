@@ -551,8 +551,7 @@ function graph4(){
     
     svg.call(tip);
     
-    d3.json("../public/data/cumulative.json", function(error, data) {
-/*
+    //d3.json("../public/data/cumulative.json", function(error, data) {
     d3.json("/home/graph4/"   +
            "?reportingTo="    + time_window_end   +
            "&reportingFrom="  + time_window_start +
@@ -560,7 +559,6 @@ function graph4(){
            "&comparisonTo="   + time_window_end_minus_year +
            "&" + query_string, 
       function(error, data){
-*/
       
       endload(4);
       check_session(data);
