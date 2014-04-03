@@ -87,7 +87,8 @@ def graph4(request):
     
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
-            data = process.graph4(request)
+            #data = process.graph4(request)
+            data = []
         else:
             data = {"session":"expired"}    
     return HttpResponse(data)

@@ -560,13 +560,13 @@ function graph4(){
            "&" + query_string, 
       function(error, data){
       
-      endload(4);
-      check_session(data);
+      endload(4)
+      check_session(data)
       
       if(nodata(data))
           show_nodata_warning(4)
       else{
-          hide_nodata_warning(4);    
+          hide_nodata_warning(4)    
           x.domain(data.map(function(d) { return d.claims; }));
           y.domain([0, d3.max(data, function(d) { return d.cost; })]);      
       
