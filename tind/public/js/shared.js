@@ -155,7 +155,7 @@ function details_reset(){
 
 function first_date(){
     response = $.ajax({type: "GET", url: "/data/firstdate/", async: false}).responseText;
-    console.log(response)
+    /* console.log(response) */
     check_session(response);
     firstdate = Date.parse(response);
     return firstdate
@@ -163,7 +163,7 @@ function first_date(){
 
 function last_date(){
     response = $.ajax({type: "GET", url: "/data/lastdate/", async: false}).responseText;
-    console.log(response)
+    /* console.log(response) */
     check_session(response)
     lastdate = Date.parse(response)
     return lastdate
@@ -187,3 +187,17 @@ function endload(num, timer){
    clearInterval(eval("timer"+num));
 }
 
+function nodata(data){
+    if(data == "No Data" || data.length <= 0)
+        return true
+    return false
+}
+
+function show_nodata_warning(num){
+    $("#nodata-"+num).show()
+    $("#graph-"+num+" svg").hide()
+}
+function hide_nodata_warning(num){
+    $("#nodata-"+num).hide()
+    $("#graph-"+num+" svg").show()        
+}

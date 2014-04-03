@@ -563,9 +563,10 @@ function graph4(){
       endload(4);
       check_session(data);
       
-      if(data == "No Data")
-        console.log("No Data. Handle it.")
-      else{    
+      if(nodata(data))
+          show_nodata_warning(4)
+      else{
+          hide_nodata_warning(4);    
           x.domain(data.map(function(d) { return d.claims; }));
           y.domain([0, d3.max(data, function(d) { return d.cost; })]);      
       

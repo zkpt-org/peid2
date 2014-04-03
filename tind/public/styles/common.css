@@ -557,3 +557,12 @@ text{
     text-align: center;
     margin-top:180px;
 }
+
+.nodata{
+    width:100%;
+    text-align: center;
+    height:100%;
+    margin-top: 190px;
+    margin-bottom: 200px;
+    display: none;
+}
