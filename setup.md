@@ -48,3 +48,16 @@
         heroku create
 
 11. **When ready push to Heroku:** `git push heroku master`
+
+
+==================================
+
+Migrations:
+
+python manage.py migrate home
+
+git add .
+git commit -m "migration."
+git push staging master
+heroku run python manage.py syncdb --app tind-staging
+heroku run python manage.py migrate home --app tind-staging
