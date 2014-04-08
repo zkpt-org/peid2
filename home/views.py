@@ -47,12 +47,25 @@ def show_alerts(request):
 
 @login_required
 def graph1(request):
-    #months = int(request.GET["months"])
-    if 'pgt' in request.session:
-        data = process.graph1(request)
-    else:
-        data = {"session":"expired"}
-    return HttpResponse(json.dumps(data))
+    try:
+        data = Graph1.objects.get(
+            client = request.GET["client"],
+            office = request.GET["office"],
+            level  = request.GET["level"],
+            gender = request.GET["gender"],
+            age    = request.GET["age"],
+            condition  = request.GET["condition"],
+            start_date = request.GET["reportingFrom"],
+            end_date   = request.GET["reportingTo"]).data
+            
+    except ObjectDoesNotExist:
+        if 'pgt' in request.session:
+            data = process.graph1(request)
+        else:
+            data = {"session":"expired"}
+        return HttpResponse(json.dumps(data))
+    return HttpResponse(data)
+    
 
 @login_required
 def graph2(request):
