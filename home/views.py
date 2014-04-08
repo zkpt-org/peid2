@@ -70,12 +70,29 @@ def graph1(request):
 @login_required
 def graph2(request):
     #months = int(request.GET["months"])
-    if 'pgt' in request.session:
-        data = process.graph2(request.GET, request.session)
-        #data = queue.send(process.graph2, (request.GET, request.session), 600)
-    else:
-        data = {"session":"expired"}    
-    return HttpResponse(json.dumps(data))
+    #data = process.graph2(request.GET, request.session)
+    #data = queue.send(process.graph2, (request.GET, request.session), 600)
+
+    try:
+        data = Graph1.objects.get(
+            client = request.GET["client"],
+            office = request.GET["office"],
+            level  = request.GET["level"],
+            gender = request.GET["gender"],
+            age    = request.GET["age"],
+            condition  = request.GET["condition"],
+            start_date = request.GET["reportingFrom"],
+            end_date   = request.GET["reportingTo"]).data
+            
+    except ObjectDoesNotExist:
+        if 'pgt' in request.session:
+            process.graph2(request.GET, request.session)
+        else:
+            data = {"session":"expired"}
+        return HttpResponse(json.dumps(data))
+    return HttpResponse(data)
+    
+    
 
 @login_required
 def graph3(request):

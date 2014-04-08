@@ -323,7 +323,8 @@ function graph2(){
     d3.json("/home/graph2/?reportingTo="    + time_window_end   +
                          "&reportingFrom="  + time_window_start +
                          "&comparisonFrom=" + time_window_start_minus_year +
-                         "&comparisonTo="   + time_window_end_minus_year, 
+                         "&comparisonTo="   + time_window_end_minus_year +
+                         "&" + query_string, 
         function(error, data) {
                            
         /* color.domain(d3.keys(data[0]).filter(function(key) { return eval(ex); })); */
