@@ -74,7 +74,7 @@ def graph2(request):
     #data = queue.send(process.graph2, (request.GET, request.session), 600)
 
     try:
-        data = Graph1.objects.get(
+        data = Graph2.objects.get(
             client = request.GET["client"],
             office = request.GET["office"],
             level  = request.GET["level"],
