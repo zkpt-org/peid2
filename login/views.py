@@ -23,9 +23,12 @@ def login(request):
                 auth.login(request, user)
                 das = Das()
                 proxy_granting_ticket = das.auth(settings.DAS_USER, settings.DAS_PASS)
-                request.session['pgt'] = proxy_granting_ticket
-                # state = "You're successfully logged in!"
-                return HttpResponseRedirect(next)
+                if proxy_granting_ticket != '':
+                    request.session['pgt'] = proxy_granting_ticket
+                    # state = "You're successfully logged in!"
+                    return HttpResponseRedirect(next)
+                else:
+                    state = "There is a problem with the authentication system. Please contact the system administrator."
             else:
                 state = "Your account is not active, please contact the site administrator."
         else:
