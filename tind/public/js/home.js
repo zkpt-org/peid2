@@ -325,12 +325,17 @@ function graph2(){
                          "&comparisonFrom=" + time_window_start_minus_year +
                          "&comparisonTo="   + time_window_end_minus_year +
                          "&" + query_string, 
-        function(error, data) {
+      function(error, data) {
                            
         /* color.domain(d3.keys(data[0]).filter(function(key) { return eval(ex); })); */
         
         endload(2)
         check_session(data)
+        
+      if(nodata(data))
+        show_nodata_warning(4)
+      else{
+        hide_nodata_warning(4)    
         
         var table = [];
         var times = [];
@@ -507,7 +512,7 @@ function graph2(){
             .attr("dy", ".71em")
             .attr("class", "text dark")      
             .text("Comparison");
-    
+    }
     });
 }
 

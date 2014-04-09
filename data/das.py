@@ -5,13 +5,13 @@ from django.http import QueryDict
 
 class Das:
     def __init__(self):        
-        #self.HOST     = 'tind-lite.zakipoint.com'
-        #self.TICKETS  = 'https://login.deerwalk.com/cas/v1/tickets'
-        #self.SERVICE  = 'https://tind-lite.zakipoint.com'
+        self.HOST     = 'tind-lite.zakipoint.com'
+        self.TICKETS  = 'https://login.deerwalk.com/cas/v1/tickets'
+        self.SERVICE  = 'https://tind-lite.zakipoint.com'
         
-        self.HOST     = 'sdemo.makalu.deerwalk.com' #hack
-        self.TICKETS  = 'https://login.deerwalk.com/cas/v1/tickets'#hack
-        self.SERVICE  = 'https://sdemo.makalu.deerwalk.com'#hack
+        #self.HOST     = 'sdemo.makalu.deerwalk.com' #hack
+        #self.TICKETS  = 'https://login.deerwalk.com/cas/v1/tickets'#hack
+        #self.SERVICE  = 'https://sdemo.makalu.deerwalk.com'#hack
         
         #self.PROXY    = 'https://tind-staging.herokuapp.com/data/proxy/'
         self.PROXY    = 'https://proxy.zakipoint.com/'
@@ -20,8 +20,8 @@ class Das:
         self.PT_URL   = 'https://login.deerwalk.com/cas/proxy'
         
         self.CLIENT_ID   = '2000'
-        #self.CLIENT_NAME = 'tind'
-        self.CLIENT_NAME = 'sdemo'#hack
+        self.CLIENT_NAME = 'tind'
+        #self.CLIENT_NAME = 'sdemo'#hack
     
     def auth(self, user, password):
         response = self.get_ticket_granting_ticket(user, password)

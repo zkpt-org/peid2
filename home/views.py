@@ -86,7 +86,7 @@ def graph2(request):
             
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
-            process.graph2(request.GET, request.session)
+            data = process.graph2(request.GET, request.session)
         else:
             data = {"session":"expired"}
         return HttpResponse(json.dumps(data))
