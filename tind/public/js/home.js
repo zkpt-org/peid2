@@ -360,7 +360,7 @@ function graph2(){
       /* y.domain(d3.extent(data, function(d) { return d.cost; })); */
     
       y.domain([
-        d3.min(costs)*0.90,
+        d3.min(costs.concat(bench_costs))*0.90,
         d3.max(costs.concat(bench_costs))*1.1
       ]);
     
