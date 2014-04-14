@@ -9,7 +9,6 @@ import login
 urlpatterns = patterns('',
     # Uncomment the admin/doc line below to enable admin documentation:
     url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
-
     # Uncomment the next line to enable the admin:
     url(r'^$', 'home.views.index', name='index'),
     url(r'^admin/', include(admin.site.urls)),
@@ -25,7 +24,8 @@ urlpatterns = patterns('',
     url(r'^logout/', login.views.logout),
     url(r'^data/', include('data.urls')),
     url(r'^dive/', include('dive.urls')),
-    url(r'^providers/', include('providers.urls'))
+    url(r'^providers/', include('providers.urls')),
+    url(r'^simulation/', include('simulation.urls'))
     
 )
 urlpatterns += staticfiles_urlpatterns()

@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+	<link type="text/css" rel="stylesheet" href="{{STATIC_URL}}styles/bootstrap/css/bootstrap.min.css"/>
+	<link type="text/css" rel="stylesheet" href="{{STATIC_URL}}styles/Font-Awesome/css/font-awesome.min.css">
+    <link type="text/css" rel="stylesheet" href="{{STATIC_URL}}styles/kendo/styles/kendo.common.min.css" />
+    <link type="text/css" rel="stylesheet" href="{{STATIC_URL}}styles/kendo/styles/kendo.default.min.css"/>
+	<link type="text/css" rel="stylesheet" href="{{STATIC_URL}}styles/reset.css"/>
+	<link type="text/css" rel="stylesheet" href="{{STATIC_URL}}styles/common.css"/>
+	<link type="text/css" rel="stylesheet" href="{{STATIC_URL}}styles/layout.css"/>
+	<link type="text/css" rel="stylesheet" href="{{STATIC_URL}}styles/colors.css"/>
+    
+    <script type="text/javascript" src="{{STATIC_URL}}js/d3.v3.min.js"></script>
+    <script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="{{STATIC_URL}}styles/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="{{STATIC_URL}}styles/kendo/js/kendo.web.min.js" ></script>
+	
+	    <style>
+	    body{
+    	    background-color: #fff;
+	    }
+        #content{
+            /* width:1100px; */ 
+            height:100%;
+            padding:20px;
+            background-color: #fff;
+            
+        }
+        #box{
+            width:1180px;
+            height:100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #wrapper {
+            width: 600px;
+            height: 323px;
+            padding: 10px 10px 25px 10px;
+            margin: 0 auto;
+            /* margin-top:-30px; */
+            /* background: url('../../content/web/slider/eqBack.png') no-repeat 0 0; */
+            /* text-align: center; */
+            display: inline-block;
+            vertical-align: top;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            
+        }
+        #equalizer {
+            margin-top: 75px;
+            padding-right: 15px;
+        }
+        .balSlider {
+            width: 400px;
+            margin: 15px;
+            vertical-align: middle;
+        }
+        .balSlider .k-slider-selection {
+            width: 400px;
+            /* display: none; */
+            background-color: #83c0ff !important;
+            border-color: #3ca3da !important;
+        }
+        .eqSlider {
+            display: inline-block;
+            zoom: 1;
+            margin: 0 12px;
+            height: 122px;
+        }
+
+        *+html .eqSlider {display:inline;}
+        
+        .k-state-selected{
+            background-color: #fff !important;
+            /* background-color: #83c0ff !important; */
+            border-color: #3ca3da !important;
+            box-shadow: none !important;
+            -webkit-box-shadow:none !important;
+        }
+        
+        .k-tooltip, .k-slider-tooltip{
+            /*
+            border-color: #3ca3da !important;
+            background-color: #3ca3da !important;
+            */
+            box-shadow:none;
+            -webkit-box-shadow:none;
+        }
+        .k-draghandle{
+            background-color: #fff;
+            width: 20px !important;
+            height: 20px !important;
+            border-radius: 50%;
+            margin-top: -3px;
+        }
+        
+        .k-label{
+            color: #999;
+            /* font-size: 11px !important; */
+        }
+        .k-tick{
+            color:#999;
+        }
+        #sim-form{
+            width: 550px;
+            display: inline-block;
+        }
+        #age{
+            width: 150px;
+            height: 335px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            float: left;
+            margin-right: 20px;
+            padding:10px 20px;
+        }
+        #gender{
+            width: 280px;
+            height: 60px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            padding:10px 20px;
+        }
+        #location{
+            width: 280px;
+            height:235px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            padding:10px 20px;
+        }
+        td{
+            /* text-align: center; */
+        }
+        td.left{
+            /* width:30px; */
+            color:#888;
+            font-size: medium;
+            font-weight: bold;
+            width: 100px;
+        }
+        td.right{
+            width:50px;
+            
+        }
+        td input{
+            width:20px;
+        }
+        .location.left{
+            width:200px;
+        }
+        .location.right{    
+        }
+        .gender.left{
+            width:60px;
+            /* vertical-align: middle; */
+        }
+        .gender.right{
+            width:80px;
+            /* vertical-align: middle; */
+        }
+        h3{
+            font-size: 16px;
+            font-weight:normal;
+            color:#999;
+        }
+        .slider-label{
+            display: inline-block;
+            font-size: x-small;
+            color: #999;
+            vertical-align: middle;
+            font-weight: bold;
+            margin-left: 20px;
+        }
+        
+        .area2{ /* fill: #8cf;  */fill: #83c0ff; stroke: #3ca3da; opacity:0.7;}
+        .area{ /* fill: #8cf;  */fill: #ff4566; /* stroke: #3ca3da; */ opacity:0.5;}
+        
+        #bell-curves{
+            padding-top: 50px;
+            padding-bottom: 80px;
+            height:400px;
+            /* background-color: #fff; */
+            width:1180px;
+            margin-left: auto;
+            margin-right: auto;  
+        }
+        #bell-curves svg{
+            display: block;
+            margin:auto;
+        }
+        .axis{
+            stroke-width:1px;
+        }
+        svg text{
+            font-size: 11px;
+        }
+        .median.x{
+            stroke:#777;
+            stroke-width:0.6px;
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div id="logo-box">
+    <!-- <div id=logo><img src="{{STATIC_URL}}images/logo-blue.png"/></div> -->
+    </div>
+	{% block nav %} {% include 'nav.html' %} {% endblock %}
+</header>
+<div id="content" class="k-content">
+    <div id="box">
+    <form id="sim-form">
+        <fieldset id="age">
+            <h3>Age</h3>
+            <table>
+                <tr>
+                    <td class="left">0 - 1</td>
+                    <td class="right"><input type="text" value="7"/> %</td>
+                </tr>
+                <tr>
+                    <td class="left">1 - 19</td>
+                    <td class="right"><input type="text" value="4"/> %</td>
+                </tr>
+                <tr>
+                    <td class="left">20 - 29</td>
+                    <td class="right"><input type="text" value="15"/> %</td>
+                </tr>
+                <tr>
+                    <td class="left">30 - 39</td>
+                    <td class="right"><input type="text" value="6"/> %</td>
+                </tr>
+                <tr>
+                    <td class="left">40 - 49</td>
+                    <td class="right"><input type="text" value="20"/> %</td>
+                </tr>
+                <tr>
+                    <td class="left">50 - 59</td>
+                    <td class="right"><input type="text" value="13"/> %</td>
+                </tr>
+                <tr>
+                    <td class="left">60 - 69</td>
+                    <td class="right"><input type="text" value="8"/> %</td>
+                </tr>
+                <tr>
+                    <td class="left">70+</td>
+                    <td class="right"><input type="text" value="11"/> %</td>
+                </tr>
+            </table>
+        </fieldset>
+        <fieldset id="gender">
+            <h3>Gender</h3>
+            <table>
+                <tr>
+                    <td class="gender left">Male</td>
+                    <td class="gender right"><input type="text" value="52"/> %</td>
+                    <td class="gender left">Female</td>
+                    <td class="gender right"><input type="text" value="48"/> %</td>
+                </tr>
+            </table>
+        </fieldset>
+        <fieldset id="location">
+            <h3>Location</h3>
+            <table>
+                <tr>
+                    <td class="location left">Austin</td>
+                    <td class="location right"><input type="text" value="16"/> %</td>
+                </tr>
+                <tr>
+                    <td class="location left">Watertown</td>
+                    <td class="location right"><input type="text" value="60"/> %</td>
+                </tr>
+                <tr>
+                    <td class="location left">Maine</td>
+                    <td class="location right"><input type="text" value="4"/> %</td>
+                </tr>
+                <tr>
+                    <td class="location left">San Francisco</td>
+                    <td class="location right"><input type="text" value="18"/> %</td>
+                </tr>
+                <tr>
+                    <td class="location left">Rest of country</td>
+                    <td class="location right"><input type="text" value="2"/> %</td>
+                </tr>
+            </table>            
+        </fieldset>
+    </form>
+    <div id="wrapper">
+        <h3>Plan Design</h3>
+        <input id="slider-1" class="balSlider" value="2000" />
+        <label class="slider-label">Individual Deductible</label>
+        <input id="slider-2" class="balSlider" value="1800" />
+        <label class="slider-label">Family Deductible</label>
+        <input id="slider-3" class="balSlider" value="10" />
+        <label class="slider-label">Co-insurance Max</label>
+        <input id="slider-4" class="balSlider" value="15" />
+        <label class="slider-label">Individual Co-nsurance Max</label>
+        <input id="slider-5" class="balSlider" value="55" />
+        <label class="slider-label">Family Co-nsurance Max</label>
+        <!--
+        <div id="equalizer">
+            <input class="eqSlider" value="10" />
+            <input class="eqSlider" value="5" />
+            <input class="eqSlider" value="0" />
+            <input class="eqSlider" value="10" />
+            <input class="eqSlider" value="15" />
+        </div>
+-->
+    </div>
+    <div id="bell-curves"></div>
+    </div>
+    <script>
+        dollars = function(val){return "$" + String(val.value);}
+        percent = function(val){return String(val.value) + "%";}
+        
+        function sliderOnSlide(e) {
+            //console.log("Slide :: new slide value is: " + e.value);
+            offset = slider1.value() + slider2.value() + (slider3.value()*100) + (slider4.value()*100) + (slider5.value()*100);
+            $("#bell-curves svg").remove()
+            console.log(offset/50)
+            /* console.log(2*(offset/100)) */
+            draw(offset/152.0618556701031)
+            
+        }
+
+        function sliderOnChange(e) {
+            //console.log("Change :: new value is: " + e.value);
+            offset = slider1.value() + slider2.value() + (slider3.value()*100) + (slider4.value()*100) + (slider5.value()*100);
+            $("#bell-curves svg").remove()
+            console.log(offset/77.6)
+            /* console.log(2*(offset/100)) */
+            draw(offset/152.0618556701031)
+
+        }
+        
+        $(document).ready(function() {
+            slider1 = $("#slider-1").kendoSlider({
+                increaseButtonTitle: "Right",
+                decreaseButtonTitle: "Left",
+                tickPlacement: "none",
+                min: 0,
+                max: 4000,
+                smallStep: 50,
+                largeStep: 5,
+                tooltip: {
+                    template: kendo.template(dollars),
+                },
+                showButtons: false,
+                change: sliderOnChange,
+                slide: sliderOnSlide
+            }).data("kendoSlider");
+            
+            slider2 = $("#slider-2").kendoSlider({
+                increaseButtonTitle: "Right",
+                decreaseButtonTitle: "Left",
+                tickPlacement: "none",
+                min: 0,
+                max: 5000,
+                smallStep: 50,
+                largeStep: 5,
+                tooltip: {
+                    template: kendo.template(dollars),
+                },
+                showButtons: false,
+                change: sliderOnChange,
+                slide: sliderOnSlide
+            }).data("kendoSlider");
+            
+            slider3 = $("#slider-3").kendoSlider({
+                increaseButtonTitle: "Right",
+                decreaseButtonTitle: "Left",
+                tickPlacement: "bottomRight",
+                min: 0,
+                max: 100,
+                smallStep: 5,
+                largeStep: 25,
+                tooltip: {
+                    template: kendo.template(percent),
+                    format: "{0}%"
+                }, 
+                showButtons: false,
+                change: sliderOnChange,
+                slide: sliderOnSlide
+            }).data("kendoSlider");
+            
+            slider4 = $("#slider-4").kendoSlider({
+                increaseButtonTitle: "Right",
+                decreaseButtonTitle: "Left",
+                tickPlacement: "bottomRight",
+                min: 0,
+                max: 100,
+                smallStep: 5,
+                largeStep: 25,
+                tooltip: {
+                    template: kendo.template(percent),
+                    format: "{0}%"
+                },
+                showButtons: false,
+                change: sliderOnChange,
+                slide: sliderOnSlide
+            }).data("kendoSlider");
+            
+            slider5 = $("#slider-5").kendoSlider({
+                increaseButtonTitle: "Right",
+                decreaseButtonTitle: "Left",
+                tickPlacement: "bottomRight",
+                min: 0,
+                max: 100,
+                smallStep: 5,
+                largeStep: 25,
+                tooltip: {
+                    template: kendo.template(percent),
+                    format: "{0}%"
+                },
+                showButtons: false,
+                change: sliderOnChange,
+                slide: sliderOnSlide
+            }).data("kendoSlider");
+            
+            
+            $(".eqSlider").kendoSlider({
+                /* orientation: "vertical", */
+                min: -20,
+                max: 20,
+                smallStep: 1,
+                largeStep: 20,
+                showButtons: false
+            });
+                        
+            draw(50);
+            
+        });
+        
+        function redraw(){
+            /* $("#curves svg").remove() */
+            offset = slider1.value() + slider2.value() + slider3.value() + slider4.value() + slider5.value();
+            console.log(slider1.value());
+            /* draw(offset); */
+        }
+        //
+        // Mathematical Functions
+        
+        // Probability Distribution Function (PDF) for the Normal distribution
+        var normal = function(mean, variance) {
+            // Precompute portion of the function that does not depend on x
+            var predicate = 1 / Math.sqrt(variance * 2 * Math.PI);
+        
+            return function(x) {
+                // See the pdf function from http://en.wikipedia.org/wiki/Normal_distribution
+                return predicate * Math.exp( -Math.pow(x - mean, 2) / (2 * variance))*100;
+            };
+        };
+        
+        // Calculate the sample variance of a data series.
+        var variance = function(series) {
+            var mean = d3.mean(series);
+            
+            return d3.sum(series.map(function(element) {
+                return Math.pow(element - mean, 2);
+            })) / (series.length - 1);
+        };
+        
+        //
+        // Data Generation
+        //
+        
+        // Your data series, e.g.
+        var data = [5, 3, 7.4, 4.4, 0.3, 3.5, 6.1, 4.7, 1.8],
+            min = Math.floor(d3.min(data)),
+            max = Math.ceil(d3.max(data));
+        
+        // Call the normal() function to get a function that we can call with just x.
+        // Set the distribution parameters to be the same as that of the data.
+        var normalTransform = normal(d3.mean(data), variance(data));
+        
+        // Fill xSeries with all natural numbers between the min and max, inclusive
+        var xSeries = [];
+            
+        for (var i = min; i <= max; i++) { xSeries.push(i); }
+        
+        // Generate corresponding y values from the x values
+        var ySeries = xSeries.map(normalTransform);
+        
+        // Combine the x and y series for d3 to have [x, y] tuples to iterate over
+        var combinedSeries = d3.zip(xSeries, ySeries);
+        
+        var offsetX = 50;
+        var offsetY = 0;
+        
+        var margin = {top: 30, right: 20, bottom: 30, left: 20},
+            width  = 1000 - margin.left - margin.right,
+            height = 400  - margin.top  - margin.bottom;
+        
+        //
+        // Graph
+        //
+        
+        function draw(offset){
+        
+        offsetX = offset;
+        
+        console.log(offset);
+        
+        var svg = d3.select("#bell-curves").append("svg")
+            .attr("width",  width  + margin.left + margin.right )
+            .attr("height", height + margin.top  + margin.bottom)
+                    
+        var xScale = d3.scale.linear()
+                .domain([min, max])
+                .range([30, 500]);
+        
+        var yScale = d3.scale.linear()
+                .domain([d3.min(ySeries), d3.max(ySeries)*1.2])
+                .range([svg.attr('height'), 0]); // Switched because y builds downward
+
+        var xScale2 = d3.scale.linear()
+                .domain([min, max])
+                .range([30+offsetX, svg.attr('width')-offsetX]);
+        
+        var yScale2 = d3.scale.linear()
+                .domain([d3.min(ySeries), d3.max(ySeries)*1.2])
+                .range([svg.attr('height'), 0]); // Switched because y builds downward
+
+        var xAxis = d3.svg.axis()
+            .scale(xScale2)
+            .orient("bottom");
+    
+        var yAxis = d3.svg.axis()
+            .scale(yScale)
+            .orient("left");
+
+        var area = d3.svg.area()
+                .interpolate('cardinal')
+                .x(function(d) { return xScale(d[0]); })
+                .y0(svg.attr('height'))
+                .y1(function(d) { return yScale(d[1]); });
+        
+        var area2 = d3.svg.area()
+                .interpolate('cardinal')
+                .x(function(d) { return xScale2(d[0]) + offsetX;})
+                .y0(svg.attr('height'))
+                .y1(function(d) { return yScale2(d[1]) + offsetY;});
+        
+        svg.append('path').datum(combinedSeries)
+            .attr('class', 'area')
+            .attr('d', area);
+        
+        
+        svg.append('path').datum(combinedSeries)
+            .attr('class', 'area2')
+            .attr('d', area2); 
+
+/*
+        svg.append("g")
+          .attr("class", "x axis")
+          .attr("transform", "translate("+ (-offsetX) +","+ (390) + ")")
+          .call(xAxis)
+          .append("text")
+          .attr("y", 0)
+          .attr("x", 0)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("Cost Projections %");
+*/
+        
+        var xMedian = svg.selectAll('svg')
+            .data([[[min/2,width], [max/2,0]]])
+            .enter()
+            .append('svg:path')
+            .attr('class', 'median x')
+            .attr("d", d3.svg.line()
+            .x(function(d,i) {
+                return xScale(d[0]);
+            })
+            .y(function(d,i) {
+                return yScale(d[1]);
+            })
+        );
+        
+        var xMedian2 = svg.selectAll('svg')
+            .data([[[min/2,width+offsetX], [max/2,0]]])
+            .enter()
+            .append('svg:path')
+            .attr('class', 'median x')
+            .attr("d", d3.svg.line()
+            .x(function(d,i) {
+                return xScale2(d[0])+offsetX;
+            })
+            .y(function(d,i) {
+                return yScale2(d[1]);
+            })
+        );
+        
+        svg.append("g")
+          .attr("class", "y axis")
+          .call(yAxis)
+          .attr("transform", "translate(30," + 0 + ")")
+        .append("text")
+          .attr("y", 8)
+          .attr("x", 70)
+          /* .attr("dy", ".71em") */
+          .style("text-anchor", "end")
+          .text("Probability %");
+        }
+        
+
+        
+    </script>
+</div>
+
+
+</body>
+</html>

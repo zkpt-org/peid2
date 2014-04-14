@@ -1,0 +1,166 @@
+{% extends 'base.html' %}
+{% block title %}Simulation{% endblock %}
+
+{% block javascript %}
+   <!--  <script type="text/javascript" src="{{STATIC_URL}}js/d3-tip.js"></script> -->
+        <script>
+        dollars = function(val){console.log(val); return "$" + String(val.value);}
+        percent = function(val){console.log(val); return String(val.value) + "%";}
+        
+        $(document).ready(function() {
+            var slider = $("#slider-1").kendoSlider({
+                increaseButtonTitle: "Right",
+                decreaseButtonTitle: "Left",
+                tickPlacement: "none",
+                min: 0,
+                max: 4000,
+                smallStep: 50,
+                largeStep: 5,
+                tooltip: {
+                    template: kendo.template(dollars),
+                }
+            }).data("kendoSlider");
+            
+            var slider = $("#slider-2").kendoSlider({
+                increaseButtonTitle: "Right",
+                decreaseButtonTitle: "Left",
+                tickPlacement: "none",
+                min: 0,
+                max: 5000,
+                smallStep: 50,
+                largeStep: 5,
+                tooltip: {
+                    template: kendo.template(dollars),
+                }
+            }).data("kendoSlider");
+            
+            var slider = $("#slider-3").kendoSlider({
+                increaseButtonTitle: "Right",
+                decreaseButtonTitle: "Left",
+                tickPlacement: "bottomRight",
+                min: 0,
+                max: 100,
+                smallStep: 5,
+                largeStep: 25,
+                tooltip: {
+                    template: kendo.template(percent),
+                }
+            }).data("kendoSlider");
+            
+            var slider = $("#slider-4").kendoSlider({
+                increaseButtonTitle: "Right",
+                decreaseButtonTitle: "Left",
+                tickPlacement: "bottomRight",
+                min: 0,
+                max: 100,
+                smallStep: 5,
+                largeStep: 25,
+                tooltip: {
+                    template: kendo.template(percent),
+                }
+            }).data("kendoSlider");
+            
+            var slider = $("#slider-5").kendoSlider({
+                increaseButtonTitle: "Right",
+                decreaseButtonTitle: "Left",
+                tickPlacement: "bottomRight",
+                min: 0,
+                max: 100,
+                smallStep: 5,
+                largeStep: 25,
+                tooltip: {
+                    template: kendo.template(percent),
+                }
+            }).data("kendoSlider");
+            
+            
+            $(".eqSlider").kendoSlider({
+                /* orientation: "vertical", */
+                min: -20,
+                max: 20,
+                smallStep: 1,
+                largeStep: 20,
+                showButtons: false
+            });
+        });
+    </script>
+
+{% endblock %}
+
+{% block css %}
+    <style>
+        #wrapper {
+            width: 600px;
+            height: 255px;
+            padding: 45px 0 0 0;
+            margin: 0 auto;
+            /* background: url('../../content/web/slider/eqBack.png') no-repeat 0 0; */
+            text-align: center;
+        }
+        #equalizer {
+            margin-top: 75px;
+            padding-right: 15px;
+        }
+        .balSlider {
+            width: 400px;
+            margin:20px;
+        }
+        .balSlider .k-slider-selection {
+            width: 400px;
+            /* display: none; */
+            background-color: #83c0ff !important;
+            border-color: #3ca3da !important;
+        }
+        .eqSlider {
+            display: inline-block;
+            zoom: 1;
+            margin: 0 12px;
+            height: 122px;
+        }
+
+        *+html .eqSlider {display:inline;}
+        
+        .k-state-selected{
+            background-color: #fff !important;
+            /* background-color: #83c0ff !important; */
+            border-color: #3ca3da !important;
+            box-shadow: none !important;
+            -webkit-box-shadow:none !important;
+        }
+        
+        .k-tooltip, .k-slider-tooltip{
+/*
+            border-color: #3ca3da !important;
+            background-color: #3ca3da !important;
+*/
+        }
+        .k-draghandle{
+            background-color: #fff;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+
+<div id="example" class="k-content">
+    <div id="wrapper">
+        <input id="slider-1" class="balSlider" value="2000" />
+        <input id="slider-2" class="balSlider" value="1800" />
+        <input id="slider-3" class="balSlider" value="10" />
+        <input id="slider-4" class="balSlider" value="15" />
+        <input id="slider-5" class="balSlider" value="55" />
+<!--
+        <div id="equalizer">
+            <input class="eqSlider" value="10" />
+            <input class="eqSlider" value="5" />
+            <input class="eqSlider" value="0" />
+            <input class="eqSlider" value="10" />
+            <input class="eqSlider" value="15" />
+        </div>
+-->
+    </div>
+
+
+
+</div>
+
+{% endblock %}

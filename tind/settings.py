@@ -152,7 +152,8 @@ INSTALLED_APPS = (
     'dive',
     'data',
     'south',
-    'providers'
+    'providers',
+    'simulation'
 )
 
 # A sample logging configuration. The only tangible logging
@@ -196,7 +197,7 @@ LOGGING = {
 # = CACHE SETTINGS =
 # ==================
 CACHE_BACKEND = 'db://cache_table'
-CACHE_MIDDLEWARE_SECONDS = 60 * 5
+CACHE_MIDDLEWARE_SECONDS = 0#60 * 5
 
 
 
