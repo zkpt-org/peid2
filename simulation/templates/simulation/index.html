@@ -320,20 +320,16 @@
             //console.log("Slide :: new slide value is: " + e.value);
             offset = slider1.value() + slider2.value() + (slider3.value()*100) + (slider4.value()*100) + (slider5.value()*100);
             $("#bell-curves svg").remove()
-            console.log(offset/50)
-            /* console.log(2*(offset/100)) */
+            /* console.log(offset/50) */
             draw(offset/152.0618556701031)
-            
         }
 
         function sliderOnChange(e) {
             //console.log("Change :: new value is: " + e.value);
             offset = slider1.value() + slider2.value() + (slider3.value()*100) + (slider4.value()*100) + (slider5.value()*100);
             $("#bell-curves svg").remove()
-            console.log(offset/77.6)
-            /* console.log(2*(offset/100)) */
+            /* console.log(offset/77.6) */
             draw(offset/152.0618556701031)
-
         }
         
         $(document).ready(function() {
