@@ -1,12 +1,12 @@
 import urllib, pycurl, cStringIO, os, config, copy
 from BeautifulSoup import BeautifulSoup, BeautifulStoneSoup
+from django.conf import settings
 from response import DasResponse
 
 class Das:
     def __init__(self, session={}):
-        import config
-        self.USER     = config.user
-        self.PASS     = config.pwrd
+        self.USER     = settings.DAS_USER
+        self.PASS     = settings.DAS_PASS
         self.HOST     = 'tind-lite.zakipoint.com'
         self.TICKETS  = 'https://login.deerwalk.com/cas/v1/tickets'
         self.SERVICE  = 'https://tind-lite.zakipoint.com'
