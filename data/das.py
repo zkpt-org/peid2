@@ -1,4 +1,4 @@
-import urllib, pycurl, cStringIO, os, config, copy
+import urllib, pycurl, cStringIO, os, copy
 from BeautifulSoup import BeautifulSoup, BeautifulStoneSoup
 from django.conf import settings
 from response import DasResponse
