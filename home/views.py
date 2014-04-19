@@ -18,10 +18,12 @@ def index(request):
     if 'alerts' not in request.session:
         request.session['alerts'] = "hide"
         request.session.modified = True
-
+    
+    das = Das(session=request.session)
+    
     if 'pgt' in request.session:
-        #data = process.graph3(request)
-        data = process.graph3init()
+        #data = process.graph3(das, request)
+        data = process.graph3_init()
     else:
         data = {"session":"expired"}
         data["reporting"]  = {}
@@ -47,6 +49,7 @@ def show_alerts(request):
 
 @login_required
 def graph1(request):
+    das = Das(session=request.session)
     try:
         data = Graph1.objects.get(
             client = request.GET["client"],
@@ -60,7 +63,7 @@ def graph1(request):
             
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
-            data = process.graph1(request)
+            data = process.graph1(das, request)
         else:
             data = {"session":"expired"}
         return HttpResponse(json.dumps(data))
@@ -72,7 +75,7 @@ def graph2(request):
     #months = int(request.GET["months"])
     #data = process.graph2(request.GET, request.session)
     #data = queue.send(process.graph2, (request.GET, request.session), 600)
-
+    das = Das(session=request.session)
     try:
         data = Graph2.objects.get(
             client = request.GET["client"],
@@ -86,7 +89,7 @@ def graph2(request):
             
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
-            data = process.graph2(request.GET, request.session)
+            data = process.graph2(das, request)
         else:
             data = {"session":"expired"}
         return HttpResponse(json.dumps(data))
@@ -96,14 +99,16 @@ def graph2(request):
 
 @login_required
 def graph3(request):
+    das = Das(session=request.session)
     if 'pgt' in request.session:
-        data = process.graph3(request)
+        data = process.graph3(das, request)
     else:
         data = {"session":"expired"}    
     return HttpResponse(json.dumps(data))
     
 @login_required
 def graph4(request):
+    das = Das(session=request.session)
     try:
         data = Graph4.objects.get(
             client = request.GET["client"],
@@ -117,8 +122,7 @@ def graph4(request):
     
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
-            #data = process.graph4(request)
-            data = []
+            data = process.graph4(das, request)
         else:
             data = {"session":"expired"}    
     return HttpResponse(data)

@@ -18,7 +18,7 @@ def index(request):
 
 @login_required
 def authenticate(request):
-    das = Das()
+    das = Das(session=request.session)
     proxy_granting_ticket = das.auth(settings.DAS_USER, settings.DAS_PASS)
     request.session['pgt'] = proxy_granting_ticket
     return render_to_response('data/index.html',{"status":proxy_granting_ticket})
@@ -33,7 +33,7 @@ def proxy(request):
 
 @login_required
 def api(request, service=None):
-    das = Das()
+    das = Das(session=request.session)
     params = request.GET.copy()
     if service: params['service'] = service
     data = das.api(request.session['pgt'], params)
@@ -42,7 +42,7 @@ def api(request, service=None):
     #return render_to_response('data/index.html',{"status": data})
 
 def lastdate(request, format="Ymd"):
-    das = Das()
+    das = Das(session=request.session)
     
     params = {
     "service"  : "search", 
@@ -53,7 +53,7 @@ def lastdate(request, format="Ymd"):
     }
     
     if 'pgt' in request.session:
-        response = das.json_to_dict(request.session['pgt'], params)["result_sets"]["0"]
+        response = das.to_dict(params)["result_sets"]["0"]
     else:
         return HttpResponse(json.dumps({"session":"expired"}))
     
@@ -65,7 +65,7 @@ def lastdate(request, format="Ymd"):
     
 
 def firstdate(request, format="Ymd"):
-    das = Das()
+    das = Das(session=request.session)
     
     params = {
     "service"  : "search", 
@@ -76,7 +76,7 @@ def firstdate(request, format="Ymd"):
     }
     
     if 'pgt' in request.session:
-        response = das.json_to_dict(request.session['pgt'], params)["result_sets"]["0"]
+        response = das.to_dict(params)["result_sets"]["0"]
     else:
         return HttpResponse(json.dumps({"session":"expired"}))
     

@@ -1,26 +1,32 @@
-from django.http import HttpResponse
+import os, datetime, calendar, sys, json
 from dateutil.relativedelta import relativedelta
-from data.das import Das
-import json, calendar, datetime, locale #, timedelta
 import pandas as pd
 import numpy as np
-#from collections import OrderedDict
+from helpers import get_cohort
 
-def graph1(request):
-    das = Das()
+def graph1(das, request):
+    cohort = get_cohort(das, request.GET)
+
+    reporting_from  = request.GET["reportingFrom"]
+    reporting_to    = request.GET["reportingTo"]
+    
+    comparison_from = request.GET["comparisonFrom"]
+    comparison_to   = request.GET["comparisonTo"]
     
     params = {
-        "service"       : "report", 
-        "report"        : "summary",
-        "reportingBasis": "ServiceDate",
-        "eligibilityType":"[medical]",
-        "reportingFrom" : request.GET["reportingFrom"],
-        "reportingTo"   : request.GET["reportingTo"],
-        "comparisonFrom": request.GET["comparisonFrom"],
-        "comparisonTo"  : request.GET["comparisonTo"]}
+        "service"         : "report", 
+        "report"          : "summary",
+        "reportingBasis"  : "ServiceDate",
+        "eligibilityType" : "[medical]",
+        "reportingFrom"   : reporting_from,
+        "reportingTo"     : reporting_to,
+        "comparisonFrom"  : comparison_from,
+        "comparisonTo"    : comparison_to}
     
-    response = das.json_to_dict(request.session['pgt'], params)
-    #if "comparison" not in response: return {"session":"expired"}
+    if cohort is not None:
+        params.update({"cohortId":cohort})
+    
+    response = das.to_dict(params)
     comparison = response["comparison"][0]
     reporting  = response["reporting"][0]
     
@@ -39,31 +45,23 @@ def graph1(request):
             "Office Visit"   : round(comparison["Office"] / comparison["memberMonths"]) if comparison["memberMonths"]!=0 else 0,
             "Pharmacy Claims": round(comparison["totalPharmacyPaidAmount"] / comparison["memberMonths"]) if comparison["memberMonths"]!=0 else 0,
         },
-        #{
-        #    "Period"         : "Benchmark",
-        #    "Inpatient"      : round(reporting["Inpatient"]   / reporting["memberMonths"]) - 
-        #                       round((reporting["Inpatient"]  / reporting["memberMonths"]) * 0.10)
-        #                       if reporting["memberMonths"]!=0 else 0,
-        #    "Outpatient"     : round(reporting["Outpatient"]  / reporting["memberMonths"]) - 
-        #                       round((reporting["Outpatient"] / reporting["memberMonths"]) * 0.12)
-        #                       if reporting["memberMonths"]!=0 else 0,
-        #    "Office Visit"   : round(reporting["Office"]      / reporting["memberMonths"]) - 
-        #                       round((reporting["Office"]     / reporting["memberMonths"]) * 0.2)
-        #                       if reporting["memberMonths"]!=0 else 0,
-        #    "Pharmacy Claims": round(reporting["totalPharmacyPaidAmount"]  / reporting["memberMonths"]) - 
-        #                       round((reporting["totalPharmacyPaidAmount"] / reporting["memberMonths"]) * 0.15)
-        #                       if reporting["memberMonths"]!=0 else 0
-        #}
     ]
     
     return data
 
-def graph2(window, session):
-    das = Das()
+def graph2(das, request):
+    cohort = get_cohort(das, request.GET)
+
+    reporting_from  = request.GET["reportingFrom"]
+    reporting_to    = request.GET["reportingTo"]
+    
+    comparison_from = request.GET["comparisonFrom"]
+    comparison_to   = request.GET["comparisonTo"]
+    
     data = []
     
-    start = datetime.date(*map(int, window["reportingFrom"].split("-")))
-    end   = datetime.date(*map(int, window["reportingTo"].split("-")))
+    start = datetime.date(*map(int, reporting_from.split("-")))
+    end   = datetime.date(*map(int, reporting_to.split("-")))
     
     m = end-start
     
@@ -86,20 +84,31 @@ def graph2(window, session):
             "comparisonFrom": (d - relativedelta(years=1)).strftime("%Y-%m-%d"),
             "comparisonTo"  : datetime.date(d.year-1, d.month, calendar.monthrange(d.year, d.month)[1]).strftime("%Y-%m-%d")}
         
-        response = das.json_to_dict(session['pgt'], params)
-        #if "comparison" not in response: return {"session":"expired"}
+        if cohort is not None:
+            params.update({"cohortId":cohort})
+        
+        response = das.to_dict(params)
         comparison = response["comparison"][0]
         reporting  = response["reporting"][0]
         
         data.append({
             "month"  : 12 - d.month, #d.strftime("%B"),
             "date"   : d.strftime("%Y-%m-%d"),
-            "total"     : round((reporting["totalPharmacyPaidAmount"]  + reporting["totalMedicalPaidAmount"])  / reporting["memberMonths"]),
-            "benchmark" : round((comparison["totalPharmacyPaidAmount"] + comparison["totalMedicalPaidAmount"]) / comparison["memberMonths"])})
+            "total"     : round((reporting["totalPharmacyPaidAmount"]  + reporting["totalMedicalPaidAmount"])  / reporting["memberMonths"]) if reporting["memberMonths"]!=0 else 0,
+            "benchmark" : round((comparison["totalPharmacyPaidAmount"] + comparison["totalMedicalPaidAmount"]) / comparison["memberMonths"])}) if comparison["memberMonths"]!=0 else 0
     
     return data
 
-def graph3(request):
+def graph3(das, request):
+    cohort = get_cohort(das, request.GET)
+
+    reporting_from  = request.GET["reportingFrom"]
+    reporting_to    = request.GET["reportingTo"]
+    
+    comparison_from = request.GET["comparisonFrom"]
+    comparison_to   = request.GET["comparisonTo"]
+    
+    """Set locale."""
     try:
         import locale
         locale.setlocale(locale.LC_ALL, 'en_US.utf8')
@@ -108,28 +117,8 @@ def graph3(request):
             locale.setlocale(locale.LC_ALL, 'en_US.UTF-8')
         except Exception as e:
             messages.error(request, 'An error occurred: {0}'.format(e))
-    
-    das = Das()
-    ticket = request.session['pgt']
-    
-    """Get the last date recorded in the dataset."""
-    params = {
-        "service"  : "search", 
-        "table"    : "smc",
-        "page"     : "1",
-        "pageSize" : "1",
-        "order"    : "paidDate:desc"}
     try:
-        lastdate = das.json_to_dict(request.session['pgt'], params)["result_sets"]["0"]["serviceDate"]
-        d = datetime.datetime.strptime(lastdate, "%Y-%m-%d")
-        last = datetime.date(d.year, d.month, calendar.monthrange(d.year, d.month)[1])
-        
         """Get data from summary table."""
-        reporting_to    = last.strftime("%Y-%m-%d")
-        reporting_from  = (last-relativedelta(years=1)+relativedelta(days=1)).strftime("%Y-%m-%d") 
-        comparison_from = (last-relativedelta(years=2)+relativedelta(days=1)).strftime("%Y-%m-%d")
-        comparison_to   = (last-relativedelta(years=1)).strftime("%Y-%m-%d")
-            
         params = {
             "service"       : "report", 
             "report"        : "summary",
@@ -140,46 +129,34 @@ def graph3(request):
             "comparisonFrom": comparison_from,
             "comparisonTo"  : comparison_to}
         
-        response = das.json_to_dict(ticket, params)
-    
-    except:
+        # if cohort is not None:
+        #     params.update({"cohortId":cohort})
+        
+        response = das.to_dict(params)
+        
+    except Exception, e:
         response = None
+        print str(e)+"\n"
+        with open("../errors.log", "a+") as f: f.write(str(e)+"\n")
     
     if response:    
         comparison = response["comparison"][0]
         reporting  = response["reporting"][0]
-        
+                
         """Calculate the number of claims for reporting Period."""
-        claims = count_claims(reporting_from, reporting_to, ticket, das)        
+        claims = count_claims(das, reporting_from, reporting_to, cohort)
         """Calculate the number of claimants for Reporting Period."""
-        claimants = count_claimants(claims, reporting_from, reporting_to, ticket, das)
+        claimants = count_claimants(das, reporting_from, reporting_to)
         
         """Calculate the number of claims Comparison Period."""
-        claims2 = count_claims(comparison_from, comparison_to, ticket, das)
+        claims2 = count_claims(das, comparison_from, comparison_to, cohort)
         """Calculate the number of claimants for Reporting Period."""
-        claimants2 = count_claimants(claims, comparison_from, comparison_to, ticket, das)
+        claimants2 = count_claimants(das, comparison_from, comparison_to)
         
         """Calculate the number of ER visits for Reporting Period."""
-        params = {
-            "service"  : "search", 
-            "table"    : "smc",
-            "page"     : "1",
-            "pageSize" : "0",
-            "query"    : "{'and':[{'serviceDate.gte':'" + reporting_from + "'},{'serviceDate.lte':'" + reporting_to + "'},{'erVisit.gt':0}]}"}
-        
-        response = das.json_to_dict(ticket, params)
-        er_visit = response["summary"]["totalCounts"]
-        
+        er_visit = count_er_visits(das, reporting_from, reporting_to)
         """Calculate the number of ER visits for Comparison Period."""
-        params = {
-            "service"  : "search", 
-            "table"    : "smc",
-            "page"     : "1",
-            "pageSize" : "0",
-            "query"    : "{'and':[{'serviceDate.gte':'" + comparison_from + "'},{'serviceDate.lte':'" + comparison_to + "'},{'erVisit.gt':0}]}"}
-        
-        response = das.json_to_dict(ticket, params)
-        er_visit2 = response["summary"]["totalCounts"]
+        er_visit2 = count_er_visits(das, comparison_from, comparison_to)
         
         data = {
             "reporting":{
@@ -203,34 +180,10 @@ def graph3(request):
                 "avg_claim_cost": "$" + str(int(round((comparison["totalMedicalPaidAmount"] + comparison["totalPharmacyPaidAmount"]) / claims)))
             }
         }
-    
-    else:
-        data = {
-            "reporting":{
-                "employees" : 0,
-                "members"   : 0,
-                "totalcost" : 0,
-                "claims"    : 0,
-                "claimants" : 0,
-                "avg_claims": 0,
-                "er_visits" : 0,
-                "avg_claim_cost": 0
-            },
-            "comparison":{
-                "employees" : 0,
-                "members"   : 0,
-                "totalcost" : 0,
-                "claims"    : 0,
-                "claimants" : 0,
-                "avg_claims": 0,
-                "er_visits" : 0,
-                "avg_claim_cost": 0
-            }
-        }
-    
-    return data
+        
+        return data
 
-def graph3init():
+def graph3_init():
     data = {
         "reporting":{
             "employees" : "",
@@ -255,60 +208,41 @@ def graph3init():
     }
     return data
 
-def graph4(request):
-    das = Das()
-    ticket = request.session['pgt']
-    
+def graph4(das, request):
+    cohort = get_cohort(das, request.GET)
+
     reporting_from  = request.GET["reportingFrom"]
     reporting_to    = request.GET["reportingTo"]
     
     comparison_from = request.GET["comparisonFrom"]
     comparison_to   = request.GET["comparisonTo"]
     
-    params = {
-        "service"         : "report", 
-        "report"          : "summary",
-        "reportingBasis"  : "ServiceDate",
-        "eligibilityType" :"[medical]",
-        "reportingFrom"   : reporting_from,
-        "reportingTo"     : reporting_to,
-        "comparisonFrom"  : comparison_from,
-        "comparisonTo"    : comparison_to}
+    total_claims = count_claims(das, reporting_from, reporting_to, cohort)
     
-    response   = das.json_to_dict(request.session['pgt'], params)
-    comparison = response["comparison"][0]
-    reporting  = response["reporting"][0]
-    
-    """reporting period."""
-    total_cost   = reporting["totalMedicalPaidAmount"] #+ reporting["totalPharmacyPaidAmount"]
-    total_claims = count_claims(reporting_from, reporting_to, ticket, das)
-    
-    psize = total_claims / 99 if total_claims % 100 > 0 else total_claims / 100
-    pages = 100
-    total = 0
-    results = []
-    
-    for p in range(1, pages+1):
-        cuml = cumulative(reporting_from, reporting_to, ticket, das, p, psize)
-        clms = pd.DataFrame(cuml)[['paidAmount']]
-        total += np.asscalar(clms.sum())
-        results.append({"perc" : p, "frequency" : round(total/total_cost*100, 2)})
-    return results
+    if total_claims <= 5000:
+        results = cumulativeF1(das, reporting_from, reporting_to, cohort)
+    else:
+        results = cumulativeF2(das, reporting_from, reporting_to, cohort, total_claims)
+        
+    return json.dumps(results)
 
-def count_claims(_from, _to, ticket, das):
+def count_claims(das, _from, _to, cohort):
     params = {
         "service"  : "search", 
         "table"    : "smc",
         "page"     : "1",
         "pageSize" : "0",
         "query"    : "{'and':[{'serviceDate.gte':'" + _from + "'},{'serviceDate.lte':'" + _to + "'},{'paidAmount.gt':'0'}]}"}
-        
-    response = das.json_to_dict(ticket, params)
+    
+    if cohort is not None:
+       params.update({"cohortId":cohort})
+    
+    response = das.to_dict(params)
     return response["summary"]["totalCounts"]
 
-def count_claimants(total, _from, _to, ticket, das):
+def count_claimants(das, _from, _to):
     params = {
-    "service"     : "search", 
+    "service"     : "search",
     "table"       : "ms",
     "page"        : "1",
     "pageSize"    : "0",
@@ -317,11 +251,87 @@ def count_claimants(total, _from, _to, ticket, das):
     "report"      : "viewMemberSearch",
     "recordTypes" : "smc"}
     
-    response = das.json_to_dict(ticket, params)["summary"]["totalCounts"]
+    response = das.to_dict(params)["summary"]["totalCounts"]
     return response
 
-def cumulative(_from, _to, ticket, das, page, psize):
+def count_er_visits(das, _from, _to):
+    params = {
+        "service"  : "search", 
+        "table"    : "smc",
+        "page"     : "1",
+        "pageSize" : "0",
+        "query"    : "{'and':[{'serviceDate.gte':'" + _from + "'},{'serviceDate.lte':'" + _to + "'},{'erVisit.gt':0}]}"}
+    
+    return das.to_dict(params)["summary"]["totalCounts"]
+
+def cumulativeF1(das, _from, _to, cohort):
+    params  = {
+    "service"  : "search", 
+    "table"    : "smc",
+    "pageSize" : 100,
+    "order"    : "paidAmount:desc",
+    "query"    : "{'and':[{'serviceDate.gte':'" + _from + "'},{'serviceDate.lte':'" + _to + "'},{'paidAmount.gt':'0'}]}",
+    "fields"   : "[paidAmount]",
+    }
+    if cohort is not None:
+        params.update({"cohortId":cohort})
+    
+    response = das.all(params)
+    df = response.dataframe()
+    
+    if df.empty:
+        return []
+    
+    df = df.sort(['paidAmount'], ascending=[0])
+    total = len(df.paidAmount)
+    
+    size = total / 99 if total % 100 > 0 else total / 100
+    cost = 0
+    i0 = 0
+    i1 = size
     results = []
+    
+    if total < 100:
+        return [] #"No Data
+    else:
+        for percent in range(1, 101):
+            claims = df.paidAmount[i0:i1]
+            """A try-catch block to catch a numpy bug."""
+            try:
+                cost += np.asscalar(claims.sum())
+            except Exception as e:
+                cost += claims.sum()
+            results.append({"claims" : percent, "cost" : cost})
+            i0 = i0 + size
+            i1 = i1 + size
+        for row in results:
+            row["cost"] = round(row["cost"]/cost*100, 2)
+    return results
+
+def cumulativeF2(das, _from, _to, cohort, total_claims):
+    psize = total_claims / 99 if total_claims % 100 > 0 else total_claims / 100
+    pages = 100
+    total = 0
+    results = []
+        
+    for p in range(1, pages+1):
+        cumul = cumulativeF2Sub(das, _from, _to, cohort, p, psize)
+    
+        if cumul:
+            cailms = pd.DataFrame(cumul)[['paidAmount']]
+            total += np.asscalar(cailms.sum())
+            results.append({"claims" : p, "cost" : total})
+        else:
+            return [] #"No Data
+    
+    for row in results:
+        row["cost"] = round(row["cost"]/total*100, 2)
+    
+    return results
+
+def cumulativeF2Sub(das, _from, _to, cohort, page, psize):
+    results = []
+    
     params  = {
     "service"  : "search", 
     "table"    : "smc",
@@ -329,46 +339,11 @@ def cumulative(_from, _to, ticket, das, page, psize):
     "pageSize" : str(psize),
     "order"    : "paidAmount:desc",
     "query"    : "{'and':[{'serviceDate.gte':'" + _from + "'},{'serviceDate.lte':'" + _to + "'},{'paidAmount.gt':'0'}]}",
-    "fields"   : "[paidAmount]"
+    "fields"   : "[paidAmount]",
     }
-    response = das.json_to_dict(ticket, params)["result_sets"]
+    if cohort is not None:
+        params.update({"cohortId":cohort})
+    
+    response = das.to_dict(params)["result_sets"]
     results += [response[row] for row in response]
     return results
-
-# def neg_claims(_from, _to, ticket, das, page, psize):
-#     results = []
-#     params = {
-#     "service"  : "search", 
-#     "table"    : "smc",
-#     "page"     : "1",
-#     "pageSize" : "1000",
-#     "order"    : "paidAmount:asc",
-#     "query"    : "{'and':[{'serviceDate.gte':'" + _from + "'},{'serviceDate.lte':'" + _to + "'},{'paidAmount.lt':'0'}]}",
-#     "fields"   : "[paidAmount]"
-#     }
-#     response = das.json_to_dict(ticket, params)["result_sets"]
-#     results += [response[row] for row in response]
-#     return results    
-
-# def count_claimants(total, _from, _to, ticket, das):
-#     psize = 100
-#     mod   = total%psize
-#     pages = (total/psize) + 1 if mod == 0 else (total/psize) + 2
-#     results = []
-# 
-#     for i in range(1, 10):
-#        params = {
-#        "service"  : "search", 
-#        "table"    : "smc",
-#        "page"     : str(i),
-#        "pageSize" : str(psize),
-#        "query"    : "{'and':[{'serviceDate.gte':'" + _from + "'},{'serviceDate.lte':'" + _to + "'}]}",
-#        "fields"   : "[memberId]"}
-# 
-#        response = das.json_to_dict(ticket, params)["result_sets"]
-#        results += [response[row] for row in response]
-# 
-#     ac = pd.DataFrame(results)[['memberId']]
-#     # ddup = ac.drop_duplicates()
-#     claimants = ac.memberId.nunique()
-#     return claimants
