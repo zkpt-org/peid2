@@ -50,8 +50,11 @@ function onready() {
 }
 
 function check_session(response){
-    if(typeof response === 'string')
+    if(typeof response === 'string'){
+        if(response == '{"session": "expired"}')
+            end_of_session();
         return response;
+    }
     else if("session" in response && response["session"]=="expired")
         end_of_session();
 }
