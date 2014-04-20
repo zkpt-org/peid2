@@ -129,8 +129,8 @@ def graph3(das, request):
             "comparisonFrom": comparison_from,
             "comparisonTo"  : comparison_to}
         
-        # if cohort is not None:
-        #     params.update({"cohortId":cohort})
+        if cohort is not None:
+            params.update({"cohortId":cohort})
         
         response = das.to_dict(params)
         
@@ -146,17 +146,17 @@ def graph3(das, request):
         """Calculate the number of claims for reporting Period."""
         claims = count_claims(das, reporting_from, reporting_to, cohort)
         """Calculate the number of claimants for Reporting Period."""
-        claimants = count_claimants(das, reporting_from, reporting_to)
+        claimants = count_claimants(das, reporting_from, reporting_to, cohort)
         
         """Calculate the number of claims Comparison Period."""
         claims2 = count_claims(das, comparison_from, comparison_to, cohort)
         """Calculate the number of claimants for Reporting Period."""
-        claimants2 = count_claimants(das, comparison_from, comparison_to)
+        claimants2 = count_claimants(das, comparison_from, comparison_to, cohort)
         
         """Calculate the number of ER visits for Reporting Period."""
-        er_visit = count_er_visits(das, reporting_from, reporting_to)
+        er_visit = count_er_visits(das, reporting_from, reporting_to, cohort)
         """Calculate the number of ER visits for Comparison Period."""
-        er_visit2 = count_er_visits(das, comparison_from, comparison_to)
+        er_visit2 = count_er_visits(das, comparison_from, comparison_to, cohort)
         
         data = {
             "reporting":{
@@ -240,7 +240,7 @@ def count_claims(das, _from, _to, cohort):
     response = das.to_dict(params)
     return response["summary"]["totalCounts"]
 
-def count_claimants(das, _from, _to):
+def count_claimants(das, _from, _to, cohort):
     params = {
     "service"     : "search",
     "table"       : "ms",
@@ -251,16 +251,22 @@ def count_claimants(das, _from, _to):
     "report"      : "viewMemberSearch",
     "recordTypes" : "smc"}
     
+    if cohort is not None:
+       params.update({"cohortId":cohort})
+    
     response = das.to_dict(params)["summary"]["totalCounts"]
     return response
 
-def count_er_visits(das, _from, _to):
+def count_er_visits(das, _from, _to, cohort):
     params = {
         "service"  : "search", 
         "table"    : "smc",
         "page"     : "1",
         "pageSize" : "0",
         "query"    : "{'and':[{'serviceDate.gte':'" + _from + "'},{'serviceDate.lte':'" + _to + "'},{'erVisit.gt':0}]}"}
+    
+    if cohort is not None:
+       params.update({"cohortId":cohort})
     
     return das.to_dict(params)["summary"]["totalCounts"]
 
