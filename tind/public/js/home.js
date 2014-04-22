@@ -111,7 +111,7 @@ function graph1(){
     
     d3.json("/home/graph1/?"   +
             /* "months="          + months_diff  + */
-            "reportingTo="    + time_window_end   +
+            "reportingTo="     + time_window_end   +
             "&reportingFrom="  + time_window_start +
             "&comparisonFrom=" + time_window_start_minus_year +
             "&comparisonTo="   + time_window_end_minus_year +

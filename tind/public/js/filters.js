@@ -1,9 +1,8 @@
 function reset_filter(elem, num){
     reset_dropdown(num, filter_default_labels);
-    /* update(0); */
     filter_query[filter_keys[num]] = "ALL";
-    monthpicker_init();
     query_string = query();
+    monthpicker_init();
     redraw();
     
 /*
@@ -14,14 +13,9 @@ function reset_filter(elem, num){
 function filter(elem, num){
     dropdown(elem, num);
     filter_query[filter_keys[num]] = $(elem).text();
-    monthpicker_init();
     query_string = query();
+    monthpicker_init();
     redraw();
-    
-/*
-    console.log(filter_query)
-    console.log(query_string)
-*/
 }
 
 function query(){ 
