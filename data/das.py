@@ -9,14 +9,14 @@ class Das:
         self.PASS     = settings.DAS_PASS
         self.HOST     = 'tind-lite.zakipoint.com'
         self.TICKETS  = 'https://login.deerwalk.com/cas/v1/tickets'
-        self.SERVICE  = 'https://tind-lite.zakipoint.com'
+        self.SERVICE  = 'https://zakipoint.makalu.deerwalk.com'
         self.PROXY    = 'https://proxy.zakipoint.com/'
         self.VALIDATE = 'https://login.deerwalk.com/cas/serviceValidate'
         self.API_URL  = 'https://das.deerwalk.com'
         self.PT_URL   = 'https://login.deerwalk.com/cas/proxy'
         
         self.CLIENT_ID   = '2000'
-        self.CLIENT_NAME = 'tind'
+        self.CLIENT_NAME = 'zakipoint'
         
         if 'pgt' in session:
             self.PGT = session['pgt']
