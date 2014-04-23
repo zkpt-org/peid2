@@ -177,7 +177,7 @@ def graph3(das, request):
                 "claimants" : locale.format("%d", claimants2, grouping=True),
                 "avg_claims": int(round(claims2 / comparison["members"])),
                 "er_visits" : locale.format("%d", er_visit2, grouping=True),
-                "avg_claim_cost": "$" + str(int(round((comparison["totalMedicalPaidAmount"] + comparison["totalPharmacyPaidAmount"]) / claims)))
+                "avg_claim_cost": "$" + str(int(round((comparison["totalMedicalPaidAmount"] + comparison["totalPharmacyPaidAmount"]) / claims2)))
             }
         }
         

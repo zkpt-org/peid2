@@ -41,6 +41,7 @@ def api(request, service=None):
     #return HttpResponse(json.dumps(data, sort_keys=True, indent=4), content_type='application/json')
     #return render_to_response('data/index.html',{"status": data})
 
+
 def lastdate(request, format="Ymd"):
     if 'lastdate' in request.session:
         return HttpResponse(request.session['lastdate'])

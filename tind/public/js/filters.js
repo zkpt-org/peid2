@@ -4,11 +4,6 @@ function reset_filter(elem, num){
     query_string = query();
     monthpicker_init();
     redraw();
-    
-/*
-    console.log(filter_query)
-    console.log(query_string)
-*/
 }
 function filter(elem, num){
     dropdown(elem, num);

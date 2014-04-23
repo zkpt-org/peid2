@@ -158,8 +158,6 @@ function details_reset(){
 
 function first_date(){
     response = $.ajax({type: "GET", url: "/data/firstdate/", async: false}).responseText;
-    
-    /* console.log(response) */
     check_session(response);
     firstdate = Date.parse(response);
     return firstdate
@@ -169,17 +167,7 @@ function last_date(){
     response = $.ajax({type: "GET", url: "/data/lastdate/", async: false}).responseText;    
     check_session(response)
     lastdate = Date.parse(response)
-    return lastdate
-    
-/*
-    var jax = $.ajax({type: "GET", url: "/data/lastdate/"});
-    jax.done(function(response){
-        check_session(response.responseText);
-        lastdate = Date.parse(response.responseText);})
-    console.log(lastdate);
-    return lastdate
-*/
-    
+    return lastdate 
 }
 
 function startload(num){

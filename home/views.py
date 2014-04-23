@@ -22,13 +22,10 @@ def index(request):
     das = Das(session=request.session)
     
     if 'pgt' in request.session:
-        #data = process.graph3(das, request)
         data = process.graph3_init()
     else:
         data = {"session":"expired"}
-        #data["reporting"]  = {}
-        #data["comparison"] = {}
-    #return HttpResponse(json.dumps(data))
+        
     return render_to_response('home/index.html',{
                 "page"       : "home", 
                 "user"       : request.user, 
@@ -52,18 +49,29 @@ def graph1(request):
     das = Das(session=request.session)
     try:
         data = Graph1.objects.get(
-            client = request.GET["client"],
-            office = request.GET["office"],
-            level  = request.GET["level"],
-            gender = request.GET["gender"],
-            age    = request.GET["age"],
+            client     = request.GET["client"],
+            office     = request.GET["office"],
+            level      = request.GET["level"],
+            gender     = request.GET["gender"],
+            age        = request.GET["age"],
             condition  = request.GET["condition"],
             start_date = request.GET["reportingFrom"],
             end_date   = request.GET["reportingTo"]).data
             
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
-            data = process.graph1(das, request)
+            data  = process.graph1(das, request)
+            graph = Graph1(
+                client     = request.GET["client"], 
+                office     = request.GET["office"],	
+                level      = request.GET["level"], 
+                condition  = request.GET["condition"], 
+                gender     = request.GET["gender"],	
+                age        = request.GET["age"], 
+                start_date = request.GET["reportingFrom"],	
+                end_date   = request.GET["reportingTo"], 
+                data       = json.dumps(data))
+            graph.save()
         else:
             data = {"session":"expired"}
         return HttpResponse(json.dumps(data))
@@ -72,24 +80,34 @@ def graph1(request):
 
 @login_required
 def graph2(request):
-    #months = int(request.GET["months"])
     #data = process.graph2(request.GET, request.session)
     #data = queue.send(process.graph2, (request.GET, request.session), 600)
     das = Das(session=request.session)
     try:
         data = Graph2.objects.get(
-            client = request.GET["client"],
-            office = request.GET["office"],
-            level  = request.GET["level"],
-            gender = request.GET["gender"],
-            age    = request.GET["age"],
+            client     = request.GET["client"],
+            office     = request.GET["office"],
+            level      = request.GET["level"],
+            gender     = request.GET["gender"],
+            age        = request.GET["age"],
             condition  = request.GET["condition"],
             start_date = request.GET["reportingFrom"],
             end_date   = request.GET["reportingTo"]).data
             
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
-            data = process.graph2(das, request)
+            data  = process.graph2(das, request)
+            graph = Graph2(
+                client     = request.GET["client"], 
+                office     = request.GET["office"],	
+                level      = request.GET["level"], 
+                condition  = request.GET["condition"], 
+                gender     = request.GET["gender"],	
+                age        = request.GET["age"], 
+                start_date = request.GET["reportingFrom"],	
+                end_date   = request.GET["reportingTo"], 
+                data       = json.dumps(data))
+            graph.save()
         else:
             data = {"session":"expired"}
         return HttpResponse(json.dumps(data))
@@ -100,29 +118,65 @@ def graph2(request):
 @login_required
 def graph3(request):
     das = Das(session=request.session)
-    if 'pgt' in request.session:
-        data = process.graph3(das, request)
-    else:
-        data = {"session":"expired"}    
-    return HttpResponse(json.dumps(data))
+    try:
+        data = Graph3.objects.get(
+            client     = request.GET["client"],
+            office     = request.GET["office"],
+            level      = request.GET["level"],
+            gender     = request.GET["gender"],
+            age        = request.GET["age"],
+            condition  = request.GET["condition"],
+            start_date = request.GET["reportingFrom"],
+            end_date   = request.GET["reportingTo"]).data
+            
+    except ObjectDoesNotExist:
+        if 'pgt' in request.session:
+            data  = process.graph3(das, request)
+            
+            graph = Graph3(
+                client     = request.GET["client"], 
+                office     = request.GET["office"],	
+                level      = request.GET["level"], 
+                condition  = request.GET["condition"], 
+                gender     = request.GET["gender"],	
+                age        = request.GET["age"], 
+                start_date = request.GET["reportingFrom"],	
+                end_date   = request.GET["reportingTo"], 
+                data       = json.dumps(data))
+            graph.save()
+        else:
+            data = {"session":"expired"}    
+        return HttpResponse(json.dumps(data))
+    return HttpResponse(data)
     
 @login_required
 def graph4(request):
     das = Das(session=request.session)
     try:
         data = Graph4.objects.get(
-            client = request.GET["client"],
-            office = request.GET["office"],
-            level  = request.GET["level"],
-            gender = request.GET["gender"],
-            age    = request.GET["age"],
+            client     = request.GET["client"],
+            office     = request.GET["office"],
+            level      = request.GET["level"],
+            gender     = request.GET["gender"],
+            age        = request.GET["age"],
             condition  = request.GET["condition"],
             start_date = request.GET["reportingFrom"],
             end_date   = request.GET["reportingTo"]).data
     
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
-            data = process.graph4(das, request)
+            data  = process.graph4(das, request)
+            graph = Graph4(
+                client     = request.GET["client"], 
+                office     = request.GET["office"],	
+                level      = request.GET["level"], 
+                condition  = request.GET["condition"], 
+                gender     = request.GET["gender"],	
+                age        = request.GET["age"], 
+                start_date = request.GET["reportingFrom"],	
+                end_date   = request.GET["reportingTo"], 
+                data       = data)
+            graph.save()
         else:
             data = {"session":"expired"}    
     return HttpResponse(data)

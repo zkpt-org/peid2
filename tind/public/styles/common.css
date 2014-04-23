@@ -162,7 +162,7 @@ nav li.selected{
 
 .box{
     width:760px;
-/* 	height:400px; */
+	min-height:400px;
 	margin-top:10px;
 	border-radius: 5px;
 	border:1px solid #ddd;
