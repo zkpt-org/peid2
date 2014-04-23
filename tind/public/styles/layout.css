@@ -95,6 +95,10 @@ nav .dropdown{
     position: relative;
 }
 
+.dropdown-menu>li>a{
+    cursor:pointer;
+}
+
 #alerts-button{
     font-size: 21px;
     margin-top: -10px;

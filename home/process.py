@@ -165,9 +165,9 @@ def graph3(das, request):
                 "totalcost" : "$" + locale.format("%d", reporting["totalMedicalPaidAmount"] + reporting["totalPharmacyPaidAmount"], grouping=True),
                 "claims"    : locale.format("%d", claims, grouping=True),
                 "claimants" : locale.format("%d", claimants, grouping=True),
-                "avg_claims": int(round(claims / reporting["members"])),
+                "avg_claims": int(round(claims / reporting["members"])) if reporting["members"]!=0 else 0,
                 "er_visits" : locale.format("%d", er_visit, grouping=True),
-                "avg_claim_cost": "$" + str(int(round((reporting["totalMedicalPaidAmount"] + reporting["totalPharmacyPaidAmount"]) / claims)))
+                "avg_claim_cost": "$" + str(int(round((reporting["totalMedicalPaidAmount"] + reporting["totalPharmacyPaidAmount"]) / claims))) if claims != 0 else 0
             },
             "comparison":{
                 "employees" : locale.format("%d", comparison["subscribers"], grouping=True),
@@ -175,9 +175,9 @@ def graph3(das, request):
                 "totalcost" : "$" + locale.format("%d", comparison["totalMedicalPaidAmount"] + comparison["totalPharmacyPaidAmount"], grouping=True),
                 "claims"    : locale.format("%d", claims2, grouping=True),
                 "claimants" : locale.format("%d", claimants2, grouping=True),
-                "avg_claims": int(round(claims2 / comparison["members"])),
+                "avg_claims": int(round(claims2 / comparison["members"])) if comparison["members"]!=0 else 0,
                 "er_visits" : locale.format("%d", er_visit2, grouping=True),
-                "avg_claim_cost": "$" + str(int(round((comparison["totalMedicalPaidAmount"] + comparison["totalPharmacyPaidAmount"]) / claims2)))
+                "avg_claim_cost": "$" + str(int(round((comparison["totalMedicalPaidAmount"] + comparison["totalPharmacyPaidAmount"]) / claims2))) if claims2 != 0 else 0
             }
         }
         
@@ -219,7 +219,7 @@ def graph4(das, request):
     
     total_claims = count_claims(das, reporting_from, reporting_to, cohort)
     
-    if total_claims <= 5000:
+    if total_claims <= 10000:
         results = cumulativeF1(das, reporting_from, reporting_to, cohort)
     else:
         results = cumulativeF2(das, reporting_from, reporting_to, cohort, total_claims)
