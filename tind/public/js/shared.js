@@ -76,7 +76,7 @@ function reset_dropdown(num, defaults){
 
 function details(elem){
     $("#container").animate( {width:1200}, 750);
-    $(".box").animate( {width:300, height:300}, 750, function(){
+    $(".box").animate( {width:300, height:300, minHeight:300}, 750, function(){
         $(".box")
             .animate({
                 borderTopLeftRadius: '50%', 
@@ -128,7 +128,8 @@ function details_reset(){
                 borderTopLeftRadius: '5px', 
                 borderTopRightRadius: '5px', 
                 borderBottomLeftRadius: '5px', 
-                borderBottomRightRadius: '5px'}, 300, function(){$(".box").animate( {width:760, height:400}, 750);});
+                borderBottomRightRadius: '5px',
+                minHeight:400}, 300, function(){$(".box").animate( {width:760, height:400}, 750);});
         
         $(".box svg")
             .animate({
