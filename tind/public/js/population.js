@@ -2,9 +2,9 @@ var visible  = [0, 1, 2, 3, 4, 5];
 var _COLORS_ = ['#3ea4bf', '#a084bf', '#ff4566', '#F6BB33', '#FF6A13', '#49bf92'];
 var colors   = ['#3ea4bf', '#a084bf', '#ff4566', '#F6BB33', '#FF6A13', '#49bf92'];
 
-var margin = {top: 30, right: 20, bottom: 50, left: 50},
-    width  = 760 - margin.left - margin.right,
-    height = 400 - margin.top  - margin.bottom;
+var margin = {top: 30, right: 20, bottom: 30, left: 20},
+    width  = 760,
+    height = 380;
 
 if( !window.isLoaded )
 	window.addEventListener("load", function(){ onDocumentReady(); }, false);
@@ -18,7 +18,7 @@ function onDocumentReady(){
 
 function draw_top_diseases(){
     
-    var radius = Math.min(width, height) / 2;
+    var radius = Math.min(width, height-20) / 2;
     var color = d3.scale.ordinal().range(colors);
     
     var arc = d3.svg.arc()
@@ -33,7 +33,7 @@ function draw_top_diseases(){
         .attr("width", width)
         .attr("height", height)
       .append("g")
-        .attr("transform", "translate(" + 180 + "," + height / 2 + ")");
+        .attr("transform", "translate(" + width / 3 + "," + ((height / 2) + 20)  + ")");
     
     var legend = svg.append("g")
     .attr("class", "legend")

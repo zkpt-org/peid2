@@ -99,3 +99,7 @@ treatments .y.axis path {
     font-size: 12px;
 
 }
+
+#graph-2 .box{
+    min-height:380px;
+}

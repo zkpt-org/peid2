@@ -539,14 +539,14 @@ function graph3(){
 function graph4(){
     /* var formatPercent = d3.format(".0%"); */
     var x = d3.scale.ordinal()
-        .rangeRoundBands([0, width+15], .08);
+        .rangeRoundBands([0, width], .08);
     
     var y = d3.scale.linear()
         .range([height, 0]);
     
     var xAxis = d3.svg.axis()
         .scale(x)
-        .tickValues([1,10,20,30,40,50,60,70,80,90,100])
+        /* .tickValues([1,10,20,30,40,50,60,70,80,90,100]) */
         .orient("bottom");
     
     var yAxis = d3.svg.axis()
@@ -581,12 +581,22 @@ function graph4(){
       endload(4)
       check_session(data)
       
+      i = 0
+      data.forEach(function(d) {
+          if(d.cost > 90)
+              delete data[data.indexOf(d)];
+          else
+              i++;
+      });
+
+      data.length = i;
+      
       if(nodata(data))
           show_nodata_warning(4)
       else{
-          hide_nodata_warning(4)    
+          hide_nodata_warning(4)
           x.domain(data.map(function(d) { return d.claims; }));
-          y.domain([0, d3.max(data, function(d) { return d.cost; })]);      
+          y.domain([0, d3.max(data, function(d) { console.log(d); return d.cost; })]);      
       
           svg.append("g")
               .attr("class", "x axis")

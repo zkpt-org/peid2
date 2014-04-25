@@ -82,9 +82,7 @@ def graph1(request):
     
 
 @login_required
-def graph2(request):
-    #data = process.graph2(request.GET, request.session)
-    #data = queue.send(process.graph2, (request.GET, request.session), 600)
+def graph2(request):    
     das = Das(session=request.session)
     try:
         data = Graph2.objects.get(
@@ -99,6 +97,7 @@ def graph2(request):
             
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
+            #data = queue.send(process.graph2, (request.GET, request.session), 600)
             data  = process.graph2(das, request)
             graph = Graph2(
                 client     = request.GET["client"], 
