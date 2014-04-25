@@ -1,0 +1,15 @@
+<div id="graph-{{number}}">
+    <div class="show-hide-toggle">
+        <a href="javascript:;" onclick="fold('#graph-{{number}}');">
+        <i class="fa fa-caret-down"></i></a>
+        <hr/>
+    </div>
+    <div class="hide">
+        <h3>{{title}}</h3>{% include 'time_window_month.html' with num=number %}
+        <div id="" class="box">
+            <div class="webfont loader" id="loader-{{number}}"></div>
+            <div class="nodata" id="nodata-{{number}}">Insufficient Data.</div>
+            <div id="{{id}}" class="fadeIn fadeIn-1s"></div>
+        </div>
+    </div>
+</div>

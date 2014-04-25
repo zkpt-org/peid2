@@ -110,7 +110,6 @@ function graph1(){
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     
     d3.json("/home/graph1/?"   +
-            /* "months="          + months_diff  + */
             "reportingTo="     + time_window_end   +
             "&reportingFrom="  + time_window_start +
             "&comparisonFrom=" + time_window_start_minus_year +
@@ -121,142 +120,149 @@ function graph1(){
       endload(1)
       check_session(data)
       
-      console.log(data)
+      total0 = data[0]["Inpatient"]+data[0]["Office Visit"]+ data[0]["Outpatient"]+ data[0]["Pharmacy Claims"]
+      total1 = data[1]["Inpatient"]+data[1]["Office Visit"]+ data[1]["Outpatient"]+ data[1]["Pharmacy Claims"]
       
-      color.domain(d3.keys(data[0]).filter(function(key) { return key !== "Period"; }));      
-      
-      data.forEach(function(d){
-        var y0 = 0;
-        d.ages = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name]}; });
-        d.total = d.ages[d.ages.length - 1].y1;
-      });
-    
-      /* data.sort(function(a, b) { return b.total - a.total; }); */
-    
-      x.domain(data.map(function(d) { return d.Period; }));
-      y.domain([0, d3.max(data, function(d) { return d.total; })*1.2]);
-    
-      svg.append("g")
-          .attr("class", "x axis")
-          .attr("transform", "translate(0," + height + ")")
-          .call(xAxis);
+      if(total0 + total1 <= 0)
+          show_nodata_warning(1)
+      else{
+          hide_nodata_warning(1)    
 
-      d3.select(".x.axis")    
-        .append("g")
-        .append("text")
-          .text((time_window_start) +" \u2013 "+ (time_window_end)) 
-          .attr("id", "daterange-1")
-          .attr("y", 30)
-          .attr("x", (x.rangeBand() - x.rangeBand()/2 - d3.select("#daterange-1").node().getComputedTextLength()/2 + 20))
-          .attr("dy", ".71em")
-          /* .style("text-anchor", "center") */;
-      
-      d3.select(".x.axis")  
-        .append("g")
-        .append("text")
-          .text((time_window_start_minus_year) +" \u2013 "+ (time_window_end_minus_year))
-          .attr("id", "daterange-2")
-          .attr("y", 30)
-          .attr("x", (x.rangeBand()*2 - x.rangeBand()/4) - (d3.select("#daterange-2").node().getComputedTextLength()/2))
-          .attr("dy", ".71em")
-          /* .style("text-anchor", "center") */
-          ;
-      
-      d3.select(".x.axis")  
-        .append("g")
-        .append("text")
-          .text((time_window_start) +" \u2013 "+ (time_window_end))
-          .attr("id", "daterange-3")
-          .attr("y", 30)
-          .attr("x", (x.rangeBand()*3 - x.rangeBand()/6)  - (d3.select("#daterange-3").node().getComputedTextLength()/2))
-          .attr("dy", ".71em")
-          /* .style("text-anchor", "center") */
-          ;    
-        
-      svg.append("g")
-          .attr("class", "y axis")
-          .call(yAxis)
-        .append("text")
-          .attr("transform", "rotate(-90)")
-          .attr("y", 6)
-          .attr("dy", ".71em")
-          .style("text-anchor", "end")
-          .text("PMPM ($)");
-    
-      var state = svg.selectAll(".state")
-        .data(data).enter().append("g")
-          .attr("class", "g")
-          .attr("transform", function(d) { return "translate(" + x(d.Period) + ",0)"; });
-
-    
-      state.selectAll("rect")
-          .data(function(d) { return d.ages; })
-        .enter().append("g").attr("class", "cost-bar")
-          .append("rect")
-          .attr("width", x.rangeBand()/2)
-          .attr("x", x.rangeBand()/2/2)
-          .attr("y", function(d) { return y(d.y1); })
-          .attr("height", function(d) { return y(d.y0) - y(d.y1); })
-          .style("fill", function(d) { return color(d.name); });
-      
-      state.selectAll(".cost-bar")    
-          .append("text")
-          .text(function(d) { 
-            if (d.y1 - d.y0 > 10)
-                return "$" + String(d.y1 - d.y0); })
-          .attr("x", x.rangeBand()/4 + x.rangeBand()/4)
-          .attr("y", function(d) { return y(d.y0) - ((y(d.y0)-y(d.y1))/2) + 5; })
-          .attr("class", "segments");
-      
-      svg.selectAll(".g")
-        .append("text")
-          .text(function(d) {return "$" + String(d.total);})
-          .attr("x", x.rangeBand()/4 + x.rangeBand()/4)
-          .attr("y", function(d) { return y(d.total + 10); })
-          .attr("class", "total");
-      
-      var legend = svg.selectAll(".legend")
-          .data(color.domain().slice().reverse())
-        .enter().append("g")
-          .attr("class", "legend")
-          .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
-    
-      legend.append("rect")
-          .attr("x", width - 18)
-          .attr("width", 18)
-          .attr("height", 18)
-          .style("fill", color);
-    
-      legend.append("text")
-          .attr("x", width - 24)
-          .attr("y", 9)
-          .attr("dy", ".35em")
-          .style("text-anchor", "end")
-          .text(function(d) { return d; });
+          color.domain(d3.keys(data[0]).filter(function(key) { return key !== "Period"; }));      
           
-/*
-      svg.append("g")
-        .append("text")
-          .attr("y", 350)
-          .attr("x", 165)
-          .attr("dy", ".71em")
-          .style("text-anchor", "end")
-          .text((time_window_start) +" \u2013 "+ (time_window_end));
-      
-      svg.append("g")
-        .append("text")
-          .attr("y", 350)
-          .attr("x", 375)
-          .attr("dy", ".71em")
-          .style("text-anchor", "end")
-          .text((time_window_start_minus_year) +" \u2013 "+ (time_window_end_minus_year));
-*/
+          data.forEach(function(d){
+            var y0 = 0;
+            d.ages = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name]}; });
+            d.total = d.ages[d.ages.length - 1].y1;
+          });
+        
+          /* data.sort(function(a, b) { return b.total - a.total; }); */
+        
+          x.domain(data.map(function(d) { return d.Period; }));
+          y.domain([0, d3.max(data, function(d) { return d.total; })*1.2]);
+        
+          svg.append("g")
+              .attr("class", "x axis")
+              .attr("transform", "translate(0," + height + ")")
+              .call(xAxis);
+    
+          d3.select(".x.axis")    
+            .append("g")
+            .append("text")
+              .text((time_window_start) +" \u2013 "+ (time_window_end)) 
+              .attr("id", "daterange-1")
+              .attr("y", 30)
+              .attr("x", (x.rangeBand() - x.rangeBand()/2 - d3.select("#daterange-1").node().getComputedTextLength()/2 + 20))
+              .attr("dy", ".71em")
+              /* .style("text-anchor", "center") */;
+          
+          d3.select(".x.axis")  
+            .append("g")
+            .append("text")
+              .text((time_window_start_minus_year) +" \u2013 "+ (time_window_end_minus_year))
+              .attr("id", "daterange-2")
+              .attr("y", 30)
+              .attr("x", (x.rangeBand()*2 - x.rangeBand()/4) - (d3.select("#daterange-2").node().getComputedTextLength()/2))
+              .attr("dy", ".71em")
+              /* .style("text-anchor", "center") */
+              ;
+          
+          d3.select(".x.axis")  
+            .append("g")
+            .append("text")
+              .text((time_window_start) +" \u2013 "+ (time_window_end))
+              .attr("id", "daterange-3")
+              .attr("y", 30)
+              .attr("x", (x.rangeBand()*3 - x.rangeBand()/6)  - (d3.select("#daterange-3").node().getComputedTextLength()/2))
+              .attr("dy", ".71em")
+              /* .style("text-anchor", "center") */
+              ;    
+            
+          svg.append("g")
+              .attr("class", "y axis")
+              .call(yAxis)
+            .append("text")
+              .attr("transform", "rotate(-90)")
+              .attr("y", 6)
+              .attr("dy", ".71em")
+              .style("text-anchor", "end")
+              .text("PMPM ($)");
+        
+          var state = svg.selectAll(".state")
+            .data(data).enter().append("g")
+              .attr("class", "g")
+              .attr("transform", function(d) { return "translate(" + x(d.Period) + ",0)"; });
+    
+        
+          state.selectAll("rect")
+              .data(function(d) { return d.ages; })
+            .enter().append("g").attr("class", "cost-bar")
+              .append("rect")
+              .attr("width", x.rangeBand()/2)
+              .attr("x", x.rangeBand()/2/2)
+              .attr("y", function(d) { return y(d.y1); })
+              .attr("height", function(d) { return y(d.y0) - y(d.y1); })
+              .style("fill", function(d) { return color(d.name); });
+          
+          state.selectAll(".cost-bar")    
+              .append("text")
+              .text(function(d) { 
+                if (d.y1 - d.y0 > 10)
+                    return "$" + String(d.y1 - d.y0); })
+              .attr("x", x.rangeBand()/4 + x.rangeBand()/4)
+              .attr("y", function(d) { return y(d.y0) - ((y(d.y0)-y(d.y1))/2) + 5; })
+              .attr("class", "segments");
+          
+          svg.selectAll(".g")
+            .append("text")
+              .text(function(d) {return "$" + String(d.total);})
+              .attr("x", x.rangeBand()/4 + x.rangeBand()/4)
+              .attr("y", function(d) { return y(d.total + 10); })
+              .attr("class", "total");
+          
+          var legend = svg.selectAll(".legend")
+              .data(color.domain().slice().reverse())
+            .enter().append("g")
+              .attr("class", "legend")
+              .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
+        
+          legend.append("rect")
+              .attr("x", width - 18)
+              .attr("width", 18)
+              .attr("height", 18)
+              .style("fill", color);
+        
+          legend.append("text")
+              .attr("x", width - 24)
+              .attr("y", 9)
+              .attr("dy", ".35em")
+              .style("text-anchor", "end")
+              .text(function(d) { return d; });
+              
+    /*
+          svg.append("g")
+            .append("text")
+              .attr("y", 350)
+              .attr("x", 165)
+              .attr("dy", ".71em")
+              .style("text-anchor", "end")
+              .text((time_window_start) +" \u2013 "+ (time_window_end));
+          
+          svg.append("g")
+            .append("text")
+              .attr("y", 350)
+              .attr("x", 375)
+              .attr("dy", ".71em")
+              .style("text-anchor", "end")
+              .text((time_window_start_minus_year) +" \u2013 "+ (time_window_end_minus_year));
+              */
+    }
     });    
 }
 
 function graph2(){
-    var minDate = Date.parse(time_window_start) //Date.today().clearTime().moveToFirstDayOfMonth().addMonths(-12);
-    var maxDate = Date.parse(time_window_end)  //Date.today().clearTime().moveToFirstDayOfMonth();
+    var minDate = Date.parse(time_window_start)
+    var maxDate = Date.parse(time_window_end)
     
     var x = d3.time.scale().domain([minDate, maxDate])
         .range([0, width]);
@@ -327,15 +333,14 @@ function graph2(){
                          "&" + query_string, 
       function(error, data) {
                            
-        /* color.domain(d3.keys(data[0]).filter(function(key) { return eval(ex); })); */
-        
+        /* color.domain(d3.keys(data[0]).filter(function(key) { return eval(ex); })); */        
         endload(2)
         check_session(data)
         
       if(nodata(data))
-        show_nodata_warning(4)
+        show_nodata_warning(2)
       else{
-        hide_nodata_warning(4)    
+        hide_nodata_warning(2)    
         
         var table = [];
         var times = [];
@@ -345,7 +350,7 @@ function graph2(){
                 
         data.forEach(function(d) {
     	    d.cost = d.total;
-    	    d.date = Date.parse(d.date)//maxDate.addMonths(-d.month);//Date.today().addMonths(d.month-12);
+    	    d.date = Date.parse(d.date)
     	    costs.push(d.cost);
     	    times.push(d.date);
     	    benchmarks.push({"cost":d.benchmark, "date":d.date});
@@ -402,7 +407,6 @@ function graph2(){
             .tickSize(-width, 0, 0)
             .tickFormat("")
         )        
-
     
       svg.append("path")
           .datum(data)
@@ -547,9 +551,8 @@ function graph4(){
     
     var yAxis = d3.svg.axis()
         .scale(y)
-        .orient("left")
-        
-        /* .tickFormat(formatPercent) */;
+        .orient("left");        
+        /* .tickFormat(formatPercent) */
     
     var tip = d3.tip()
       .attr('class', 'd3-tip')

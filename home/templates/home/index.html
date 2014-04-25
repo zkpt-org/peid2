@@ -11,34 +11,9 @@
         {#{% clearcache alertcache %}#}
         {% include 'home/alerts.html' %}
     {% include 'filters.html' %}
-    <div id="graph-1" class="">
-        <div class="show-hide-toggle">
-            <a href="javascript:;" onclick="fold('#graph-1');">
-            <i class="fa fa-caret-down"></i></a>
-            <hr/>
-        </div>
-        <div class="hide">
-            <h3>Costs by  Category</h3>{% include 'time_window_month.html' with num="1" %}
-            <div  class="box">
-                <div class="webfont loader" id="loader-1"></div>
-                <div id="aggregate_costs" class="fadeIn fadeIn-1s"></div>
-            </div>
-        </div>
-    </div>
-    <div id="graph-2" class="">
-        <div class="show-hide-toggle">
-            <a href="javascript:;" onclick="fold('#graph-2');">
-            <i class="fa fa-caret-down"></i></a>
-            <hr/>
-        </div>
-        <div class="hide">
-            <h3>Per-Member Costs over Time Period</h3>{% include 'time_window_month.html' with num="2" %}
-            <div  class="box">
-                <div class="webfont loader" id="loader-2"></div>
-                <div id="pmpm" class="fadeIn fadeIn-1s"></div>
-            </div>
-        </div>
-    </div>
+    {% include "graph.html" with number="1" title="Costs by  Category" id="aggregate_costs" %}
+    {% include "graph.html" with number="2" title="Per-Member Costs over Time Period" id="pmpm" %}
+    
     <div id="graph-3" class="">
         <div class="show-hide-toggle">
             <a href="javascript:;" onclick="fold('#graph-3');">
@@ -99,19 +74,6 @@
             </div>
         </div>
     </div>
-    <div id="graph-4">
-        <div class="show-hide-toggle">
-            <a href="javascript:;" onclick="fold('#graph-4');">
-            <i class="fa fa-caret-down"></i></a>
-            <hr/>
-        </div>
-        <div class="hide">
-            <h3>Cumulative Costs</h3>{% include 'time_window_month.html' with num="4" %}
-            <div id="" class="box">
-                <div class="webfont loader" id="loader-4"></div><!-- replace with dynamic js code -->
-                <div class="nodata" id="nodata-4">Insufficient Data.</div><!-- replace with dynamic js code -->
-                <div id="cumulative" class="fadeIn fadeIn-1s"></div>
-            </div>
-        </div>
-    </div>
+
+    {% include "graph.html" with number="4" title="Cumulative Costs" id="cumulative" %}
 {% endblock %}

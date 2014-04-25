@@ -138,22 +138,6 @@ def get_cohort(das, q):
         #insert new cohort
     return cohort
 
-# def cohort(das, cond):
-#     if cond != "ALL":            
-#         p = {
-#         "service":"create",
-#         "table":"ms",
-#         "query":"{'and':[{'qmMeasure.eq':'"+cond+"'}]}"}
-#         cohort = das.to_dict(p)["cohortId"] 
-#     else:
-#         cohort = None
-#     return cohort
-# 
-# def add_cohort(cohort, params):
-#     if cohort is not None: 
-#         params.update({"cohortId":cohort})
-#     return params
-
 def empty_query(query):
     if(query['client']!='ALL' or query['office']!='ALL' or query['level']!='ALL' or 
        query['gender']!='ALL' or query['age']!='ALL' or query['condition']!='ALL'):

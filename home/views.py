@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from models import *
 from data.das import Das
 from data import queue
+from tind.functions import conditions
 from home import process
 import json, calendar, datetime
 from django.core.cache import cache
@@ -22,16 +23,18 @@ def index(request):
     das = Das(session=request.session)
     
     if 'pgt' in request.session:
-        data = process.graph3_init()
+        data = process.graph3_init()        
     else:
         data = {"session":"expired"}
+    
         
     return render_to_response('home/index.html',{
                 "page"       : "home", 
                 "user"       : request.user, 
                 "alerts"     : request.session['alerts'],
                 "reporting"  : data["reporting"],
-                "comparison" : data["comparison"]
+                "comparison" : data["comparison"],
+                "conditions" : conditions(das)
            }, context_instance=RequestContext(request))
 
 def hide_alerts(request):
