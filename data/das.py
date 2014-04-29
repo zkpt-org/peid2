@@ -2,6 +2,7 @@ import urllib, pycurl, cStringIO, os, copy
 from BeautifulSoup import BeautifulSoup, BeautifulStoneSoup
 from django.conf import settings
 from response import DasResponse
+from cohort import DasCohort
 
 class Das:
     def __init__(self, session={}):
@@ -187,6 +188,16 @@ class Das:
         # else:
         #     return DasResponse(self, {}).nullset()
     
+    def cohort(self, query=None, id=None):
+        """Return DasCohort object."""
+        if query is not None and id is None:
+            cohort = DasCohort(self).create(query)
+        elif query is None and id is None:
+            raise ValueError("Specify cohort id or pass query string to create a new cohort.")
+        else:
+            cohort = DasCohort(self, id=id)
+        return cohort
+            
     def api_call(self, p):
         for k, v in p.iteritems(): 
             if isinstance(v, list): p[k] = str(v[0])

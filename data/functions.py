@@ -2,19 +2,19 @@ import datetime, calendar
 from dateutil.relativedelta import relativedelta
 
 def lastdate(das):
-    try:
-        params = {
-            "service"  : "search", 
-            "table"    : "smc",
-            "page"     : "1",
-            "pageSize" : "1",
-            "order"    : "paidDate:desc"}
-        
-        return das.to_dict(params)["result_sets"]["0"]["serviceDate"]
+    params = {
+        "service"  : "search", 
+        "table"    : "smc",
+        "page"     : "1",
+        "pageSize" : "1",
+        "order"    : "paidDate:desc"}
+    r = das.to_dict(params)
     
-    except Exception,e:
-        print str(e)+"\n"
-        with open("../errors.log", "a+") as f: f.write(str(e)+"\n")
+    if "result_sets" not in r:
+        now = datetime.datetime.now()
+        return now.strftime('%Y-%m-%d')
+    return r["result_sets"]["0"]["serviceDate"]
+
 
 def timewindow(das):
     """Get the last date recorded in the dataset."""
@@ -46,9 +46,9 @@ def chronic(das, q):
     }
     r = das.response(p)
     conditions = OrderedDict()
-    
-    for i in sorted(r.data["reporting"]["Default"], key=lambda x: r.data["reporting"]["Default"][x]["withCondition"] 
-        if x != "memberCount" and x != "memberMonths" else r.data["reporting"]["Default"][x], reverse=True): 
-        if i != "memberCount" and i != "memberMonths":
-            conditions.update({r.data["reporting"]["Default"][i]["name"] : r.data["reporting"]["Default"][i]["description"]})
+    if r.data:
+        for i in sorted(r.data["reporting"]["Default"], key=lambda x: r.data["reporting"]["Default"][x]["withCondition"] 
+            if x != "memberCount" and x != "memberMonths" else r.data["reporting"]["Default"][x], reverse=True): 
+            if i != "memberCount" and i != "memberMonths":
+                conditions.update({r.data["reporting"]["Default"][i]["name"] : r.data["reporting"]["Default"][i]["description"]})
     return conditions

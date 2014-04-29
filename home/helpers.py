@@ -71,7 +71,7 @@ def employers(das, win):
     return list(set([(i.groupIdName, i.groupId) for i in emp.results if 'groupIdName' in vars(i)]))
 
 def format_query(q):
-    query = ""    
+    query = ""
     for key, val in q.items():
         if val != "ALL":
             if key == "client":
@@ -94,11 +94,12 @@ def format_query(q):
                     query += "{'memberAge.gte':'"+val[:2]+"'},"
             elif key == "condition":
                 query += "{'qmMeasure.eq':'"+val+"'},"
-    query += "]}"
+            elif key == "relation":
+                query += "{'relationshipId.eq':'"+val[0]+"'},"
     return query
 
 def get_cohort(das, q):
-    
+    from data.models import Cohort
     traits = copy.deepcopy(q)
     #del traits["start_date"], traits["end_date"]
     if "reportingFrom" in traits: del traits["reportingFrom"]
@@ -125,17 +126,10 @@ def get_cohort(das, q):
     
     try:
         cohort = Cohort.objects.get(traits=t).cohort_id
-    except ObjectDoesNotExist:
-        sys.exit()
-        #query = format_query(q)
-        #
-        #p = {
-        #    "service":"create",
-        #    "table":"ms",
-        #    "query":"{'and':[%s]}" % query
-        #}
-        #cohort = das.to_dict(p)["cohortId"]
-        #insert new cohort
+    except ObjectDoesNotExist: 
+        query  = format_query(q)
+        cohort = das.cohort(query=query).id
+        Cohort(cohort_id=cohort, traits=t).save()
     return cohort
 
 def empty_query(query):
