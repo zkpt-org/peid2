@@ -1,8 +1,8 @@
 <script type="text/javascript" src="{{STATIC_URL}}js/filters.js"></script>
 <script type="text/javascript">
-    filter_default_labels = ["Client", "Office", "Level", "Condition", "Gender", "Age Group"];
-    filter_query = {"client":"ALL", "gender":"ALL", "age":"ALL", "condition":"ALL", "level":"ALL", "office":"ALL", "client":"ALL"};
-    filter_keys = ["client", "office", "level", "condition", "gender", "age"]
+    filter_default_labels = ["Client", "Office", "Relation", "Condition", "Gender", "Age Group"];
+    filter_query = {"client":"ALL", "gender":"ALL", "age":"ALL", "condition":"ALL", "relation":"ALL", "office":"ALL", "client":"ALL"};
+    filter_keys  = ["client", "office", "relation", "condition", "gender", "age"]
     query_string = query(filter_query);
 </script>
 <div id="filter-controls">
@@ -31,6 +31,7 @@
         <li onclick="filter(this, 1)"><a>Office C</a></li>
       </ul>
     </div>
+<!--
     <div class="btn-group" id="filter-2">
       <button class="btn filter-label" onclick="reset_filter(this, 2)">Level</button>
       <button class="btn dropdown-toggle btn-zp" data-toggle="dropdown" href="#">
@@ -44,6 +45,22 @@
         <li onclick="filter(this, 2)"><a>Manager</a></li>
         <li onclick="filter(this, 2)"><a>Assistant</a></li>
         <li onclick="filter(this, 2)"><a>Entry Level</a></li>
+      </ul>
+    </div>
+-->
+    <div class="btn-group" id="filter-2">
+      <button class="btn filter-label" onclick="reset_filter(this, 2)">Relation</button>
+      <button class="btn dropdown-toggle btn-zp" data-toggle="dropdown" href="#">
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu">
+        <li onclick="reset_filter(this, 2)"><a>All Members</a></li>
+        <li class="divider"></li>
+        <li onclick="filter(this, 2)"><a>Employee</a></li>
+        <li onclick="filter(this, 2)"><a>Spouse</a></li>
+        <li onclick="filter(this, 2)"><a>Child</a></li>
+        <li onclick="filter(this, 2)"><a>Dependent</a></li>
+        <li onclick="filter(this, 2)"><a>Legal Dependent</a></li>
       </ul>
     </div>
     <div class="btn-group" id="filter-3">

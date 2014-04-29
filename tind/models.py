@@ -13,6 +13,7 @@ class ProcessedGraphData(TimeStampedModel):
     client     = models.CharField(max_length=64, default="ALL") 
     office     = models.CharField(max_length=64, default="ALL")
     level      = models.CharField(max_length=64, default="ALL")
+    relation   = models.CharField(max_length=64, default="ALL")
     condition  = models.CharField(max_length=64, default="ALL")
     gender     = models.CharField(max_length=8,  default="ALL")
     age        = models.CharField(max_length=8,  default="ALL")

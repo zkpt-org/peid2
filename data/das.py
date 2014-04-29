@@ -44,6 +44,7 @@ class Das:
         else:
             c.setopt(c.URL, url + '?' + urllib.urlencode(p))
         if not peer: c.setopt(c.SSL_VERIFYPEER , 0)
+        c.setopt(pycurl.ENCODING, 'gzip')
         c.setopt(c.SSLVERSION, 3)
         c.setopt(c.WRITEFUNCTION, response.write)
         try:
@@ -75,6 +76,10 @@ class Das:
         rsp = self.curl(self.PT_URL, p)
         xml = BeautifulStoneSoup(rsp)
         pt = xml.find('cas:proxyticket').string if xml.find('cas:proxyticket') else xml
+        if xml.find('cas:proxyfailure'):
+            # self.auth()
+            # return self.get_proxy_ticket()
+            return xml.find('cas:proxyfailure')["code"]
         return str(pt)
     
     def api(self, p):
