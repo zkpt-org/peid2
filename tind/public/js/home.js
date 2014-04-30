@@ -286,6 +286,10 @@ function graph2(){
     
     var line = d3.svg.line()
         .interpolate("monotone")
+        /*
+        .interpolate("basis")
+        .interpolate("linear")
+        */
         .x(function(d) { return x(d.date); })
         .y(function(d) { return y(d.cost); });
         
@@ -447,23 +451,23 @@ function graph2(){
     var max_score = d3.max(costs.concat(bench_costs))*1.1;
     var min_score = d3.min(costs.concat(bench_costs))*0.9;
     
-    var spacing = width/data.length;
+    var spacing = width/(table.length-1);
     
     function update_circle(){
         event = d3.event;
-        var xpos = d3.mouse(this)[0] - margin.left;
-        var index = (table.length)*(xpos/width);
+        var xpos  = d3.mouse(this)[0]- margin.left//-margin.right;
+        var index = (table.length)*(xpos / (width + margin.left + margin.right) );
         var ypos;
-        console.log(table.length)
-        console.log(index)
+        
         if(xpos > 0 && xpos < width){
             if( table[index] === undefined ){     
                 var lower = Math.floor(index);
-                var upper = Math.floor(index) + 1;
-    
+                var upper = (Math.floor(index) < table.length-1) ? (Math.floor(index) + 1) : (Math.floor(index));
+                
                 var between = d3.interpolateNumber(
                     (height - ((table[lower] - min_score) / ((max_score - min_score) / height))), 
                     (height - ((table[upper] - min_score) / ((max_score - min_score) / height))));
+                
                 ypos = between( (xpos % spacing) / spacing );
                 
             } 
