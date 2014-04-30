@@ -8,6 +8,7 @@ class Das:
     def __init__(self, session={}):
         self.USER     = settings.DAS_USER
         self.PASS     = settings.DAS_PASS
+        
         self.HOST     = 'tind-lite.zakipoint.com'
         self.TICKETS  = 'https://login.deerwalk.com/cas/v1/tickets'
         self.SERVICE  = 'https://zakipoint.makalu.deerwalk.com'
@@ -32,7 +33,7 @@ class Das:
         vld = self.validate_service(st)
         xml = BeautifulStoneSoup(vld)
         iou = xml.find('cas:proxygrantingticket').string if xml.find('cas:proxygrantingticket') else None
-
+        
         self.PGT = self.get_proxy_granting_ticket(iou)
         return self.PGT
     
@@ -197,7 +198,7 @@ class Das:
         else:
             cohort = DasCohort(self, id=id)
         return cohort
-            
+    
     def api_call(self, p):
         for k, v in p.iteritems(): 
             if isinstance(v, list): p[k] = str(v[0])

@@ -365,7 +365,7 @@ function graph2(){
       /* y.domain(d3.extent(data, function(d) { return d.cost; })); */
     
       y.domain([
-        d3.min(costs.concat(bench_costs)),
+        d3.min(costs.concat(bench_costs))*0.9,
         d3.max(costs.concat(bench_costs))*1.1
       ]);
     
@@ -447,30 +447,29 @@ function graph2(){
     var max_score = d3.max(costs.concat(bench_costs))*1.1;
     var min_score = d3.min(costs.concat(bench_costs))*0.9;
     
-    var spacing = 100;
+    var spacing = width/data.length;
     
     function update_circle(){
         event = d3.event;
         var xpos = d3.mouse(this)[0] - margin.left;
         var index = (table.length)*(xpos/width);
         var ypos;
-                
+        console.log(table.length)
+        console.log(index)
         if(xpos > 0 && xpos < width){
-/*
             if( table[index] === undefined ){     
                 var lower = Math.floor(index);
                 var upper = Math.floor(index) + 1;
     
                 var between = d3.interpolateNumber(
-                    (height - ((table[lower] - min_score) / ((max_score- min_score) / height))), 
-                    (height - ((table[upper] - min_score) / ((max_score- min_score) / height))));
+                    (height - ((table[lower] - min_score) / ((max_score - min_score) / height))), 
+                    (height - ((table[upper] - min_score) / ((max_score - min_score) / height))));
                 ypos = between( (xpos % spacing) / spacing );
                 
             } 
             else{
-*/
                 ypos = height - ((table[Math.floor(index)] - min_score) / ((max_score - min_score) / height));
-            //}
+            }
             circle
             .attr("cx", xpos)
             .attr("cy", ypos);
@@ -485,6 +484,9 @@ function graph2(){
             tooltip.style("top", ($("#pmpm").position()["top"]+ypos)+"px").style("left",(event.pageX+20)+"px")
             
             $('.tooltip-1').html('<h3>$ '+table[Math.floor(index)]+'</h3>');
+            
+        }
+        else if(xpos > width){
             
         }
     }
