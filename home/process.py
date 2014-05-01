@@ -1,4 +1,4 @@
-import os, datetime, calendar, sys, json
+import datetime, calendar, json
 from dateutil.relativedelta import relativedelta
 import pandas as pd
 import numpy as np
@@ -50,13 +50,13 @@ def graph1(das, request):
     return data
 
 def graph2(das, request):
-    cohort = get_cohort(das, request.GET)
+    cohort = get_cohort(das, request)
 
-    reporting_from  = request.GET["reportingFrom"]
-    reporting_to    = request.GET["reportingTo"]
+    reporting_from  = request["reportingFrom"]
+    reporting_to    = request["reportingTo"]
     
-    comparison_from = request.GET["comparisonFrom"]
-    comparison_to   = request.GET["comparisonTo"]
+    comparison_from = request["comparisonFrom"]
+    comparison_to   = request["comparisonTo"]
     
     data = []
     

@@ -88,10 +88,6 @@ function graph1(){
         .rangeRound([height, 0]);
     
     var color = d3.scale.ordinal()
-        /* 
-        .range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]); 
-        .range(['#3ea4bf','#F6BB33', '#49bf92', '#a084bf', '#FF6A13']) 
-        */
         .range(colors);
     
     var xAxis = d3.svg.axis()
@@ -123,6 +119,8 @@ function graph1(){
       total0 = data[0]["Inpatient"]+data[0]["Office Visit"]+ data[0]["Outpatient"]+ data[0]["Pharmacy Claims"]
       total1 = data[1]["Inpatient"]+data[1]["Office Visit"]+ data[1]["Outpatient"]+ data[1]["Pharmacy Claims"]
       
+      console.log(data)
+      
       if(total0 + total1 <= 0)
           show_nodata_warning(1)
       else{
@@ -153,8 +151,7 @@ function graph1(){
               .attr("id", "daterange-1")
               .attr("y", 30)
               .attr("x", (x.rangeBand() - x.rangeBand()/2 - d3.select("#daterange-1").node().getComputedTextLength()/2 + 20))
-              .attr("dy", ".71em")
-              /* .style("text-anchor", "center") */;
+              .attr("dy", ".71em");
           
           d3.select(".x.axis")  
             .append("g")
@@ -163,9 +160,7 @@ function graph1(){
               .attr("id", "daterange-2")
               .attr("y", 30)
               .attr("x", (x.rangeBand()*2 - x.rangeBand()/4) - (d3.select("#daterange-2").node().getComputedTextLength()/2))
-              .attr("dy", ".71em")
-              /* .style("text-anchor", "center") */
-              ;
+              .attr("dy", ".71em");
           
           d3.select(".x.axis")  
             .append("g")
@@ -174,9 +169,7 @@ function graph1(){
               .attr("id", "daterange-3")
               .attr("y", 30)
               .attr("x", (x.rangeBand()*3 - x.rangeBand()/6)  - (d3.select("#daterange-3").node().getComputedTextLength()/2))
-              .attr("dy", ".71em")
-              /* .style("text-anchor", "center") */
-              ;    
+              .attr("dy", ".71em");
             
           svg.append("g")
               .attr("class", "y axis")
@@ -238,24 +231,6 @@ function graph1(){
               .attr("dy", ".35em")
               .style("text-anchor", "end")
               .text(function(d) { return d; });
-              
-    /*
-          svg.append("g")
-            .append("text")
-              .attr("y", 350)
-              .attr("x", 165)
-              .attr("dy", ".71em")
-              .style("text-anchor", "end")
-              .text((time_window_start) +" \u2013 "+ (time_window_end));
-          
-          svg.append("g")
-            .append("text")
-              .attr("y", 350)
-              .attr("x", 375)
-              .attr("dy", ".71em")
-              .style("text-anchor", "end")
-              .text((time_window_start_minus_year) +" \u2013 "+ (time_window_end_minus_year));
-              */
     }
     });    
 }
@@ -286,10 +261,9 @@ function graph2(){
     
     var line = d3.svg.line()
         .interpolate("monotone")
-        /*
-        .interpolate("basis")
-        .interpolate("linear")
-        */
+        /* .interpolate("basis") */
+        /* .interpolate("linear") */
+       
         .x(function(d) { return x(d.date); })
         .y(function(d) { return y(d.cost); });
         
@@ -315,7 +289,6 @@ function graph2(){
             .scale(x)
              .orient("bottom")
              .ticks(12)
-             /* .ticks(8) */
     }
     
     function make_y_axis() {        
@@ -325,27 +298,7 @@ function graph2(){
             .ticks(10)
     }
     
-    //svg.on('click', function () {
-        //offset = d3.mouse(this)[0];
-        
-    //});
-    
-    d3.json("/home/graph2/?reportingTo="    + time_window_end   +
-                         "&reportingFrom="  + time_window_start +
-                         "&comparisonFrom=" + time_window_start_minus_year +
-                         "&comparisonTo="   + time_window_end_minus_year +
-                         "&" + query_string, 
-      function(error, data) {
-                           
-        /* color.domain(d3.keys(data[0]).filter(function(key) { return eval(ex); })); */        
-        endload(2)
-        check_session(data)
-        
-      if(nodata(data))
-        show_nodata_warning(2)
-      else{
-        hide_nodata_warning(2)    
-        
+    RenderGraph("home", 2, function(data){
         var table = [];
         var times = [];
         var costs = [];
@@ -361,168 +314,159 @@ function graph2(){
     	    table[c] = d.cost;
     	    c ++;
         });
-      
-      var bench_costs = [] 
-      benchmarks.forEach(function(d){bench_costs.push(d.cost)})
-      
-      x.domain(d3.extent(data, function(d) { return d.date; }));
-      /* y.domain(d3.extent(data, function(d) { return d.cost; })); */
-    
-      y.domain([
-        d3.min(costs.concat(bench_costs))*0.9,
-        d3.max(costs.concat(bench_costs))*1.1
-      ]);
-    
-    
-      svg.append("g")
-          .attr("class", "x axis")
-          .attr("id", "x-axis")
-          .attr("transform", "translate(0," + height + ")")
-          .call(xAxis)
-          .style("opacity", "0")
-          .transition().duration(50).delay(0).ease('in')
-          .style("opacity", "1");
-    
-      svg.append("g")
-          .attr("class", "y axis")
-          .call(yAxis)
-        .append("text")
-          .attr("transform", "rotate(-90)")
-          .attr("y", 6)
-          .attr("dy", ".71em")
-          .style("text-anchor", "end")
-          .text("Avg. Cost ($)")
-          .style("opacity", "0")
-          .transition().duration(50).delay(0).ease('in')
-          .style("opacity", "1");
 
-
-      svg.append("g")         
-        .attr("class", "grid")
-        .attr("transform", "translate(0," + height + ")")
-        .call(make_x_axis()
-            .tickSize(-height, 0, 0)
-            .tickFormat("")
-        )
-
-      svg.append("g")         
-        .attr("class", "grid")
-        .call(make_y_axis()
-            .tickSize(-width, 0, 0)
-            .tickFormat("")
-        )        
-    
-      svg.append("path")
-          .datum(data)
-          .attr("class", "pmpm")
-          .attr("d", line);
-            
-      svg.append("path")
-          .datum(benchmarks)
-          .attr("class", "benchmark")
-          .attr("d", line);    
-    
-
-    var indicator = svg.append("line")
-    .attr("x1", 0)
-    .attr("y1", height+10)
-    .attr("x2", 0)
-    .attr("y2", height-10)
-    .style("stroke", "#3ea4bf")
-    .style("stroke-width", "1.2px")
-    .style("visibility", "hidden");
-    
-    var circle = svg.append("circle")
-    .attr("r", 6)
-    .attr("display", "none")
-    .attr("class","tracker");
-
-    d3.select('#pmpm-graph')
-    .on("mouseover", function(){
-        circle.attr("display", "block"); 
-        tooltip.style("visibility", "visible");
-        indicator.style("visibility", "visible");})
-    .on("mousemove", update_circle)
-    .on("mouseout", function(){ 
-        circle.attr("display", "none"); 
-        tooltip.style("visibility", "hidden"); 
-        indicator.style("visibility", "hidden");});
-            
-    var max_score = d3.max(costs.concat(bench_costs))*1.1;
-    var min_score = d3.min(costs.concat(bench_costs))*0.9;
-    
-    var spacing = width/(table.length-1);
-    
-    function update_circle(){
-        event = d3.event;
-        var xpos  = d3.mouse(this)[0]- margin.left//-margin.right;
-        var index = (table.length)*(xpos / (width + margin.left + margin.right) );
-        var ypos;
+        var bench_costs = [] 
+        benchmarks.forEach(function(d){bench_costs.push(d.cost)})
+  
+        x.domain(d3.extent(data, function(d) { return d.date; }));
+          
+        y.domain([
+            d3.min(costs.concat(bench_costs))*0.9,
+            d3.max(costs.concat(bench_costs))*1.1
+        ]);
         
-        if(xpos > 0 && xpos < width){
-            if( table[index] === undefined ){     
-                var lower = Math.floor(index);
-                var upper = (Math.floor(index) < table.length-1) ? (Math.floor(index) + 1) : (Math.floor(index));
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("id", "x-axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis)
+            .style("opacity", "0")
+            .transition().duration(50).delay(0).ease('in')
+            .style("opacity", "1");
+        
+        svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis)
+        .append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("y", 6)
+            .attr("dy", ".71em")
+            .style("text-anchor", "end")
+            .text("Avg. Cost ($)")
+            .style("opacity", "0")
+            .transition().duration(50).delay(0).ease('in')
+            .style("opacity", "1");
+            
+            
+        svg.append("g")         
+            .attr("class", "grid")
+            .attr("transform", "translate(0," + height + ")")
+            .call(make_x_axis()
+                .tickSize(-height, 0, 0)
+                .tickFormat("")
+            )
+
+        svg.append("g")         
+            .attr("class", "grid")
+            .call(make_y_axis()
+                .tickSize(-width, 0, 0)
+                .tickFormat("")
+            )        
+
+        svg.append("path")
+            .datum(data)
+            .attr("class", "pmpm")
+            .attr("d", line);
                 
-                var between = d3.interpolateNumber(
-                    (height - ((table[lower] - min_score) / ((max_score - min_score) / height))), 
-                    (height - ((table[upper] - min_score) / ((max_score - min_score) / height))));
-                
-                ypos = between( (xpos % spacing) / spacing );
-                
-            } 
-            else{
-                ypos = height - ((table[Math.floor(index)] - min_score) / ((max_score - min_score) / height));
-            }
-            circle
-            .attr("cx", xpos)
-            .attr("cy", ypos);
-            
-            indicator
-            .attr("x1", xpos)
-            .attr("x2", xpos)
-            .attr("y1", 0)
-            .attr("y2", height+10);
-            
-            tooltip.style("visibility", "visible")
-            tooltip.style("top", ($("#pmpm").position()["top"]+ypos)+"px").style("left",(event.pageX+20)+"px")
-            
-            $('.tooltip-1').html('<h3>$ '+table[Math.floor(index)]+'</h3>');
-            
-        }
-        else if(xpos > width){
-            
-        }
-    }
+        svg.append("path")
+            .datum(benchmarks)
+            .attr("class", "benchmark")
+            .attr("d", line);    
+
+        var indicator = svg.append("line")
+            .attr("x1", 0)
+            .attr("y1", height+10)
+            .attr("x2", 0)
+            .attr("y2", height-10)
+            .style("stroke", "#3ea4bf")
+            .style("stroke-width", "1.2px")
+            .style("visibility", "hidden");
+        
+        var circle = svg.append("circle")
+            .attr("r", 6)
+            .attr("display", "none")
+            .attr("class","tracker");
+        
+        d3.select('#pmpm-graph')
+            .on("mouseover", function(){
+                circle.attr("display", "block"); 
+                tooltip.style("visibility", "visible");
+                indicator.style("visibility", "visible");})
+            .on("mousemove", update_circle)
+            .on("mouseout", function(){ 
+                circle.attr("display", "none"); 
+                tooltip.style("visibility", "hidden"); 
+                indicator.style("visibility", "hidden");});
     
-    var key = svg.append("svg:g");
-    key.append("svg:circle")
-          .attr("cy", 360 )
-          .attr("cx", 0 )
-          .attr("r", 8) // radius of circle
-          .attr("fill", '#3ea4bf')
-          .attr("stroke", '#777777') 
-          .style("opacity", 0.9);
-    key.append("text")
+        var max_score = d3.max(costs.concat(bench_costs))*1.1;
+        var min_score = d3.min(costs.concat(bench_costs))*0.9;
+
+        var spacing = width/(table.length-1);
+
+        function update_circle(){
+            event = d3.event;
+            var xpos  = d3.mouse(this)[0]- margin.left;
+            var index = (table.length)*(xpos / (width + margin.left + margin.right) );
+            var ypos;
+
+            if(xpos > 0 && xpos < width){
+                if( table[index] === undefined ){     
+                    var lower = Math.floor(index);
+                    var upper = (Math.floor(index) < table.length-1) ? (Math.floor(index) + 1) : (Math.floor(index));
+                    
+                    var between = d3.interpolateNumber(
+                        (height - ((table[lower] - min_score) / ((max_score - min_score) / height))), 
+                        (height - ((table[upper] - min_score) / ((max_score - min_score) / height))));
+                    
+                    ypos = between( (xpos % spacing) / spacing );
+                }else{
+                    ypos = height - ((table[Math.floor(index)] - min_score) / ((max_score - min_score) / height));
+                }
+                
+                circle
+                    .attr("cx", xpos)
+                    .attr("cy", ypos);
+                
+                indicator
+                    .attr("x1", xpos)
+                    .attr("x2", xpos)
+                    .attr("y1", 0)
+                    .attr("y2", height+10);
+                
+                tooltip.style("visibility", "visible")
+                tooltip.style("top", ($("#pmpm").position()["top"]+ypos)+"px").style("left",(event.pageX+20)+"px")
+                
+                $('.tooltip-1').html('<h3>$ '+table[Math.floor(index)]+'</h3>');   
+            }
+        }
+
+        var key = svg.append("svg:g");
+        key.append("svg:circle")
+            .attr("cy", 360 )
+            .attr("cx", 0 )
+            .attr("r", 8) // radius of circle
+            .attr("fill", '#3ea4bf')
+            .attr("stroke", '#777777') 
+            .style("opacity", 0.9);
+        key.append("text")
             .attr("y", 355)
             .attr("x", 15)
             .attr("dy", ".71em")
             .attr("class", "text dark")
             .text("Reporting");
-    key.append("svg:circle")
-          .attr("cy", 360 )
-          .attr("cx", 100 )
-          .attr("r", 8) // radius of circle
-          .attr("fill", '#F6BB33')
-          .attr("stroke", '#777777') 
-          .style("opacity", 0.9);
-    key.append("text")
+        key.append("svg:circle")
+            .attr("cy", 360 )
+            .attr("cx", 100 )
+            .attr("r", 8) // radius of circle
+            .attr("fill", '#F6BB33')
+            .attr("stroke", '#777777') 
+            .style("opacity", 0.9);
+        key.append("text")
             .attr("y", 355)
             .attr("x", 115)
             .attr("dy", ".71em")
             .attr("class", "text dark")      
             .text("Comparison");
-    }
     });
 }
 
@@ -575,67 +519,47 @@ function graph4(){
     
     svg.call(tip);
     
-    //d3.json("../public/data/cumulative.json", function(error, data) {
-    d3.json("/home/graph4/"   +
-           "?reportingTo="    + time_window_end   +
-           "&reportingFrom="  + time_window_start +
-           "&comparisonFrom=" + time_window_start_minus_year +
-           "&comparisonTo="   + time_window_end_minus_year +
-           "&" + query_string, 
-      function(error, data){
-      
-      endload(4)
-      check_session(data)
-      
-      i = 0
-      data.forEach(function(d) {
-          if(d.cost > 90)
-              delete data[data.indexOf(d)];
-          else
-              i++;
-      });
-
-      data.length = i;
-      
-      if(nodata(data))
-          show_nodata_warning(4)
-      else{
-          hide_nodata_warning(4)
-          x.domain(data.map(function(d) { return d.claims; }));
-          y.domain([0, d3.max(data, function(d) { return d.cost; })]);      
-      
-          svg.append("g")
-              .attr("class", "x axis")
-              .attr("transform", "translate(-5," + height + ")")
-              .call(xAxis)
-              .append("text")
-              .attr("y", 30)
-              .attr("x", 690)
-              .attr("dy", ".71em")
-              .style("text-anchor", "end")
-              .text("Claims %");
-    
-          svg.append("g")
-              .attr("class", "y axis")
-              .call(yAxis)
-              .attr("transform", "translate(-1," + 0 + ")")
-            .append("text")
-              .attr("y", 5)
-              .attr("x", 40)
-              .attr("dy", ".71em")
-              .style("text-anchor", "end")
-              .text("Cost %");
-    
-          svg.selectAll(".bar")
-              .data(data)
-            .enter().append("rect")
-              .attr("class", "bar")
-              .attr("x", function(d) { return x(d.claims)-5; })
-              .attr("width", x.rangeBand())
-              .attr("y", function(d) { return y(d.cost); })
-              .attr("height", function(d) { return height - y(d.cost); })
-              .on('mouseover', tip.show)
-              .on('mouseout', tip.hide)
-        }
+    RenderGraph("home", 4, function(data){
+        i = 0
+        data.forEach(function(d){
+          (d.cost > 90) ? delete data[data.indexOf(d)] : i++
+        })
+        
+        data.length = i
+        x.domain(data.map(function(d) { return d.claims; }))
+        y.domain([0, d3.max(data, function(d) { return d.cost; })])
+        
+        svg.append("g")
+          .attr("class", "x axis")
+          .attr("transform", "translate(-5," + height + ")")
+          .call(xAxis)
+          .append("text")
+          .attr("y", 30)
+          .attr("x", 690)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("Claims %");
+        
+        svg.append("g")
+          .attr("class", "y axis")
+          .call(yAxis)
+          .attr("transform", "translate(-1," + 0 + ")")
+        .append("text")
+          .attr("y", 5)
+          .attr("x", 40)
+          .attr("dy", ".71em")
+          .style("text-anchor", "end")
+          .text("Cost %");
+        
+        svg.selectAll(".bar")
+          .data(data)
+        .enter().append("rect")
+          .attr("class", "bar")
+          .attr("x", function(d) { return x(d.claims)-5; })
+          .attr("width", x.rangeBand())
+          .attr("y", function(d) { return y(d.cost); })
+          .attr("height", function(d) { return height - y(d.cost); })
+          .on('mouseover', tip.show)
+          .on('mouseout', tip.hide)
     });
 }

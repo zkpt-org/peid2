@@ -16,6 +16,10 @@ function onDocumentReady(){
     draw_top_diffs();
 }
 
+function redraw(num){
+    
+}
+
 function draw_top_diseases(){
     
     var radius = Math.min(width, height-20) / 2;
@@ -64,8 +68,8 @@ function draw_top_diseases(){
     var labels = ["A", "B", "C", "D", "E", "F"]
     var i = -1;
     
-    d3.json("../public/data/top_diseases.json", function(error, data) {
-        
+    //d3.json("../public/data/top_diseases.json", function(error, data) {
+    RenderGraph("population", 1, function(data){    
       data.forEach(function(d) {
         d.population = +d.population;
       });

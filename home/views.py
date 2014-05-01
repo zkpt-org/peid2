@@ -10,6 +10,7 @@ from home import process
 import json, calendar, datetime
 from django.core.cache import cache
 from django.core.exceptions import ObjectDoesNotExist
+from django.http import HttpResponseRedirect
 #from django.views.decorators.cache import never_cache
 #from collections import OrderedDict
 
@@ -26,7 +27,7 @@ def index(request):
         data = process.graph3_init()        
     else:
         data = {"session":"expired"}
-    
+        return HttpResponseRedirect("/login/")
         
     return render_to_response('home/index.html',{
                 "page"       : "home", 
@@ -100,8 +101,8 @@ def graph2(request):
             
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
-            #data = queue.send(process.graph2, (request.GET, request.session), 600)
-            data  = process.graph2(das, request)
+            # data = queue.send(process.graph2, (das, request.GET), 600)
+            data  = process.graph2(das, request.GET)
             graph = Graph2(
                 client     = request.GET["client"], 
                 office     = request.GET["office"],	
