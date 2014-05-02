@@ -57,19 +57,6 @@ def chronic(das, win):
             conditions.update({r.data["reporting"]["Default"][i]["name"] : r.data["reporting"]["Default"][i]["description"]})
     return conditions
 
-def employers(das, win):
-    p = {
-    "service"     : "search",
-    "table"       : "ms",
-    "page"        : "1",
-    "pageSize"    : "100",
-    "query"       : "{'and':[{'serviceDate.gte':'"+win["reporting_from"]+"'},{'serviceDate.lte':'"+win["reporting_to"]+"'}]}",
-    "fields"      : "[groupIdName,groupId]"
-    }
-    emp = das.all(p)
-    
-    return list(set([(i.groupIdName, i.groupId) for i in emp.results if 'groupIdName' in vars(i)]))
-
 def format_query(q):
     query = ""
     for key, val in q.items():
@@ -126,38 +113,18 @@ def get_cohort(das, q):
     
     try:
         cohort = Cohort.objects.get(traits=t).cohort_id
-    except ObjectDoesNotExist: 
-        query  = format_query(q)
+    except ObjectDoesNotExist:
+        q2 = q.dict()
+        q2['condition'] = traits['condition']
+        query  = format_query(q2)
         cohort = das.cohort(query=query).id
         Cohort(cohort_id=cohort, traits=t).save()
     return cohort
 
-def empty_query(query):
-    if(query['client']!='ALL' or query['office']!='ALL' or query['level']!='ALL' or 
-       query['gender']!='ALL' or query['age']!='ALL' or query['condition']!='ALL'):
-       return False
-    return True
-
-
-def months(_from, _to):
-    start = datetime.date(*map(int, _from.split("-")))
-    end   = datetime.date(*map(int, _to.split("-")))
-    
-    m = end-start
-    
-    start_month = start.month
-    end_months  = (end.year-start.year) * 12 + end.month + 1
-    
-    months = end_months - start.month
-    
-    # dates = [datetime.datetime(year=yr, month=mn, day=1) for (yr, mn) in (
-    #      ((m - 1) / 12 + start.year, (m - 1) % 12 + 1) for m in range(start_month, end_months))]
-    
-    return months
-
-def chunks(l, n):
-    """ Yield successive n-sized chunks from l."""
-    for i in xrange(0, len(l), n):
-        yield l[i:i+n]
-
-    
+# 
+# def chunks(l, n):
+#     """ Yield successive n-sized chunks from l."""
+#     for i in xrange(0, len(l), n):
+#         yield l[i:i+n]
+# 
+#     
