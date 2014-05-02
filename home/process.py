@@ -3,6 +3,7 @@ from dateutil.relativedelta import relativedelta
 import pandas as pd
 import numpy as np
 from helpers import get_cohort
+from models import *
 
 def graph1(das, request):
     cohort = get_cohort(das, request)
@@ -223,8 +224,20 @@ def graph4(das, request):
         results = cumulativeF1(das, reporting_from, reporting_to, cohort)
     else:
         results = cumulativeF2(das, reporting_from, reporting_to, cohort, total_claims)
-        
-    return json.dumps(results)
+    
+    graph = Graph4(
+        client     = request.GET["client"], 
+        office     = request.GET["office"],	
+        level      = request.GET["level"],
+        relation   = request.GET["relation"],
+        condition  = request.GET["condition"], 
+        gender     = request.GET["gender"],	
+        age        = request.GET["age"], 
+        start_date = request.GET["reportingFrom"],	
+        end_date   = request.GET["reportingTo"], 
+        data       = json.dumps(results))
+    graph.save()
+
 
 def count_claims(das, _from, _to, cohort):
     params = {

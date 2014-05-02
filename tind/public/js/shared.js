@@ -212,7 +212,7 @@ function RenderGraph(page, num, callback){
                 show_nodata_warning(num)
             else{
                 hide_nodata_warning(num)
-                callback(data)
+                callback(data, error)
             }   
         });    
 }
