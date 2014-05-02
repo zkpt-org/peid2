@@ -235,7 +235,7 @@ function RenderGraph(page, num, callback){
             else{
                 endload(num)
                 check_session(data)
-                data = check_status(page, num, query)
+                //data = check_status(page, num, query)
                 
                 if(nodata(data))
                     show_nodata_warning(num)
