@@ -53,7 +53,7 @@ def chronic(das, win):
     for i in sorted(r.data["reporting"]["Default"], key=lambda x: r.data["reporting"]["Default"][x]["withCondition"] 
         if x != "memberCount" and x != "memberMonths" else r.data["reporting"]["Default"][x], reverse=True): 
         if i != "memberCount" and i != "memberMonths":
-            print r.data["reporting"]["Default"][i]["description"], r.data["reporting"]["Default"][i]["withCondition"]
+            # print r.data["reporting"]["Default"][i]["description"], r.data["reporting"]["Default"][i]["withCondition"]
             conditions.update({r.data["reporting"]["Default"][i]["name"] : r.data["reporting"]["Default"][i]["description"]})
     return conditions
 

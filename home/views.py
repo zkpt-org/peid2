@@ -177,7 +177,7 @@ def graph4(request):
     
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
-            data = queue.send(process.graph4, (das, request.GET), timeout=1200)
+            data = queue.send(process.graph4, (das, request.GET), timeout=600)
             # data = process.graph4(das, request)
             
             graph = Graph4(

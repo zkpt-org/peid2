@@ -82,7 +82,7 @@ STATIC_URL = '/public/'
 # Additional locations of static files
 STATICFILES_DIRS = (
     os.path.join(SETTINGS_ROOT, 'public'),
-    os.path.join(SETTINGS_ROOT, 'tmp'),
+    #os.path.join(SETTINGS_ROOT, 'tmp'),
 )
 
 # List of finder classes that know how to find static files in
