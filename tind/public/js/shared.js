@@ -2,7 +2,7 @@
 var shadowbox = false;
 var counter   = 0;
 var time_window_start, time_window_end, time_window_start_minus_year, time_window_end_minus_year, months_diff;
-var firstdate, lastdate, check;
+var firstdate, lastdate;
 //var today    = Date.today().clearTime();
 //var year_ago = Date.today().clearTime().addMonths(-12);
 //var start_of_month = Date.today().clearTime().moveToFirstDayOfMonth();
