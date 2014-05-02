@@ -2,7 +2,7 @@
 var shadowbox = false;
 var counter   = 0;
 var time_window_start, time_window_end, time_window_start_minus_year, time_window_end_minus_year, months_diff;
-var firstdate, lastdate;
+var firstdate, lastdate, check;
 //var today    = Date.today().clearTime();
 //var year_ago = Date.today().clearTime().addMonths(-12);
 //var start_of_month = Date.today().clearTime().moveToFirstDayOfMonth();
@@ -58,9 +58,9 @@ function check_status(page, num, query){
     //if(typeof response === 'string'){
     
     if(response == '{"status": "processing"}')
-        var check = setInterval(function(){check_status(page, num, query)},2000);
+        window['check' + num] = setInterval(function(){check_status(page, num, query)},2000);
     else
-        clearInterval(check)
+        clearInterval(window['check' + num])
     //}
     /*
     else if(typeof response !== 'undefined' && "status" in response && response["status"]=="processing"){        
