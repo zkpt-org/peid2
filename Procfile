@@ -1,2 +1,2 @@
 web: bin/proximo gunicorn tind.wsgi
-worker: python worker.py
+worker: bin/proximo python worker.py
