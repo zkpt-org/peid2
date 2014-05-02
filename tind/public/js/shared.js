@@ -205,14 +205,19 @@ function RenderGraph(page, num, callback){
             "&"                + query_string, 
         
         function(error, data){
-            endload(num)
-            check_session(data)
-            
-            if(nodata(data))
-                show_nodata_warning(num)
+            if(error){
+                console.log(error)
+            }
             else{
-                hide_nodata_warning(num)
-                callback(data, error)
-            }   
+                endload(num)
+                check_session(data)
+                
+                if(nodata(data))
+                    show_nodata_warning(num)
+                else{
+                    hide_nodata_warning(num)
+                    callback(data)
+                }
+            }
         });    
 }

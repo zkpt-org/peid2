@@ -517,8 +517,7 @@ function graph4(){
     
     svg.call(tip);
     
-    RenderGraph("home", 4, function(data, error){
-        console.log(error)
+    RenderGraph("home", 4, function(data){
         i = 0
         data.forEach(function(d){
           (d.cost > 90) ? delete data[data.indexOf(d)] : i++
