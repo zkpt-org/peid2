@@ -115,7 +115,8 @@ def get_cohort(das, q):
         cohort = Cohort.objects.get(traits=t).cohort_id
     except ObjectDoesNotExist:
         q2 = q.dict()
-        q2['condition'] = traits['condition']
+        if 'condition' in traits:
+            q2['condition'] = traits['condition']
         query  = format_query(q2)
         cohort = das.cohort(query=query).id
         Cohort(cohort_id=cohort, traits=t).save()
