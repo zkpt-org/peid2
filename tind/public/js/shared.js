@@ -52,18 +52,22 @@ function check_session(response){
     else if(typeof response !== 'undefined' && "session" in response && response["session"]=="expired")
         end_of_session();
 }
-function check_status(response, page, num){
-    if(typeof response === 'string'){
-        if(response == '{"status": "processing"}')
-             //$.get( "/"+page+"/ping/?graph="+num, function( data ){console.log(data)});
-             var data = $.ajax({type: "GET", url: "/"+page+"/ping/?graph="+num, async: false}).responseText
+function check_status(page, num, query){
+    var response = $.ajax({type: "GET", url: "/"+page+"/ping"+num+query, async: false}).responseText
+    console.log("ping"+num)
+    //if(typeof response === 'string'){
+    
+    if(response == '{"status": "processing"}')
+        setTimeout(function(){check_status(page, num, query)},2000);
+    //}
+    /*
+    else if(typeof response !== 'undefined' && "status" in response && response["status"]=="processing"){        
+        var check = setInterval(function(){check_status(page, num, query)}, 3000);
     }
-    else if(typeof response !== 'undefined' && "status" in response && response["status"]=="processing"){
-        //$.get( "/"+page+"/ping/?graph="+num, function( data ){console.log(data)});
-        var data = $.ajax({type: "GET", url: "/"+page+"/ping/?graph="+num, async: false}).responseText
-        var check = setInterval(function(){check_status(data, page, num)}, 3000); 
-    }
-    clearInterval(check)
+    else if(typeof response === 'undefined'){        
+        var check = setInterval(function(){check_status(page, num, query)}, 3000);
+    }*/  
+    data = jQuery.parseJSON(response)
     return data   
 }
 
@@ -210,22 +214,28 @@ function hide_nodata_warning(num){
 }
 
 function RenderGraph(page, num, callback){
-    d3.json("/"                + page + 
-            "/graph"           + num  +
-            "/?reportingTo="   + time_window_end   +
-            "&reportingFrom="  + time_window_start +
-            "&comparisonFrom=" + time_window_start_minus_year +
-            "&comparisonTo="   + time_window_end_minus_year   +
-            "&"                + query_string, 
-        
+    var query = "/?reportingTo="   + time_window_end   +
+                "&reportingFrom="  + time_window_start +
+                "&comparisonFrom=" + time_window_start_minus_year +
+                "&comparisonTo="   + time_window_end_minus_year   +
+                "&"                + query_string
+    
+    d3.json("/" + page + "/graph" + num  + query, 
         function(error, data){
             if(error){
                 console.log(error)
+                data = check_status(page, num, query)               
+                if(nodata(data))
+                    show_nodata_warning(num)
+                else{
+                    hide_nodata_warning(num)
+                    callback(data)
+                }
             }
             else{
                 endload(num)
                 check_session(data)
-                check_status(data, page, num)
+                data = check_status(page, num, query)
                 
                 if(nodata(data))
                     show_nodata_warning(num)

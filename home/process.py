@@ -226,15 +226,15 @@ def graph4(das, request):
         results = cumulativeF2(das, reporting_from, reporting_to, cohort, total_claims)
     
     graph = Graph4(
-        client     = request.GET["client"], 
-        office     = request.GET["office"],	
-        level      = request.GET["level"],
-        relation   = request.GET["relation"],
-        condition  = request.GET["condition"], 
-        gender     = request.GET["gender"],	
-        age        = request.GET["age"], 
-        start_date = request.GET["reportingFrom"],	
-        end_date   = request.GET["reportingTo"], 
+        client     = request["client"], 
+        office     = request["office"],	
+        level      = request["level"],
+        relation   = request["relation"],
+        condition  = request["condition"], 
+        gender     = request["gender"],	
+        age        = request["age"], 
+        start_date = request["reportingFrom"],	
+        end_date   = request["reportingTo"], 
         data       = json.dumps(results))
     graph.save()
 

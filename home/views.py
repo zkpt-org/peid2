@@ -177,8 +177,9 @@ def graph4(request):
     
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
-            queue.send(process.graph4, (das, request.GET), timeout=600)
-            data = json.dumps({"status":"processing"})
+            #data = json.dumps({"status":"processing"})
+            data = queue.send(process.graph4, (das, request.GET), timeout=600)
+
             # data = process.graph4(das, request)
             #             graph = Graph4(
             #                 client     = request.GET["client"], 
@@ -196,8 +197,7 @@ def graph4(request):
             data = {"session":"expired"}    
     return HttpResponse(data)
 
-def ping(request):
-    num = request.GET["graph"]
+def ping4(request):
     try:
         data = Graph4.objects.get(
             client     = request.GET["client"],
@@ -213,4 +213,50 @@ def ping(request):
         data = json.dumps({"status":"processing"})
     return HttpResponse(data)
     
-    
+def ping3(request):
+    try:
+        data = Graph3.objects.get(
+            client     = request.GET["client"],
+            office     = request.GET["office"],
+            level      = request.GET["level"],
+            relation   = request.GET["relation"],
+            gender     = request.GET["gender"],
+            age        = request.GET["age"],
+            condition  = request.GET["condition"],
+            start_date = request.GET["reportingFrom"],
+            end_date   = request.GET["reportingTo"]).data
+    except ObjectDoesNotExist:
+        data = json.dumps({"status":"processing"})
+    return HttpResponse(data)
+
+def ping2(request):
+    try:
+        data = Graph2.objects.get(
+            client     = request.GET["client"],
+            office     = request.GET["office"],
+            level      = request.GET["level"],
+            relation   = request.GET["relation"],
+            gender     = request.GET["gender"],
+            age        = request.GET["age"],
+            condition  = request.GET["condition"],
+            start_date = request.GET["reportingFrom"],
+            end_date   = request.GET["reportingTo"]).data
+    except ObjectDoesNotExist:
+        data = json.dumps({"status":"processing"})
+    return HttpResponse(data)
+
+def ping1(request):
+    try:
+        data = Graph1.objects.get(
+            client     = request.GET["client"],
+            office     = request.GET["office"],
+            level      = request.GET["level"],
+            relation   = request.GET["relation"],
+            gender     = request.GET["gender"],
+            age        = request.GET["age"],
+            condition  = request.GET["condition"],
+            start_date = request.GET["reportingFrom"],
+            end_date   = request.GET["reportingTo"]).data
+    except ObjectDoesNotExist:
+        data = json.dumps({"status":"processing"})
+    return HttpResponse(data)
