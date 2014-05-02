@@ -59,13 +59,16 @@ function check_status(page, num, query){
     console.log("ping-"+num)
     if(typeof response !== 'undefined' && "status" in response && response["status"]=="processing"){ 
     //if(response == '{"status": "processing"}'){
-        window['check' + num] = setInterval(function(){check_status(page, num, query)},2000);
+        //window['check' + num] = 
+        setTimeout(function(){check_status(page, num, query)},2000);
         console.log("setting check" +num)
     }
+/*
     else{
         clearInterval(window['check' + num])
         console.log("clearing check" +num)
     }
+*/
     //}
     /*
     else if(typeof response !== 'undefined' && "status" in response && response["status"]=="processing"){        
