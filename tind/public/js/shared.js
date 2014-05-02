@@ -78,7 +78,7 @@ function check_status(page, num, query){
         var check = setInterval(function(){check_status(page, num, query)}, 3000);
     }*/  
     //data = jQuery.parseJSON(response)
-    return data   
+    return response   
 }
 
 function end_of_session(){document.location = "/login/"}
