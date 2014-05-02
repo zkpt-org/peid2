@@ -58,7 +58,9 @@ function check_status(page, num, query){
     //if(typeof response === 'string'){
     
     if(response == '{"status": "processing"}')
-        setTimeout(function(){check_status(page, num, query)},2000);
+        var check = setInterval(function(){check_status(page, num, query)},2000);
+    else
+        clearInterval(check)
     //}
     /*
     else if(typeof response !== 'undefined' && "status" in response && response["status"]=="processing"){        
