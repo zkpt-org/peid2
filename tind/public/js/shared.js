@@ -53,7 +53,7 @@ function check_session(response){
         end_of_session();
 }
 function check_status(page, num, query){
-    var response = jQuery.parseJSON($.ajax({type: "GET", url: "/"+page+"/ping"+num+query, async: false}).responseText)
+    var response = jQuery.parseJSON($.ajax({type: "GET", url: "/"+page+"/ping"+num+query, async: true}).responseText)
     //if(typeof response === 'string')
     //    response = jQuery.parseJSON(response)
     console.log("ping-"+num)
@@ -61,7 +61,7 @@ function check_status(page, num, query){
     if(typeof response !== 'undefined' && "status" in response && response["status"]=="processing"){ 
     //if(response == '{"status": "processing"}'){
         //window['check' + num] = 
-        setTimeout(function(){check_status(page, num, query)},2000);
+        setTimeout(function(){check_status(page, num, query)},500);
         console.log("setting check" +num)
     }
 /*
