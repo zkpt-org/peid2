@@ -53,13 +53,13 @@ function check_session(response){
         end_of_session();
 }
 function check_status(page, num, query){
-    var response = jQuery.parseJSON($.ajax({type: "GET", url: "/"+page+"/ping"+num+query, async: true}).responseText)
+    var response = $.ajax({type: "GET", url: "/"+page+"/ping"+num+query, async: false}).responseText
     //if(typeof response === 'string')
     //    response = jQuery.parseJSON(response)
     console.log("ping-"+num)
     console.log(response)
     if(typeof response !== 'undefined' && "status" in response && response["status"]=="processing"){ 
-    //if(response == '{"status": "processing"}'){
+    if(response == '{"status": "processing"}'){
         //window['check' + num] = 
         setTimeout(function(){check_status(page, num, query)},500);
         console.log("setting check" +num)
@@ -78,8 +78,8 @@ function check_status(page, num, query){
     else if(typeof response === 'undefined'){        
         var check = setInterval(function(){check_status(page, num, query)}, 3000);
     }*/  
-    //data = jQuery.parseJSON(response)
-    return response   
+    data = jQuery.parseJSON(response)
+    return data   
 }
 
 function end_of_session(){document.location = "/login/"}
