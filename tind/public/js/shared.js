@@ -77,7 +77,7 @@ function check_status(page, num, query){
     else if(typeof response === 'undefined'){        
         var check = setInterval(function(){check_status(page, num, query)}, 3000);
     }*/  
-    data = jQuery.parseJSON(response)
+    //data = jQuery.parseJSON(response)
     return data   
 }
 
