@@ -54,13 +54,16 @@ function check_session(response){
 }
 function check_status(page, num, query){
     var response = $.ajax({type: "GET", url: "/"+page+"/ping"+num+query, async: false}).responseText
-    console.log("ping-"+num)
     //if(typeof response === 'string'){
-    
-    if(response == '{"status": "processing"}')
+    console.log("ping-"+num)
+    if(response == '{"status": "processing"}'){
         window['check' + num] = setInterval(function(){check_status(page, num, query)},2000);
-    else
+        console.log("setting check" +num)
+    }
+    else{
         clearInterval(window['check' + num])
+        console.log("clearing check" +num)
+    }
     //}
     /*
     else if(typeof response !== 'undefined' && "status" in response && response["status"]=="processing"){        
