@@ -54,7 +54,7 @@ function check_session(response){
 }
 function check_status(page, num, query){
     var response = $.ajax({type: "GET", url: "/"+page+"/ping"+num+query, async: false}).responseText
-    console.log("ping"+num)
+    console.log("ping-"+num)
     //if(typeof response === 'string'){
     
     if(response == '{"status": "processing"}')
@@ -231,6 +231,7 @@ function RenderGraph(page, num, callback){
                     hide_nodata_warning(num)
                     callback(data)
                 }
+                endload(num)
             }
             else{
                 endload(num)
