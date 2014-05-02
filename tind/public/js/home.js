@@ -118,9 +118,7 @@ function graph1(){
       
       total0 = data[0]["Inpatient"]+data[0]["Office Visit"]+ data[0]["Outpatient"]+ data[0]["Pharmacy Claims"]
       total1 = data[1]["Inpatient"]+data[1]["Office Visit"]+ data[1]["Outpatient"]+ data[1]["Pharmacy Claims"]
-      
-      console.log(data)
-      
+            
       if(total0 + total1 <= 0)
           show_nodata_warning(1)
       else{

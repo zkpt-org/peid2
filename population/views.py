@@ -6,6 +6,7 @@ from models import *
 from django.core.exceptions import ObjectDoesNotExist
 from data.das import Das
 from tind.functions import conditions
+from population import process
 import json
 
 @login_required
@@ -35,7 +36,7 @@ def graph1(request):
             
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
-            data = process.graph1(das, request)
+            data = process.graph1(das, request.GET)
             #             graph = Graph1(
             #                 client     = request.GET["client"], 
             #                 office     = request.GET["office"],	

@@ -49,7 +49,7 @@ function check_session(response){
             end_of_session()
         return response
     }
-    else if("session" in response && response["session"]=="expired")
+    else if(typeof response !== 'undefined' && "session" in response && response["session"]=="expired")
         end_of_session();
 }
 

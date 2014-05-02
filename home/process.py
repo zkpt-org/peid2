@@ -5,13 +5,13 @@ import numpy as np
 from helpers import get_cohort
 
 def graph1(das, request):
-    cohort = get_cohort(das, request.GET)
+    cohort = get_cohort(das, request)
 
-    reporting_from  = request.GET["reportingFrom"]
-    reporting_to    = request.GET["reportingTo"]
+    reporting_from  = request["reportingFrom"]
+    reporting_to    = request["reportingTo"]
     
-    comparison_from = request.GET["comparisonFrom"]
-    comparison_to   = request.GET["comparisonTo"]
+    comparison_from = request["comparisonFrom"]
+    comparison_to   = request["comparisonTo"]
     
     params = {
         "service"         : "report", 
@@ -100,13 +100,13 @@ def graph2(das, request):
     return data
 
 def graph3(das, request):
-    cohort = get_cohort(das, request.GET)
+    cohort = get_cohort(das, request)
 
-    reporting_from  = request.GET["reportingFrom"]
-    reporting_to    = request.GET["reportingTo"]
+    reporting_from  = request["reportingFrom"]
+    reporting_to    = request["reportingTo"]
     
-    comparison_from = request.GET["comparisonFrom"]
-    comparison_to   = request.GET["comparisonTo"]
+    comparison_from = request["comparisonFrom"]
+    comparison_to   = request["comparisonTo"]
     
     """Set locale."""
     try:
@@ -209,13 +209,13 @@ def graph3_init():
     return data
 
 def graph4(das, request):
-    cohort = get_cohort(das, request.GET)
+    cohort = get_cohort(das, request)
 
-    reporting_from  = request.GET["reportingFrom"]
-    reporting_to    = request.GET["reportingTo"]
+    reporting_from  = request["reportingFrom"]
+    reporting_to    = request["reportingTo"]
     
-    comparison_from = request.GET["comparisonFrom"]
-    comparison_to   = request.GET["comparisonTo"]
+    comparison_from = request["comparisonFrom"]
+    comparison_to   = request["comparisonTo"]
     
     total_claims = count_claims(das, reporting_from, reporting_to, cohort)
     
