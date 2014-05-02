@@ -177,21 +177,40 @@ def graph4(request):
     
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
-            data = queue.send(process.graph4, (das, request.GET), timeout=600)
+            queue.send(process.graph4, (das, request.GET), timeout=600)
+            data = json.dumps({"status":"processing"})
             # data = process.graph4(das, request)
-            
-            graph = Graph4(
-                client     = request.GET["client"], 
-                office     = request.GET["office"],	
-                level      = request.GET["level"],
-                relation   = request.GET["relation"],
-                condition  = request.GET["condition"], 
-                gender     = request.GET["gender"],	
-                age        = request.GET["age"], 
-                start_date = request.GET["reportingFrom"],	
-                end_date   = request.GET["reportingTo"], 
-                data       = data)
-            graph.save()
+            #             graph = Graph4(
+            #                 client     = request.GET["client"], 
+            #                 office     = request.GET["office"],	
+            #                 level      = request.GET["level"],
+            #                 relation   = request.GET["relation"],
+            #                 condition  = request.GET["condition"], 
+            #                 gender     = request.GET["gender"],	
+            #                 age        = request.GET["age"], 
+            #                 start_date = request.GET["reportingFrom"],	
+            #                 end_date   = request.GET["reportingTo"], 
+            #                 data       = data)
+            #             graph.save()
         else:
             data = {"session":"expired"}    
     return HttpResponse(data)
+
+def ping(request):
+    num = request.GET["graph"]
+    try:
+        data = Graph4.objects.get(
+            client     = request.GET["client"],
+            office     = request.GET["office"],
+            level      = request.GET["level"],
+            relation   = request.GET["relation"],
+            gender     = request.GET["gender"],
+            age        = request.GET["age"],
+            condition  = request.GET["condition"],
+            start_date = request.GET["reportingFrom"],
+            end_date   = request.GET["reportingTo"]).data
+    except ObjectDoesNotExist:
+        data = json.dumps({"status":"processing"})
+    return HttpResponse(data)
+    
+    

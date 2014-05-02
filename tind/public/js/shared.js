@@ -52,6 +52,20 @@ function check_session(response){
     else if(typeof response !== 'undefined' && "session" in response && response["session"]=="expired")
         end_of_session();
 }
+function check_status(response, page, num){
+    if(typeof response === 'string'){
+        if(response == '{"status": "processing"}')
+             //$.get( "/"+page+"/ping/?graph="+num, function( data ){console.log(data)});
+             var data = $.ajax({type: "GET", url: "/"+page+"/ping/?graph="+num, async: false}).responseText
+    }
+    else if(typeof response !== 'undefined' && "status" in response && response["status"]=="processing"){
+        //$.get( "/"+page+"/ping/?graph="+num, function( data ){console.log(data)});
+        var data = $.ajax({type: "GET", url: "/"+page+"/ping/?graph="+num, async: false}).responseText
+        var check = setInterval(function(){check_status(data, page, num)}, 3000); 
+    }
+    clearInterval(check)
+    return data   
+}
 
 function end_of_session(){document.location = "/login/"}
     
@@ -211,6 +225,7 @@ function RenderGraph(page, num, callback){
             else{
                 endload(num)
                 check_session(data)
+                check_status(data, page, num)
                 
                 if(nodata(data))
                     show_nodata_warning(num)
