@@ -65,7 +65,7 @@ def graph1(request):
             
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
-            data = queue.send(process.graph1, (das, request.GET), 600)
+            data = queue.send(process.graph1, (das, request.GET), timeout=600)
             # data = process.graph1(das, request)
             graph = Graph1(
                 client     = request.GET["client"], 
@@ -102,7 +102,7 @@ def graph2(request):
             
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
-            data = queue.send(process.graph2, (das, request.GET), 600)
+            data = queue.send(process.graph2, (das, request.GET), timeout=600)
             # data  = process.graph2(das, request.GET)
             graph = Graph2(
                 client     = request.GET["client"], 
@@ -140,7 +140,7 @@ def graph3(request):
             
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
-            data = queue.send(process.graph3, (das, request.GET), 600)
+            data = queue.send(process.graph3, (das, request.GET), timeout=600)
             # data = process.graph3(das, request)
             
             graph = Graph3(
@@ -177,7 +177,7 @@ def graph4(request):
     
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
-            data = queue.send(process.graph4, (das, request.GET), 600)
+            data = queue.send(process.graph4, (das, request.GET), timeout=1200)
             # data = process.graph4(das, request)
             
             graph = Graph4(
