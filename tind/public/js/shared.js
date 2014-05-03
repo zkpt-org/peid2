@@ -62,15 +62,12 @@ function check_status(page, num, query){
         data = jQuery.parseJSON(response)
         return data  
     });
-*/
-    
-    
+*/    
     var response = $.ajax({type: "GET", url: "/"+page+"/ping"+num+query, async: false}).responseText
     console.log("ping-"+num)
     console.log(response)
     if(response == '{"status": "processing"}' || typeof response === 'undefined'){
-        setTimeout(function(){check_status(page, num, query)},500);
-        console.log("/"+page+"/ping"+num+query)
+        return setTimeout(function(){return check_status(page, num, query)},1000);
     }
     data = jQuery.parseJSON(response)
     return data   
