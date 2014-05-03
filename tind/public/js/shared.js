@@ -67,7 +67,8 @@ function check_status(page, num, query){
     console.log("ping-"+num)
     console.log(response)
     if(response == '{"status": "processing"}' || typeof response === 'undefined'){
-        return setTimeout(function(){return check_status(page, num, query)},1000);
+        setTimeout(function(){check_status(page, num, query)},500);
+        /* console.log("/"+page+"/ping"+num+query) */
     }
     data = jQuery.parseJSON(response)
     return data   
