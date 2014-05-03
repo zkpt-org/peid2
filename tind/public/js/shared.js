@@ -57,7 +57,7 @@ function check_status(page, num, query){
     
     $.get( "/"+page+"/ping"+num+query, function( response ) {
         if(response == '{"status": "processing"}' || typeof response === 'undefined'){
-            setTimeout(function(){check_status(page, num, query)},500);
+            check_status(page, num, query)
             console.log("/"+page+"/ping"+num+query)
         }
         data = jQuery.parseJSON(response)
@@ -204,6 +204,8 @@ function endload(num, timer){
 }
 
 function nodata(data){
+    if(typeof data === 'undefined')
+        return true
     if(data == "No Data" || data.length <= 0)
         return true
     return false
