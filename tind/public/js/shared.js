@@ -55,7 +55,7 @@ function check_session(response){
 function check_status(page, num, query){
     //var response = $.ajax({type: "GET", url: "/"+page+"/ping"+num+query, async: false}).responseText
     
-    $.get( "ajax/test.html", function( response ) {
+    $.get( "/"+page+"/ping"+num+query, function( response ) {
         if(response == '{"status": "processing"}' || typeof response === 'undefined'){
             setTimeout(function(){check_status(page, num, query)},500);
             console.log("/"+page+"/ping"+num+query)
