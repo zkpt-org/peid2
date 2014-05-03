@@ -60,9 +60,8 @@ function check_status(page, num, query){
     console.log(response)
     //if(typeof response !== 'undefined' && "status" in response && response["status"]=="processing"){ 
     if(response == '{"status": "processing"}' || typeof response === 'undefined'){
-        //window['check' + num] = 
         setTimeout(function(){check_status(page, num, query)},500);
-        console.log("setting check" +num)
+        console.log("/"+page+"/ping"+num+query)
     }
     data = jQuery.parseJSON(response)
     return data   
