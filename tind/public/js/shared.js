@@ -59,25 +59,11 @@ function check_status(page, num, query){
     console.log("ping-"+num)
     console.log(response)
     //if(typeof response !== 'undefined' && "status" in response && response["status"]=="processing"){ 
-    if(response == '{"status": "processing"}'){
+    if(response == '{"status": "processing"}' || typeof response === 'undefined'){
         //window['check' + num] = 
         setTimeout(function(){check_status(page, num, query)},500);
         console.log("setting check" +num)
     }
-/*
-    else{
-        clearInterval(window['check' + num])
-        console.log("clearing check" +num)
-    }
-*/
-    //}
-    /*
-    else if(typeof response !== 'undefined' && "status" in response && response["status"]=="processing"){        
-        var check = setInterval(function(){check_status(page, num, query)}, 3000);
-    }
-    else if(typeof response === 'undefined'){        
-        var check = setInterval(function(){check_status(page, num, query)}, 3000);
-    }*/  
     data = jQuery.parseJSON(response)
     return data   
 }
