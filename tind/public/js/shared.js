@@ -53,7 +53,7 @@ function check_session(response){
         end_of_session();
 }
 function check_status(page, num, query){
-    var response = $.ajax({type: "GET", url: "/"+page+"/ping"+num+query, async: true}).responseText
+    var response = $.ajax({type: "GET", url: "/"+page+"/ping"+num+query, async: false}).responseText
     //if(typeof response === 'string')
     //    response = jQuery.parseJSON(response)
     console.log("ping-"+num)
