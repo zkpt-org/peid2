@@ -53,18 +53,27 @@ function check_session(response){
         end_of_session();
 }
 function check_status(page, num, query){
-    var response = $.ajax({type: "GET", url: "/"+page+"/ping"+num+query, async: false}).responseText
-    //if(typeof response === 'string')
-    //    response = jQuery.parseJSON(response)
+    //var response = $.ajax({type: "GET", url: "/"+page+"/ping"+num+query, async: false}).responseText
+    
+    $.get( "ajax/test.html", function( response ) {
+        if(response == '{"status": "processing"}' || typeof response === 'undefined'){
+            setTimeout(function(){check_status(page, num, query)},500);
+            console.log("/"+page+"/ping"+num+query)
+        }
+        data = jQuery.parseJSON(response)
+        return data  
+    });
+    
+    
+/*
     console.log("ping-"+num)
-    console.log(response)
-    //if(typeof response !== 'undefined' && "status" in response && response["status"]=="processing"){ 
     if(response == '{"status": "processing"}' || typeof response === 'undefined'){
         setTimeout(function(){check_status(page, num, query)},500);
         console.log("/"+page+"/ping"+num+query)
     }
     data = jQuery.parseJSON(response)
-    return data   
+    return data  
+*/ 
 }
 
 function end_of_session(){document.location = "/login/"}
