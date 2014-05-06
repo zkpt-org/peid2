@@ -173,7 +173,7 @@
 }
 
 #cumulative .x.axis path {
-  display: none;
+  /* display: none; */
 }
 
 .d3-tip {

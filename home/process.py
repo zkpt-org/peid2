@@ -237,7 +237,8 @@ def graph4(das, request):
         end_date   = request["reportingTo"], 
         data       = json.dumps(results))
     graph.save()
-
+    
+    return json.dumps(results)
 
 def count_claims(das, _from, _to, cohort):
     params = {

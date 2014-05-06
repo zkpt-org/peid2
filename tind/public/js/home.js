@@ -494,7 +494,6 @@ function graph4(){
     
     var xAxis = d3.svg.axis()
         .scale(x)
-        /* .tickValues([1,10,20,30,40,50,60,70,80,90,100]) */
         .orient("bottom");
     
     var yAxis = d3.svg.axis()
@@ -518,14 +517,18 @@ function graph4(){
     svg.call(tip);
     
     RenderGraph("home", 4, function(data){
-        i = 0
+        var i = 0
+        var tvals = []
+        
         data.forEach(function(d){
           (d.cost > 90) ? delete data[data.indexOf(d)] : i++
         })
         
         data.length = i
-        x.domain(data.map(function(d) { return d.claims; }))
+        x.domain(data.map(function(d) { if(d.claims%5==0) tvals.push(d.claims); return d.claims; }))
         y.domain([0, d3.max(data, function(d) { return d.cost; })])
+        
+        xAxis.tickValues(tvals)
         
         svg.append("g")
           .attr("class", "x axis")

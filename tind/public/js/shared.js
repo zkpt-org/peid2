@@ -52,27 +52,6 @@ function check_session(response){
     else if(typeof response !== 'undefined' && "session" in response && response["session"]=="expired")
         end_of_session();
 }
-function check_status(page, num, query){
-/*
-    $.get( "/"+page+"/ping"+num+query, function( response ) {
-        if(response == '{"status": "processing"}' || typeof response === 'undefined'){
-            check_status(page, num, query)
-            console.log("/"+page+"/ping"+num+query)
-        }
-        data = jQuery.parseJSON(response)
-        return data  
-    });
-*/    
-    var response = $.ajax({type: "GET", url: "/"+page+"/ping"+num+query, async: false}).responseText
-    console.log("ping-"+num)
-    console.log(response)
-    if(response == '{"status": "processing"}' || typeof response === 'undefined'){
-        setTimeout(function(){check_status(page, num, query)},500);
-        /* console.log("/"+page+"/ping"+num+query) */
-    }
-    data = jQuery.parseJSON(response)
-    return data   
-}
 
 function end_of_session(){document.location = "/login/"}
     
@@ -224,35 +203,10 @@ function RenderGraph(page, num, callback){
                 "&comparisonFrom=" + time_window_start_minus_year +
                 "&comparisonTo="   + time_window_end_minus_year   +
                 "&"                + query_string;
-    
-/*
-    (function poll(){
-        $.ajax({ 
-            url: "/" + page + "/graph" + num  + query, 
-            success: function(data){
-                console.log("/" + page + "/graph" + num  + query)
-                endload(num)
-                check_session(data)
-            
-                if(nodata(data))
-                    show_nodata_warning(num)
-                else{
-                    hide_nodata_warning(num)
-                    callback(data)
-                }
-            }, 
-            dataType: "json", 
-            complete: poll, 
-            timeout: 15000 
-        });
-    })()
-*/
         
     d3.json("/" + page + "/graph" + num  + query, 
         function(error, data){
             if(error){
-                //console.log(error)
-                //console.log(error.status)
                 if(error.status == 503)
                 (function poll(){
                     jQuery.ajax({ 
@@ -278,7 +232,6 @@ function RenderGraph(page, num, callback){
             else{
                 endload(num)
                 check_session(data)
-                //data = check_status(page, num, query)
                 if(nodata(data))
                     show_nodata_warning(num)
                 else{
