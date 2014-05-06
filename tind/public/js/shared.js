@@ -251,11 +251,11 @@ function RenderGraph(page, num, callback){
     d3.json("/" + page + "/graph" + num  + query, 
         function(error, data){
             if(error){
-                console.log(error)
-                console.log(error.status)
-                
+                //console.log(error)
+                //console.log(error.status)
+                if(error.status == 503)
                 (function poll(){
-                    $.ajax({ 
+                    jQuery.ajax({ 
                         url: "/" + page + "/graph" + num  + query, 
                         success: function(data){
                             console.log("/" + page + "/graph" + num  + query)
@@ -273,7 +273,7 @@ function RenderGraph(page, num, callback){
                         error: poll,
                         timeout: 120000 
                     });
-                })(jQuery);
+                })();
             }
             else{
                 endload(num)
