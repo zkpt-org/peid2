@@ -9,7 +9,7 @@ from tind.functions import conditions
 from home import process
 import json, calendar, datetime
 from django.core.cache import cache
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 from django.http import HttpResponseRedirect
 #from django.views.decorators.cache import never_cache
 #from collections import OrderedDict
@@ -79,6 +79,7 @@ def graph1(request):
                 end_date   = request.GET["reportingTo"], 
                 data       = json.dumps(data))
             graph.save()
+            
         else:
             data = {"session":"expired"}
         return HttpResponse(json.dumps(data))
@@ -179,5 +180,16 @@ def graph4(request):
         if 'pgt' in request.session:
             data = queue.send(process.graph4, (das, request.GET), timeout=600)
         else:
-            data = {"session":"expired"}    
+            data = {"session":"expired"}
+    except MultipleObjectsReturned:
+        data = Graph4.objects.filter(
+            client     = request.GET["client"],
+            office     = request.GET["office"],
+            level      = request.GET["level"],
+            relation   = request.GET["relation"],
+            gender     = request.GET["gender"],
+            age        = request.GET["age"],
+            condition  = request.GET["condition"],
+            start_date = request.GET["reportingFrom"],
+            end_date   = request.GET["reportingTo"])[0].data 
     return HttpResponse(data)
