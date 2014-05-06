@@ -252,6 +252,7 @@ function RenderGraph(page, num, callback){
         function(error, data){
             if(error){
                 console.log(error)
+                console.log(error.status)
                 //data = check_status(page, num, query)
                 (function poll(){
                     $.ajax({ 
@@ -270,7 +271,7 @@ function RenderGraph(page, num, callback){
                         }, 
                         dataType: "json", 
                         error: poll,
-/*
+                        /*
                         complete: function(){                
                             if(nodata(data))
                                 show_nodata_warning(num)
@@ -280,12 +281,11 @@ function RenderGraph(page, num, callback){
                             }
                             endload(num)
                         }, 
-*/
-                        timeout: 15000 
+                        */
+                        timeout: 120000 
                         }
                     );
-                })()
-
+                })();
             }
             else{
                 endload(num)
