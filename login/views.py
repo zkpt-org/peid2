@@ -27,7 +27,7 @@ def login(request):
                     # state = "You're successfully logged in!"
                     return HttpResponseRedirect(next)
                 else:
-                    state = "There is a problem with the authentication system. Please contact the system administrator."
+                    state = "There is a problem with the authentication system. Please try again in a few minutes."
             else:
                 state = "Your account is not active, please contact the site administrator."
         else:
