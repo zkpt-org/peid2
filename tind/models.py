@@ -33,5 +33,18 @@ class ProcessedGraphData(TimeStampedModel):
         #return OrderedDict((data))
         return self.data
     
+    def insert(self, params, data):
+        self.client     = params["client"]
+        self.office     = params["office"]	
+        self.level      = params["level"]
+        self.relation   = params["relation"]
+        self.condition  = params["condition"]
+        self.gender     = params["gender"]	
+        self.age        = params["age"]
+        self.start_date = params["reportingFrom"]
+        self.end_date   = params["reportingTo"]
+        self.data       = json.dumps(data)
+        self.save()
+    
     class Meta:
         abstract = True

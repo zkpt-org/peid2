@@ -431,10 +431,13 @@ function graph2(){
                     .attr("y1", 0)
                     .attr("y2", height+10);
                 
+                var estimate = d3.interpolateNumber(table[lower],table[upper])
+                
                 tooltip.style("visibility", "visible")
                 tooltip.style("top", ($("#pmpm").position()["top"]+ypos)+"px").style("left",(event.pageX+20)+"px")
                 
-                $('.tooltip-1').html('<h3>$ '+table[Math.floor(index)]+'</h3>');   
+                /* $('.tooltip-1').html('<h3>$ '+table[Math.floor(index)]+'</h3>'); */
+                $('.tooltip-1').html('<h3>$ '+estimate((xpos % spacing) / spacing).toFixed(2)+'</h3>');   
             }
         }
 
