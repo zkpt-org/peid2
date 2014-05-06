@@ -223,26 +223,74 @@ function RenderGraph(page, num, callback){
                 "&reportingFrom="  + time_window_start +
                 "&comparisonFrom=" + time_window_start_minus_year +
                 "&comparisonTo="   + time_window_end_minus_year   +
-                "&"                + query_string
+                "&"                + query_string;
     
-    d3.json("/" + page + "/graph" + num  + query, 
-        function(error, data){
-            if(error){
-                console.log(error)
-                data = check_status(page, num, query)               
+/*
+    (function poll(){
+        $.ajax({ 
+            url: "/" + page + "/graph" + num  + query, 
+            success: function(data){
+                console.log("/" + page + "/graph" + num  + query)
+                endload(num)
+                check_session(data)
+            
                 if(nodata(data))
                     show_nodata_warning(num)
                 else{
                     hide_nodata_warning(num)
                     callback(data)
                 }
-                endload(num)
+            }, 
+            dataType: "json", 
+            complete: poll, 
+            timeout: 15000 
+        });
+    })()
+*/
+        
+    d3.json("/" + page + "/graph" + num  + query, 
+        function(error, data){
+            if(error){
+                console.log(error)
+                //data = check_status(page, num, query)
+                (function poll(){
+                    $.ajax({ 
+                        url: "/" + page + "/graph" + num  + query, 
+                        success: function(data){
+                            console.log("/" + page + "/graph" + num  + query)
+                            endload(num)
+                            check_session(data)
+                        
+                            if(nodata(data))
+                                show_nodata_warning(num)
+                            else{
+                                hide_nodata_warning(num)
+                                callback(data)
+                            }
+                        }, 
+                        dataType: "json", 
+                        error: poll,
+/*
+                        complete: function(){                
+                            if(nodata(data))
+                                show_nodata_warning(num)
+                            else{
+                                hide_nodata_warning(num)
+                                callback(data)
+                            }
+                            endload(num)
+                        }, 
+*/
+                        timeout: 15000 
+                        }
+                    );
+                })()
+
             }
             else{
                 endload(num)
                 check_session(data)
                 //data = check_status(page, num, query)
-                
                 if(nodata(data))
                     show_nodata_warning(num)
                 else{
