@@ -51,7 +51,6 @@ def order(args):
     l = []
     for a in args:
         if isinstance(a, QueryDict):
-            print [(key, val) for key, val in dict(a.iterlists()).items()]
             s = OrderedDict(sorted([(key, val) for key, val in dict(a.iterlists()).items()]))
         elif isinstance(a, dict):
             s = OrderedDict(sorted([(key, val) for key, val in a.items()]))
