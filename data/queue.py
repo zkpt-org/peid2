@@ -3,6 +3,7 @@ from worker import conn
 import time, hashlib
 from collections import OrderedDict
 from django.http import QueryDict
+from data.das import Das
 # from django.contrib.sessions.backends.db import SessionStore
 
 def send(func, args, session, timeout=600, priority='default'):
@@ -59,10 +60,12 @@ def order(args):
         if isinstance(a, QueryDict):
             s = OrderedDict(sorted([(key, val) for key, val in dict(a.iterlists()).items()]))
             l.append(s)
-        #elif isinstance(a, dict):
-        #    s = OrderedDict(sorted([(key, val) for key, val in a.items()]))
-        #else:
-        #    s = a
+        elif isinstance(a, dict):
+            s = OrderedDict(sorted([(key, val) for key, val in a.items()]))
+        elif isinstance(a, Das):
+            s = "DAS client instance"
+        else:
+            s = a
     return tuple(l)
 
         
