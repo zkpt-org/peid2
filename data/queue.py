@@ -1,8 +1,9 @@
 from rq import Queue
 from worker import conn
-import time
-import hashlib
-from django.contrib.sessions.backends.db import SessionStore
+import time, hashlib
+from collections import OrderedDict
+from django.http import QueryDict
+# from django.contrib.sessions.backends.db import SessionStore
 
 def send(func, args, session, timeout=600, priority='default'):
     if register(session, args):
@@ -15,7 +16,8 @@ def send(func, args, session, timeout=600, priority='default'):
     
 def register(session, args):
     h = hashlib.md5()
-    h.update(str(args))
+    
+    h.update(str(order(args)))
     
     pid  = h.hexdigest()
     jobs = session["jobQ"]
@@ -26,12 +28,15 @@ def register(session, args):
         session.save()
         print session["jobQ"]
         return True
+    
+    print "By-passing job", pid
+    
     return False
         
 
 def unregister(session, args):
     h = hashlib.md5()
-    h.update(str(args))
+    h.update(str(order(args)))
     
     pid  = h.hexdigest()
     jobs = session["jobQ"]
@@ -41,5 +46,19 @@ def unregister(session, args):
         session["jobQ"] = jobs
         session.save()
         print session["jobQ"]
+        
+def order(args):
+    l = []
+    for a in args:
+        if isinstance(a, QueryDict):
+            print [(key, val) for key, val in dict(a.iterlists()).items()]
+            s = OrderedDict(sorted([(key, val) for key, val in dict(a.iterlists()).items()]))
+        elif isinstance(a, dict):
+            s = OrderedDict(sorted([(key, val) for key, val in a.items()]))
+        else:
+            s = a
+        l.append(s)
+    # print str(tuple(l))
+    return tuple(l)
 
         
