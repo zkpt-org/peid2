@@ -26,10 +26,13 @@ def register(session, args):
         jobs.append(pid)
         session["jobQ"] = jobs
         session.save()    
+        print "adding job", pid
+        print "jobs:", session["jobQ"]
+        
         return True
     
-    print "jobs:", session["jobQ"]
     print "By-passing job", pid
+    print "jobs:", session["jobQ"]
     
     return False
         
@@ -55,11 +58,11 @@ def order(args):
     for a in args:
         if isinstance(a, QueryDict):
             s = OrderedDict(sorted([(key, val) for key, val in dict(a.iterlists()).items()]))
-        elif isinstance(a, dict):
-            s = OrderedDict(sorted([(key, val) for key, val in a.items()]))
-        else:
-            s = a
-        l.append(s)
+            l.append(s)
+        #elif isinstance(a, dict):
+        #    s = OrderedDict(sorted([(key, val) for key, val in a.items()]))
+        #else:
+        #    s = a
     return tuple(l)
 
         
