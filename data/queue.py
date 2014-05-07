@@ -18,7 +18,7 @@ def send(func, args, session, timeout=600, priority='default'):
 def register(session, func, args):
     h = hashlib.md5()
     
-    h.update(str(func) + str(order(args)))
+    h.update(func.__name__ + str(order(args)))
     
     pid  = h.hexdigest()
     jobs = session["jobQ"]
@@ -40,7 +40,7 @@ def register(session, func, args):
 
 def unregister(session, func, args):
     h = hashlib.md5()
-    h.update(str(func) + str(order(args)))
+    h.update(func.__name__ + str(order(args)))
     
     pid  = h.hexdigest()
     jobs = session["jobQ"]
