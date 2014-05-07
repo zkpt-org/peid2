@@ -7,13 +7,13 @@ from data.das import Das
 # from django.contrib.sessions.backends.db import SessionStore
 
 def send(func, args, session, timeout=600, priority='default'):
-    if register(session, func, args):
-        q = Queue(priority, connection=conn, default_timeout=600)      
-        job = q.enqueue_call(func=func, args=args, timeout=timeout)
-        while job.result is None:
-            time.sleep(1)
-        if job.result: unregister(session, func, args)
-        return job.result
+    #if register(session, func, args):
+    q = Queue(priority, connection=conn, default_timeout=600)      
+    job = q.enqueue_call(func=func, args=args, timeout=timeout)
+    while job.result is None:
+        time.sleep(1)
+        #if job.result: unregister(session, func, args)
+    return job.result
     
 def register(session, func, args):
     h = hashlib.md5()
