@@ -26,13 +26,13 @@ def register(session, func, args):
         jobs.append(pid)
         session["jobQ"] = jobs
         session.save()    
-        print "adding job", pid
-        print "jobs:", session["jobQ"]
+        #print "adding job", pid
+        #print "jobs:", session["jobQ"]
         
         return True
     
-    print "By-passing job", pid
-    print "jobs:", session["jobQ"]
+    #print "By-passing job", pid
+    #print "jobs:", session["jobQ"]
     
     return False
         
@@ -49,8 +49,8 @@ def unregister(session, func, args):
         session["jobQ"] = jobs
         session.save()
     
-        print "deleting job", pid
-        print "jobs:", session["jobQ"]
+        #print "deleting job", pid
+        #print "jobs:", session["jobQ"]
     
     
 def order(args):

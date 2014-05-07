@@ -225,7 +225,7 @@ function RenderGraph(page, num, callback){
                         }, 
                         dataType: "json", 
                         error: poll,
-                        timeout: 120000 
+                        timeout: 60000 
                     });
                 })();
             }
