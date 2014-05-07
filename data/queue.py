@@ -12,7 +12,7 @@ def send(func, args, session, timeout=600, priority='default'):
         job = q.enqueue_call(func=func, args=args, timeout=timeout)
         while job.result is None:
             time.sleep(1)
-        #if job.result: unregister(session, func, args)
+        if job.result: unregister(session, func, args)
         return job.result
     
 def register(session, func, args):
@@ -67,7 +67,6 @@ def order(args):
         else:
             s = ""
         l.append(s)
-    print tuple(sorted(l))
     return tuple(sorted(l))
 
         
