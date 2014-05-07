@@ -12,7 +12,7 @@ def send(func, args, session, timeout=600, priority='default'):
         job = q.enqueue_call(func=func, args=args, timeout=timeout)
         while job.result is None:
             time.sleep(1)
-        if job.result: unregister(session, func, args)
+        #if job.result: unregister(session, func, args)
         return job.result
     
 def register(session, func, args):
@@ -60,13 +60,13 @@ def order(args):
     for a in args:
         if isinstance(a, QueryDict):
             s = OrderedDict(sorted([(key, val) for key, val in dict(a.iterlists()).items()]))
-            l.append(s)
         elif isinstance(a, dict):
             s = OrderedDict(sorted([(key, val) for key, val in a.items()]))
         elif isinstance(a, Das):
             s = "DAS client instance"
         else:
             s = ""
+        l.append(s)
     print tuple(sorted(l))
     return tuple(sorted(l))
 
