@@ -89,7 +89,7 @@ def graph3(request):
             
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
-            data = queue.send(process.graph3, (das, request.GET), request.session)
+            data = queue.send(process.graph3, (das, request.GET), request.session, priority="high")
         else:
             data = {"session":"expired"}    
         return HttpResponse(json.dumps(data))

@@ -25,10 +25,10 @@ def register(session, args):
     if pid not in jobs:
         jobs.append(pid)
         session["jobQ"] = jobs
-        session.save()
-        print session["jobQ"]
+        session.save()    
         return True
     
+    print "jobs:", session["jobQ"]
     print "By-passing job", pid
     
     return False
@@ -45,8 +45,11 @@ def unregister(session, args):
         jobs.remove(pid)
         session["jobQ"] = jobs
         session.save()
-        print session["jobQ"]
-        
+    
+    print "deleting job", pid
+    print "jobs:", session["jobQ"]
+    
+    
 def order(args):
     l = []
     for a in args:
@@ -57,7 +60,6 @@ def order(args):
         else:
             s = a
         l.append(s)
-    # print str(tuple(l))
     return tuple(l)
 
         
