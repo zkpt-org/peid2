@@ -56,6 +56,7 @@ def unregister(session, func, args):
     
 def order(args):
     l = []
+    print args
     for a in args:
         if isinstance(a, QueryDict):
             s = OrderedDict(sorted([(key, val) for key, val in dict(a.iterlists()).items()]))
@@ -65,7 +66,8 @@ def order(args):
         elif isinstance(a, Das):
             s = "DAS client instance"
         else:
-            s = a
-    return tuple(l)
+            s = ""
+    print tuple(sorted(l))
+    return tuple(sorted(l))
 
         
