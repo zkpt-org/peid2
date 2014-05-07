@@ -84,7 +84,7 @@ class ProcessedGraphData(TimeStampedModel):
             condition  = params["condition"],
             start_date = params["reportingFrom"],
             end_date   = params["reportingTo"],
-            data       = d)
+            data       = json.dumps(d))
         return graph
     
     class Meta:
