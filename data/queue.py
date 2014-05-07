@@ -7,18 +7,18 @@ from data.das import Das
 # from django.contrib.sessions.backends.db import SessionStore
 
 def send(func, args, session, timeout=600, priority='default'):
-    if register(session, args):
+    if register(session, func, args):
         q = Queue(priority, connection=conn, default_timeout=600)      
         job = q.enqueue_call(func=func, args=args, timeout=timeout)
         while job.result is None:
             time.sleep(1)
-        # if job.result: unregister(session, args)
+        if job.result: unregister(session, func, args)
         return job.result
     
-def register(session, args):
+def register(session, func, args):
     h = hashlib.md5()
     
-    h.update(str(order(args)))
+    h.update(str(func) + str(order(args)))
     
     pid  = h.hexdigest()
     jobs = session["jobQ"]
@@ -38,9 +38,9 @@ def register(session, args):
     return False
         
 
-def unregister(session, args):
+def unregister(session, func, args):
     h = hashlib.md5()
-    h.update(str(order(args)))
+    h.update(str(func) + str(order(args)))
     
     pid  = h.hexdigest()
     jobs = session["jobQ"]
@@ -50,8 +50,8 @@ def unregister(session, args):
         session["jobQ"] = jobs
         session.save()
     
-    print "deleting job", pid
-    print "jobs:", session["jobQ"]
+        print "deleting job", pid
+        print "jobs:", session["jobQ"]
     
     
 def order(args):
