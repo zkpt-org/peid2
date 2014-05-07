@@ -17,7 +17,6 @@ def send(func, args, session, timeout=600, priority='default'):
     
 def register(session, func, args):
     h = hashlib.md5()
-    
     h.update(func.__name__ + str(order(args)))
     
     pid  = h.hexdigest()
@@ -56,7 +55,6 @@ def unregister(session, func, args):
     
 def order(args):
     l = []
-    print args
     for a in args:
         if isinstance(a, QueryDict):
             s = OrderedDict(sorted([(key, val) for key, val in dict(a.iterlists()).items()]))
