@@ -4,6 +4,7 @@ import pandas as pd
 import numpy as np
 from helpers import get_cohort
 from models import *
+from django.core.exceptions import ObjectDoesNotExist
 
 def graph1(das, request):
     cohort = get_cohort(das, request)
@@ -47,6 +48,13 @@ def graph1(das, request):
             "Pharmacy Claims": round(comparison["totalPharmacyPaidAmount"] / comparison["memberMonths"]) if comparison["memberMonths"]!=0 else 0,
         },
     ]
+    
+    Graph1().find_or_create(request, data)
+    #     try:
+    #         Graph1().find(request)    
+    #     
+    #     except ObjectDoesNotExist:
+    #         Graph1().insert(request, data)
     
     return data
 
@@ -97,6 +105,12 @@ def graph2(das, request):
             "date"   : d.strftime("%Y-%m-%d"),
             "total"     : round((reporting["totalPharmacyPaidAmount"]  + reporting["totalMedicalPaidAmount"])  / reporting["memberMonths"]) if reporting["memberMonths"]!=0 else 0,
             "benchmark" : round((comparison["totalPharmacyPaidAmount"] + comparison["totalMedicalPaidAmount"]) / comparison["memberMonths"])}) if comparison["memberMonths"]!=0 else 0
+    
+    try:
+        Graph2().find(request)    
+    
+    except ObjectDoesNotExist:
+        Graph2().insert(request, data)
     
     return data
 
@@ -182,7 +196,13 @@ def graph3(das, request):
             }
         }
         
-        return data
+    try:
+        Graph3().find(request)    
+    
+    except ObjectDoesNotExist:
+        Graph3().insert(request, data)
+        
+    return data
 
 def graph3_init():
     data = {
@@ -221,24 +241,17 @@ def graph4(das, request):
     total_claims = count_claims(das, reporting_from, reporting_to, cohort)
     
     if total_claims <= 10000:
-        results = cumulativeF1(das, reporting_from, reporting_to, cohort)
+        data = cumulativeF1(das, reporting_from, reporting_to, cohort)
     else:
-        results = cumulativeF2(das, reporting_from, reporting_to, cohort, total_claims)
+        data = cumulativeF2(das, reporting_from, reporting_to, cohort, total_claims)
     
-    graph = Graph4(
-        client     = request["client"], 
-        office     = request["office"],	
-        level      = request["level"],
-        relation   = request["relation"],
-        condition  = request["condition"], 
-        gender     = request["gender"],	
-        age        = request["age"], 
-        start_date = request["reportingFrom"],	
-        end_date   = request["reportingTo"], 
-        data       = json.dumps(results))
-    graph.save()
+    try:
+        Graph4().find(request)    
     
-    return json.dumps(results)
+    except ObjectDoesNotExist:
+        Graph4().insert(request, data)
+    
+    return json.dumps(data)
 
 def count_claims(das, _from, _to, cohort):
     params = {

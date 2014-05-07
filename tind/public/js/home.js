@@ -69,6 +69,8 @@ function redraw(num){
     }
     else{
         $(".box svg").remove();
+        $("#graph-3 table td.hi-lite.reporting").each(function(){$(this).html("")})
+        $("#graph-3 table td.hi-lite.comparison").each(function(){$(this).html("")})
         startload(1);
         startload(2);
         startload(3);

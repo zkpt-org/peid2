@@ -24,6 +24,7 @@ def login(request):
                 proxy_granting_ticket = das.auth()
                 if proxy_granting_ticket != '':
                     request.session['pgt'] = proxy_granting_ticket
+                    request.session['jobQ'] = []
                     # state = "You're successfully logged in!"
                     return HttpResponseRedirect(next)
                 else:

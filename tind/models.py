@@ -1,5 +1,7 @@
 # from django.db import models
+import json
 from django.db import models
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
 class TimeStampedModel(models.Model):
     """Abstract base class model that provides self.updating 'created' and 'modified' fields."""
@@ -45,6 +47,45 @@ class ProcessedGraphData(TimeStampedModel):
         self.end_date   = params["reportingTo"]
         self.data       = json.dumps(data)
         self.save()
+    
+    def find(self, params):
+        try:
+            data = self._default_manager.get(
+                client     = params["client"],
+                office     = params["office"],
+                level      = params["level"],
+                relation   = params["relation"],
+                gender     = params["gender"],
+                age        = params["age"],
+                condition  = params["condition"],
+                start_date = params["reportingFrom"],
+                end_date   = params["reportingTo"]).data
+        except MultipleObjectsReturned:
+            data = self._default_manager.filter(
+                client     = params["client"],
+                office     = params["office"],
+                level      = params["level"],
+                relation   = params["relation"],
+                gender     = params["gender"],
+                age        = params["age"],
+                condition  = params["condition"],
+                start_date = params["reportingFrom"],
+                end_date   = params["reportingTo"])[0].data
+        return data
+    
+    def find_or_create(self, params, d):
+        graph, created = self._default_manager.get_or_create(                
+            client     = params["client"],
+            office     = params["office"],
+            level      = params["level"],
+            relation   = params["relation"],
+            gender     = params["gender"],
+            age        = params["age"],
+            condition  = params["condition"],
+            start_date = params["reportingFrom"],
+            end_date   = params["reportingTo"],
+            data       = d)
+        return graph
     
     class Meta:
         abstract = True
