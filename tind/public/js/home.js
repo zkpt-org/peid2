@@ -61,7 +61,6 @@ function redraw(num){
     height = 400 - margin.top  - margin.bottom;
     
     //$(".tooltip-1").remove();
-    
     if(num){
         $("#graph-"+num+" .box svg").remove()
         startload(num)
@@ -107,44 +106,26 @@ function graph1(){
       .append("g")
         .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
     
-    d3.json("/home/graph1/?"   +
-            "reportingTo="     + time_window_end   +
-            "&reportingFrom="  + time_window_start +
-            "&comparisonFrom=" + time_window_start_minus_year +
-            "&comparisonTo="   + time_window_end_minus_year +
-            "&" + query_string, 
-      function(error, data){
-      
-      endload(1)
-      check_session(data)
-      
-      total0 = data[0]["Inpatient"]+data[0]["Office Visit"]+ data[0]["Outpatient"]+ data[0]["Pharmacy Claims"]
-      total1 = data[1]["Inpatient"]+data[1]["Office Visit"]+ data[1]["Outpatient"]+ data[1]["Pharmacy Claims"]
-            
-      if(total0 + total1 <= 0)
-          show_nodata_warning(1)
-      else{
-          hide_nodata_warning(1)    
-
-          color.domain(d3.keys(data[0]).filter(function(key) { return key !== "Period"; }));      
+    RenderGraph("home", 1, function(data){ 
+        color.domain(d3.keys(data[0]).filter(function(key) { return key !== "Period"; }));      
           
-          data.forEach(function(d){
+        data.forEach(function(d){
             var y0 = 0;
             d.ages = color.domain().map(function(name) { return {name: name, y0: y0, y1: y0 += +d[name]}; });
             d.total = d.ages[d.ages.length - 1].y1;
-          });
+        });
         
-          /* data.sort(function(a, b) { return b.total - a.total; }); */
+        /* data.sort(function(a, b) { return b.total - a.total; }); */
         
-          x.domain(data.map(function(d) { return d.Period; }));
-          y.domain([0, d3.max(data, function(d) { return d.total; })*1.2]);
+        x.domain(data.map(function(d) { return d.Period; }));
+        y.domain([0, d3.max(data, function(d) { return d.total; })*1.2]);
         
-          svg.append("g")
-              .attr("class", "x axis")
-              .attr("transform", "translate(0," + height + ")")
-              .call(xAxis);
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
     
-          d3.select(".x.axis")    
+        d3.select(".x.axis")    
             .append("g")
             .append("text")
               .text((time_window_start) +" \u2013 "+ (time_window_end)) 
@@ -153,7 +134,7 @@ function graph1(){
               .attr("x", (x.rangeBand() - x.rangeBand()/2 - d3.select("#daterange-1").node().getComputedTextLength()/2 + 20))
               .attr("dy", ".71em");
           
-          d3.select(".x.axis")  
+        d3.select(".x.axis")  
             .append("g")
             .append("text")
               .text((time_window_start_minus_year) +" \u2013 "+ (time_window_end_minus_year))
@@ -162,7 +143,7 @@ function graph1(){
               .attr("x", (x.rangeBand()*2 - x.rangeBand()/4) - (d3.select("#daterange-2").node().getComputedTextLength()/2))
               .attr("dy", ".71em");
           
-          d3.select(".x.axis")  
+        d3.select(".x.axis")  
             .append("g")
             .append("text")
               .text((time_window_start) +" \u2013 "+ (time_window_end))
@@ -171,9 +152,9 @@ function graph1(){
               .attr("x", (x.rangeBand()*3 - x.rangeBand()/6)  - (d3.select("#daterange-3").node().getComputedTextLength()/2))
               .attr("dy", ".71em");
             
-          svg.append("g")
-              .attr("class", "y axis")
-              .call(yAxis)
+        svg.append("g")
+            .attr("class", "y axis")
+            .call(yAxis)
             .append("text")
               .attr("transform", "rotate(-90)")
               .attr("y", 6)
@@ -181,14 +162,14 @@ function graph1(){
               .style("text-anchor", "end")
               .text("PMPM ($)");
         
-          var state = svg.selectAll(".state")
+        var state = svg.selectAll(".state")
             .data(data).enter().append("g")
               .attr("class", "g")
               .attr("transform", function(d) { return "translate(" + x(d.Period) + ",0)"; });
     
         
-          state.selectAll("rect")
-              .data(function(d) { return d.ages; })
+        state.selectAll("rect")
+            .data(function(d) { return d.ages; })
             .enter().append("g").attr("class", "cost-bar")
               .append("rect")
               .attr("width", x.rangeBand()/2)
@@ -197,8 +178,8 @@ function graph1(){
               .attr("height", function(d) { return y(d.y0) - y(d.y1); })
               .style("fill", function(d) { return color(d.name); });
           
-          state.selectAll(".cost-bar")    
-              .append("text")
+        state.selectAll(".cost-bar")    
+            .append("text")
               .text(function(d) { 
                 if (d.y1 - d.y0 > 10)
                     return "$" + String(d.y1 - d.y0); })
@@ -206,33 +187,32 @@ function graph1(){
               .attr("y", function(d) { return y(d.y0) - ((y(d.y0)-y(d.y1))/2) + 5; })
               .attr("class", "segments");
           
-          svg.selectAll(".g")
+        svg.selectAll(".g")
             .append("text")
               .text(function(d) {return "$" + String(d.total);})
               .attr("x", x.rangeBand()/4 + x.rangeBand()/4)
               .attr("y", function(d) { return y(d.total + 10); })
               .attr("class", "total");
           
-          var legend = svg.selectAll(".legend")
-              .data(color.domain().slice().reverse())
+        var legend = svg.selectAll(".legend")
+            .data(color.domain().slice().reverse())
             .enter().append("g")
               .attr("class", "legend")
               .attr("transform", function(d, i) { return "translate(0," + i * 20 + ")"; });
         
-          legend.append("rect")
+        legend.append("rect")
               .attr("x", width - 18)
               .attr("width", 18)
               .attr("height", 18)
               .style("fill", color);
         
-          legend.append("text")
+        legend.append("text")
               .attr("x", width - 24)
               .attr("y", 9)
               .attr("dy", ".35em")
               .style("text-anchor", "end")
               .text(function(d) { return d; });
-    }
-    });    
+    });
 }
 
 function graph2(){

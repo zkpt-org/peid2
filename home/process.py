@@ -49,6 +49,12 @@ def graph1(das, request):
         },
     ]
     
+    total0 = data[0]["Inpatient"]+ data[0]["Office Visit"]+ data[0]["Outpatient"]+ data[0]["Pharmacy Claims"]
+    total1 = data[1]["Inpatient"]+ data[1]["Office Visit"]+ data[1]["Outpatient"]+ data[1]["Pharmacy Claims"]
+    
+    if total0 + total1 == 0:
+        data = []
+            
     Graph1().find_or_create(request, data)
     #     try:
     #         Graph1().find(request)    
