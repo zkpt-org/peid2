@@ -212,8 +212,7 @@ function RenderGraph(page, num, callback){
                     jQuery.ajax({ 
                         url: "/" + page + "/graph" + num  + query, 
                         success: function(data){
-                            if(data == null) 
-                                poll() 
+                            if(data == null) poll() 
                             
                             endload(num)
                             check_session(data)
@@ -256,6 +255,7 @@ function RenderTable(page, num, callback){
         $.ajax({
             url : "/" + page + "/graph" + num  + query,
             success: function(data){
+                if(data == null) poll() 
                 endload(num)
                 check_session(data)
                 callback(data)
