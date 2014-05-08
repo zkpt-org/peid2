@@ -44,13 +44,15 @@ function onready(){
 }
 
 function check_session(response){
-    if(typeof response === 'string'){
-        if(response == '{"session": "expired"}')
+    if(response !== null && typeof response !== 'undefined'){
+        if(typeof response === 'string'){
+            if(response == '{"session": "expired"}')
+                end_of_session()
+            return response
+        }
+        else if("session" in response && response["session"]=="expired")
             end_of_session()
-        return response
     }
-    else if(typeof response !== 'undefined' && "session" in response && response["session"]=="expired")
-        end_of_session();
 }
 
 function end_of_session(){document.location = "/login/"}
@@ -181,7 +183,7 @@ function endload(num, timer){
 }
 
 function nodata(data){
-    if(typeof data === 'undefined')
+    if(typeof data === 'undefined' || data === null)
         return true
     if(data == "No Data" || data.length <= 0)
         return true
@@ -203,16 +205,18 @@ function RenderGraph(page, num, callback){
                 "&comparisonFrom=" + time_window_start_minus_year +
                 "&comparisonTo="   + time_window_end_minus_year   +
                 "&"                + query_string;
+    
+    startload(num)
         
     d3.json("/" + page + "/graph" + num  + query, 
         function(error, data){
-            if(error){
-                if(error.status == 503)
+            if(error || data == null){
+                //if(error.status == 503)
                 (function poll(){
                     jQuery.ajax({ 
                         url: "/" + page + "/graph" + num  + query, 
                         success: function(data){
-                            if(data == null) poll() 
+                            if(data == null) setTimeout(poll, 1000)
                             
                             endload(num)
                             check_session(data)
@@ -225,13 +229,11 @@ function RenderGraph(page, num, callback){
                             }
                         }, 
                         dataType: "json", 
-                        error: poll,
+                        error: setTimeout(poll, 1000),
                         timeout: 30000 
                     });
                 })();
             }
-            else if(data == null)
-                poll() 
             else{
                 endload(num)
                 check_session(data)
@@ -251,11 +253,14 @@ function RenderTable(page, num, callback){
                 "&comparisonFrom=" + time_window_start_minus_year +
                 "&comparisonTo="   + time_window_end_minus_year   +
                 "&"                + query_string;
+    
+    startload(num);
+    
     (function poll(){    
         $.ajax({
             url : "/" + page + "/graph" + num  + query,
             success: function(data){
-                if(data == null) poll() 
+                if(data == null) setTimeout(poll, 1000) 
                 endload(num)
                 check_session(data)
                 callback(data)

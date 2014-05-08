@@ -7,9 +7,9 @@
 
 {% block css %}{% endblock %}
 {% block content %}
-        {#{% load clearcache %}#}
-        {#{% clearcache alertcache %}#}
-        {% include 'home/alerts.html' %}
+    {#{% load clearcache %}#}
+    {#{% clearcache alertcache %}#}
+    {% include 'home/alerts.html' %}
     {% include 'filters.html' %}
     {% include "graph.html" with number="1" title="Costs by  Category" id="aggregate_costs" %}
     {% include "graph.html" with number="2" title="Per-Member Costs over Time Period" id="pmpm" %}

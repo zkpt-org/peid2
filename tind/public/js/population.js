@@ -27,14 +27,9 @@ function redraw(num){
     }
     else{
         //$(".box svg").remove();
-        startload(1);
-        //startload(2);
-        //startload(3);
-        //startload(4);
         graph1();
         graph2();
         graph3();
-        //graph4();
     }    
 }
 
@@ -69,14 +64,14 @@ function draw_top_diseases(){
     .attr("width", 500)
     .attr('transform', 'translate(50,-150)');
     
-    var tooltip2 = d3.select("#graph-2")
+    var tooltip2 = d3.select("#graph-1")
     .append("div")
     .style("position", "absolute")
     .style("z-index", "10")
     .style("visibility", "hidden")
     .attr("class", "tooltip-2");
         
-     var subcond = d3.select("#graph-2 .box")
+     var subcond = d3.select("#graph-1 .box")
     .append("div")
     .style("position", "absolute")
     .style("visibility", "hidden")

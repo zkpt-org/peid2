@@ -9,6 +9,8 @@
 
 {% block content %}
     {% include 'filters.html' %}
+    {% include "graph.html" with number="1" title="Top Ten Disease Conditions" id="top-diseases" %}
+<!--
     <div id="graph-2">
         <div class="show-hide-toggle">
             <a href="javascript:;" onclick="fold('#graph-2');">
@@ -21,8 +23,9 @@
                 <div id="top-diseases" class="fadeIn fadeIn-1s">
                 </div>
             </div>
-        </div>            
-    </div>
+        </div>  
+          
+    </div>-->
     <div id="graph-3" class="">
         <div class="show-hide-toggle">
             <a href="javascript:;" onclick="fold('#graph-3');">

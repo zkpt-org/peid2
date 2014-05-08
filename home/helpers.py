@@ -2,7 +2,7 @@ import datetime, calendar, copy, json, sys
 from dateutil.relativedelta import relativedelta
 from collections import OrderedDict
 from data.models import *
-from django.core.exceptions import ObjectDoesNotExist
+from django.core.exceptions import ObjectDoesNotExist, MultipleObjectsReturned
 
 def lastdate(das):
     try:
@@ -120,6 +120,12 @@ def get_cohort(das, q):
         query  = format_query(q2)
         cohort = das.cohort(query=query).id
         Cohort(cohort_id=cohort, traits=t).save()
+    except MultipleObjectsReturned:
+        cohort = Cohort.objects.filter(traits=t)[0].cohort_id
+        for c in Cohort.objects.filter(traits=t)[1:]:
+            das.cohort(id=c.cohort_id).delete()
+            Cohort.objects.filter(cohort_id=c.cohort_id).delete()
+        
     return cohort
 
 # 

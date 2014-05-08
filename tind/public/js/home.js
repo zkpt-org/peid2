@@ -32,10 +32,12 @@ function onDocumentReady(){
         $("#alerts-box").css("display","none");
     }
     
+/*
     $(".box").click(
     function(){
         details($(this));
     });
+*/
 }
 
 function ToggleAlertsBox(){
@@ -70,10 +72,7 @@ function redraw(num){
         $(".box svg").remove();
         $("#graph-3 table td.hi-lite.reporting").each(function(){$(this).html("")})
         $("#graph-3 table td.hi-lite.comparison").each(function(){$(this).html("")})
-        startload(1);
-        startload(2);
-        startload(3);
-        startload(4);
+        
         graph1();
         graph2();
         graph3();
