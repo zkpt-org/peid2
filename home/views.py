@@ -56,7 +56,8 @@ def graph1(request):
             
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
-            data = queue.send(process.graph1, (das, request.GET), request.session, priority="high")
+            # data = queue.send(process.graph1, (das, request.GET), request.session, priority="high")
+            data = process.graph1(das, request.GET)
         else:
             data = {"session":"expired"}
         return HttpResponse(json.dumps(data))
@@ -72,7 +73,8 @@ def graph2(request):
             
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
-            data = queue.send(process.graph2, (das, request.GET), request.session)
+            # data = queue.send(process.graph2, (das, request.GET), request.session)
+            data = process.graph2(das, request.GET)
         else:
             data = {"session":"expired"}
         return HttpResponse(json.dumps(data))
@@ -89,7 +91,8 @@ def graph3(request):
             
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
-            data = queue.send(process.graph3, (das, request.GET), request.session, priority="high")
+            # data = queue.send(process.graph3, (das, request.GET), request.session, priority="high")
+            data = process.graph3(das, request.GET)
         else:
             data = {"session":"expired"}    
         return HttpResponse(json.dumps(data))
