@@ -229,6 +229,8 @@ function RenderGraph(page, num, callback){
                     });
                 })();
             }
+            else if(data == null)
+                poll() 
             else{
                 endload(num)
                 check_session(data)
