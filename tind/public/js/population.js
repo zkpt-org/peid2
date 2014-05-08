@@ -22,11 +22,10 @@ function onDocumentReady(){
 function redraw(num){
     if(num){
         $("#graph-"+num+" .box svg").remove()
-        startload(num)
         eval('graph'+num+'()')
     }
     else{
-        //$(".box svg").remove();
+        $(".box svg").remove();
         graph1();
         graph2();
         graph3();

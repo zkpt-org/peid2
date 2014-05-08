@@ -32,12 +32,10 @@ function onDocumentReady(){
         $("#alerts-box").css("display","none");
     }
     
-/*
     $(".box").click(
     function(){
         details($(this));
     });
-*/
 }
 
 function ToggleAlertsBox(){
@@ -62,10 +60,8 @@ function redraw(num){
     width  = 760 - margin.left - margin.right,
     height = 400 - margin.top  - margin.bottom;
     
-    //$(".tooltip-1").remove();
     if(num){
         $("#graph-"+num+" .box svg").remove()
-        startload(num)
         eval('graph'+num+'()')
     }
     else{

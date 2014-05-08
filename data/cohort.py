@@ -11,9 +11,6 @@ class DasCohort:
         p = {"service":"create", "table":"ms", "pageSize":r.total, "query":"{'and':[%s]}" % query}
         self.id = self.das.to_dict(p)["cohortId"]
         
-        # p = {"service":"search", "table":"ms", "pageSize":"100", "fields":"[memberId]", "query":"{'and':[%s]}" % query}
-        # members = self.das.all(p).list('memberId')
-        # self.update(add=members)
         return self
     
     def update(self, add=None, remove=None):
