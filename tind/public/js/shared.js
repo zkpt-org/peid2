@@ -212,7 +212,9 @@ function RenderGraph(page, num, callback){
                     jQuery.ajax({ 
                         url: "/" + page + "/graph" + num  + query, 
                         success: function(data){
-                            console.log("/" + page + "/graph" + num  + query)
+                            if(data == null) 
+                                poll() 
+                            
                             endload(num)
                             check_session(data)
                         
