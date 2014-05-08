@@ -104,7 +104,7 @@ def graph4(request):
     
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
-            data = queue.send(process.graph4, (das, request.GET), request.session)
+            data = queue.send(process.graph4, (das, request.GET), request.session, priority="low")
         else:
             data = {"session":"expired"}
     
