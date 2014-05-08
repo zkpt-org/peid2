@@ -454,21 +454,6 @@ function graph2(){
 }
 
 function graph3(){
-/*
-    $.getJSON("/home/graph3/?"+
-            "reportingTo="     + time_window_end   +
-            "&reportingFrom="  + time_window_start +
-            "&comparisonFrom=" + time_window_start_minus_year +
-            "&comparisonTo="   + time_window_end_minus_year +
-            "&" + query_string    
-    , function(data){
-        endload(3)
-        check_session(data)
-        for(period in data)
-            for( n in data[period] )
-                $("td." + period + "." + n)[0].innerText = data[period][n]   
-    }) 
-*/
     RenderTable("home", 3, function(data){
         for(period in data)
             for( n in data[period] )
