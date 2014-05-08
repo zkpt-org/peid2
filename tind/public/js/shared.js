@@ -241,3 +241,24 @@ function RenderGraph(page, num, callback){
             }
         });    
 }
+
+function RenderTable(page, num, callback){
+    var query = "/?reportingTo="   + time_window_end   +
+                "&reportingFrom="  + time_window_start +
+                "&comparisonFrom=" + time_window_start_minus_year +
+                "&comparisonTo="   + time_window_end_minus_year   +
+                "&"                + query_string;
+    (function poll(){    
+        $.ajax({
+            url : "/" + page + "/graph" + num  + query,
+            success: function(data){
+                endload(num)
+                check_session(data)
+                callback(data)
+            },
+            dataType: "json",
+            error: poll,
+            timeout: 30000
+        })
+    })()   
+}

@@ -454,6 +454,7 @@ function graph2(){
 }
 
 function graph3(){
+/*
     $.getJSON("/home/graph3/?"+
             "reportingTo="     + time_window_end   +
             "&reportingFrom="  + time_window_start +
@@ -467,6 +468,12 @@ function graph3(){
             for( n in data[period] )
                 $("td." + period + "." + n)[0].innerText = data[period][n]   
     }) 
+*/
+    RenderTable("home", 3, function(data){
+        for(period in data)
+            for( n in data[period] )
+                $("td." + period + "." + n)[0].innerText = data[period][n]
+    })
 }
 
 function graph4(){
