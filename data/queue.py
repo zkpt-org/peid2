@@ -13,7 +13,7 @@ def send(func, args, session, timeout=600, priority='default'):
         while job.result is None:
             time.sleep(1)
         if job.result: unregister(session, func, args)
-    return job.result
+        return job.result
     
 def register(session, func, args):
     h = hashlib.md5()
