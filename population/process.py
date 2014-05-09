@@ -1,3 +1,7 @@
+from collections import OrderedDict
+from data.functions import get_cohort
+from collections import OrderedDict
+
 def graph1(das, request):
     reporting_from  = request["reportingFrom"]
     reporting_to    = request["reportingTo"]
@@ -6,24 +10,30 @@ def graph1(das, request):
     comparison_to   = request["comparisonTo"]
     
     td = top_diseases(das, request)
-    top10 = td.items()[0:10]
-
-    data = [
-        {"condition" : top10[0][0], "population" : top10[0][1]["withCondition"], "intersection" : {"Diabetes":203, "High Blood Pressure":247, "Metabolic Syndrome":132}},
-        {"condition" : top10[1][0], "population" : top10[1][1]["withCondition"], "intersection" : {"High Cholesterol":247, "Diabetes":153, "Metabolic Syndrome":88}},
-        {"condition" : top10[2][0], "population" : top10[2][1]["withCondition"], "intersection" : {"High Cholesterol":203, "High Blood Pressure":153, "Metabolic Syndrome":95}},
-        {"condition" : top10[3][0], "population" : top10[3][1]["withCondition"], "intersection" : {"Diabetes":95, "High Blood Pressure":88, "High Cholesterol":132}},
-        {"condition" : top10[4][0], "population" : top10[4][1]["withCondition"], "intersection" : {"High Cholesterol":98, "High Blood Pressure":38,"Metabolic Syndrome":35 }},
-        {"condition" : top10[5][0], "population" : top10[5][1]["withCondition"], "intersection" : {"Diabetes":203, "High Blood Pressure":247, "Metabolic Syndrome":132}},
-        {"condition" : top10[6][0], "population" : top10[6][1]["withCondition"], "intersection" : {"High Cholesterol":247, "Diabetes":153, "Metabolic Syndrome":88}},
-        {"condition" : top10[7][0], "population" : top10[7][1]["withCondition"], "intersection" : {"High Cholesterol":203, "High Blood Pressure":153, "Metabolic Syndrome":95}},
-        {"condition" : top10[8][0], "population" : top10[8][1]["withCondition"], "intersection" : {"Diabetes":95, "High Blood Pressure":88, "High Cholesterol":132}},
-        {"condition" : top10[9][0], "population" : top10[9][1]["withCondition"], "intersection" : {"High Cholesterol":98, "High Blood Pressure":38,"Metabolic Syndrome":35 }}
-    ]
+        
+    top10 = td.items()[0:10] if request['condition'] == "ALL" else td.items()[1:11]
+    
+    data = []    
+    for n, i in enumerate(top10):
+        if top10[n][1]["withCondition"] >= 1:
+            disease = {}
+            disease["condition"]  = top10[n][0]
+            disease["population"] = top10[n][1]["withCondition"]
+            
+            disease["details"] = OrderedDict()
+            disease["details"]["Cost"]             = "$ " + str("{0:,.2f}".format(round(top10[n][1]["cost"], 2)))
+            disease["details"]["Office Visits"]    = top10[n][1]["Office Visits"]
+            disease["details"]["ER Visits"]        = top10[n][1]["ER Visits"]
+            disease["details"]["Admits"]           = top10[n][1]["Admits"]
+            disease["details"]["30 Day Re-admits"] = top10[n][1]["30 Day Re-Admit"]
+            
+            data.append(disease)
+    
     return data    
 
-def top_diseases(das, request):
-    from collections import OrderedDict
+def top_diseases(das, request):    
+    cohort = get_cohort(das, request)
+        
     p = {
     "service"        : "report",
     "report"         : "chronicConditions",
@@ -34,6 +44,10 @@ def top_diseases(das, request):
     "comparisonTo"   : request["comparisonTo"],
     "order"          : "Admits:desc",
     }
+    
+    if cohort is not None:
+        p.update({"cohortId":cohort})
+    
     r = das.response(p)
     conditions = OrderedDict()
     

@@ -76,8 +76,8 @@ function draw_top_diseases(){
     .style("visibility", "hidden")
     .style("z-index", "10")
     .style("top", String(legend[0][0].getBoundingClientRect().bottom + 160)+"px")
-    .style("left", String(legend[0][0].getBoundingClientRect().left + 200) +"px" )
-    .attr("id", "subconditions");   
+    .style("left", String(legend[0][0].getBoundingClientRect().left + 140) +"px" )
+    .attr("id", "condition-stats");   
     
     
     var orig_color;
@@ -108,20 +108,20 @@ function draw_top_diseases(){
               tooltip2.style("top", (d3.event.pageY-10)+"px").style("left",(d3.event.pageX+5)+"px")
             
               $('.tooltip-2').html("pop. "+d.data.population);
-              d3.select('#subconditions').style("visibility", "visible")
+              d3.select('#condition-stats').style("visibility", "visible")
               
-              list = "<ul>"
-              for(var label in d.data.intersection){
-                list += "<li> + "+label+","+" "+d.data.intersection[label]+"</li>"
+              list = "<table>"
+              for(var cond in d.data.details){
+                list += "<tr><td>"+cond+": </td><td>"+ d.data.details[cond] +"</td></tr>"
               }
-              list += "</ul>"    
+              list += "</table>"    
               
-              $('#subconditions').html('<h3 style="color:'+orig_color+';">'+d.data.condition+"</h3>"+list);
+              $('#condition-stats').html('<h3 style="color:'+orig_color+';">'+d.data.condition+"</h3>"+list);
           })
           .on("mouseout", function(){
              d3.select( d3.event.target ).style("fill", orig_color);
              tooltip2.style("visibility", "hidden")
-             d3.select('#subconditions').style("visibility", "hidden")  
+             d3.select('#condition-stats').style("visibility", "hidden")  
           });
     
       g.append("text")

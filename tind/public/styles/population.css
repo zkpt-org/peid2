@@ -14,9 +14,9 @@
     font-weight: bold;
 }
 
-#subconditions{
-    min-width:230px;
-    min-height:110px;
+#condition-stats{
+    min-width:340px;
+    min-height:150px;
     background-color: #fff;
     border:#aaa 1px solid;
     border-radius:5px;
@@ -24,15 +24,16 @@
     
 }
 
-#subconditions h3{
+#condition-stats h3{
     font-weight: bold;
 }
-#subconditions ul{
+#condition-stats table{
     margin-top:15px;
     margin-left: 10px;
 }
-#subconditions li{
- line-height: 1.5;
+#condition-stats td{
+ line-height: 1.7;
+ min-width:150px;
 }
 
 #top-diseases text{
