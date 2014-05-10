@@ -24,32 +24,10 @@ def graph1(request):
     das = Das(session=request.session)
     try:
         data = Graph1().find(request.GET)
-        #         data = Graph1.objects.get(
-        #             client     = request.GET["client"],
-        #             office     = request.GET["office"],
-        #             level      = request.GET["level"],
-        #             relation   = request.GET["relation"],
-        #             gender     = request.GET["gender"],
-        #             age        = request.GET["age"],
-        #             condition  = request.GET["condition"],
-        #             start_date = request.GET["reportingFrom"],
-        #             end_date   = request.GET["reportingTo"]).data
             
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
             data = process.graph1(das, request.GET)
-            #             graph = Graph1(
-            #                 client     = request.GET["client"], 
-            #                 office     = request.GET["office"],	
-            #                 level      = request.GET["level"],
-            #                 relation   = request.GET["relation"], 
-            #                 condition  = request.GET["condition"], 
-            #                 gender     = request.GET["gender"],	
-            #                 age        = request.GET["age"], 
-            #                 start_date = request.GET["reportingFrom"],	
-            #                 end_date   = request.GET["reportingTo"], 
-            #                 data       = json.dumps(data))
-            #             graph.save()
         else:
             data = {"session":"expired"}
         return HttpResponse(json.dumps(data))

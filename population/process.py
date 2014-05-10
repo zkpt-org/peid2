@@ -1,6 +1,7 @@
 from collections import OrderedDict
 from data.functions import get_cohort
 from collections import OrderedDict
+from models import *
 
 def graph1(das, request):
     reporting_from  = request["reportingFrom"]
@@ -28,6 +29,8 @@ def graph1(das, request):
             disease["details"]["30 Day Re-admits"] = top10[n][1]["30 Day Re-Admit"]
             
             data.append(disease)
+    
+    Graph1().find_or_create(request, data)
     
     return data    
 
