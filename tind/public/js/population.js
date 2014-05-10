@@ -116,7 +116,7 @@ function draw_top_diseases(){
               }
               list += "</table>"    
               
-              $('#condition-stats').html('<h3 style="color:'+orig_color+';">'+d.data.condition+"</h3>"+list);
+              $('#condition-stats').html('<h3 style="color:'+orig_color+';">'+d.data.condition +/* ", "+d.data.population+ */"</h3>"+list);
           })
           .on("mouseout", function(){
              d3.select( d3.event.target ).style("fill", orig_color);
