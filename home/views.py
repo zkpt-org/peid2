@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from models import *
 from data.das import Das
 from data import queue
-from tind.functions import conditions
+from data.functions import conditions
 from home import process
 import json, calendar, datetime
 from django.core.cache import cache

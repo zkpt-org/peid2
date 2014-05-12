@@ -3,7 +3,7 @@ from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from data.das import Das
-from tind.functions import conditions
+from data.functions import conditions
 
 @login_required
 def index(request):

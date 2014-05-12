@@ -2,7 +2,7 @@ import datetime, calendar, json
 from dateutil.relativedelta import relativedelta
 import pandas as pd
 import numpy as np
-from helpers import get_cohort
+from data.functions import get_cohort
 from models import *
 from django.core.exceptions import ObjectDoesNotExist
 

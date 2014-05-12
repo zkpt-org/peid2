@@ -5,7 +5,7 @@ from django.contrib.auth.decorators import login_required
 from models import *
 from django.core.exceptions import ObjectDoesNotExist
 from data.das import Das
-from tind.functions import conditions
+from data.functions import conditions
 from population import process
 import json
 

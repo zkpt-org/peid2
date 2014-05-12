@@ -17,7 +17,6 @@ def lastdate(das):
         return now.strftime('%Y-%m-%d')
     return r["result_sets"]["0"]["serviceDate"]
 
-
 def timewindow(das):
     """Get the last date recorded in the dataset."""
     ld = lastdate(das)
@@ -54,6 +53,11 @@ def chronic(das, q):
             if i != "memberCount" and i != "memberMonths":
                 conditions.update({r.data["reporting"]["Default"][i]["name"] : r.data["reporting"]["Default"][i]["description"]})
     return conditions
+
+def conditions(das):
+    tw   = timewindow(das)
+    cond = chronic(das, tw)
+    return cond
 
 def format_query(q):
     query = ""

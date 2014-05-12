@@ -4,7 +4,7 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from models import *
 from data.das import Das
-from tind.functions import conditions
+from data.functions import conditions
 import json
 
 @login_required
