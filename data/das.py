@@ -49,13 +49,14 @@ class Das:
         c.setopt(pycurl.ENCODING, 'gzip')
         c.setopt(c.SSLVERSION, 3)
         c.setopt(c.WRITEFUNCTION, response.write)
-        #if os.environ.get('PROXIMO_URL', '') != '':
-        #    c.setopt(c.PROXY, os.environ.get('PROXIMO_URL', ''))
+        if os.environ.get('PROXIMO_URL', '') != '':
+            print os.environ.get('PROXIMO_URL', '')
+            c.setopt(c.PROXY, os.environ.get('PROXIMO_URL', ''))
         try:
             c.perform()
         except pycurl.error, error:
             errno, errstr = error
-            print 'A curl error occurred: ', errstr
+            print 'A curl error occurred: ', errno, errstr
         c.close()
         return response.getvalue()
     
