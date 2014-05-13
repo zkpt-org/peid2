@@ -54,7 +54,7 @@ class Das:
             c.setopt(c.PROXY, "http://"+proximo[1] )
             c.setopt(c.PROXYPORT, 80) 
             c.setopt(c.PROXYUSERPWD, proximo[0].replace("http://",""))
-            c.setopt(c.PROXYAUTH, pycurl.HTTPAUTH_NTLM) 
+            #c.setopt(c.PROXYAUTH, pycurl.HTTPAUTH_NTLM) 
             #c.setopt(c.PROXYAUTH, 8)
         try:
             c.perform()
