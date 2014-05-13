@@ -51,7 +51,7 @@ class Das:
         c.setopt(c.WRITEFUNCTION, response.write)
         if os.environ.get('PROXIMO_URL', '') != '':
             proximo = os.environ.get('PROXIMO_URL', '').split("@")
-            print proximo[0], proximo[1]
+            print proximo[0].replace("http://",""), "http://"+proximo[1]
             c.setopt(c.USERPWD, proximo[0].replace("http://",""))
             c.setopt(c.PROXY, "http://"+proximo[1] )
         try:
