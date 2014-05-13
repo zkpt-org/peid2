@@ -49,11 +49,13 @@ class Das:
         c.setopt(pycurl.ENCODING, 'gzip')
         c.setopt(c.SSLVERSION, 3)
         c.setopt(c.WRITEFUNCTION, response.write)
-        #         if os.environ.get('PROXIMO_URL', '') != '':
-        #             proximo = os.environ.get('PROXIMO_URL', '').split("@")
-        #             print proximo[0].replace("http://",""), "http://"+proximo[1]
-        #             c.setopt(pycurl.USERPWD, proximo[0].replace("http://",""))
-        #             c.setopt(c.PROXY, "http://"+proximo[1] )
+        if os.environ.get('PROXIMO_URL', '') != '':
+            proximo = os.environ.get('PROXIMO_URL', '').split("@")
+            c.setopt(c.PROXY, "http://"+proximo[1] )
+            c.setopt(c.PROXYPORT, 80) 
+            c.setopt(c.PROXYUSERPWD, proximo[0].replace("http://",""))
+            c.setopt(c.PROXYAUTH, pycurl.HTTPAUTH_NTLM) 
+            #c.setopt(c.PROXYAUTH, 8)
         try:
             c.perform()
         except pycurl.error, error:
