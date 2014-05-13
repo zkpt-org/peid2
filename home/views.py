@@ -63,7 +63,6 @@ def graph1(request):
         return HttpResponse(json.dumps(data))
                 
     return HttpResponse(data)
-    
 
 @login_required
 def graph2(request):    
@@ -80,8 +79,6 @@ def graph2(request):
         return HttpResponse(json.dumps(data))
 
     return HttpResponse(data)
-    
-    
 
 @login_required
 def graph3(request):
