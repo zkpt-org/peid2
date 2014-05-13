@@ -49,8 +49,11 @@ class Das:
         c.setopt(pycurl.ENCODING, 'gzip')
         c.setopt(c.SSLVERSION, 3)
         c.setopt(c.WRITEFUNCTION, response.write)
-        # if os.environ.get('PROXIMO_URL', '') != '':
-        #    c.setopt(c.PROXY, os.environ.get('PROXIMO_URL', ''))
+        if os.environ.get('PROXIMO_URL', '') != '':
+            proximo = os.environ.get('PROXIMO_URL', '').split("@")
+            print proximo[0], proximo[1]
+            c.setopt(c.USERPWD, proximo[0])
+            c.setopt(c.PROXY, proximo[1] )
         try:
             c.perform()
         except pycurl.error, error:
