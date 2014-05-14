@@ -35,7 +35,7 @@ def index(request):
                 "alerts"     : request.session['alerts'],
                 "reporting"  : data["reporting"],
                 "comparison" : data["comparison"],
-                "conditions" : conditions(das)
+                "conditions" : conditions(das, session=request.session)
            }, context_instance=RequestContext(request))
 
 def hide_alerts(request):

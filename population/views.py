@@ -16,7 +16,7 @@ def index(request):
     return render_to_response('population/index.html',{
                 "page":"population",
                 "user":request.user, 
-                "conditions" : conditions(das)
+                "conditions" : conditions(das, session=request.session)
             }, context_instance=RequestContext(request))
 
 @login_required            

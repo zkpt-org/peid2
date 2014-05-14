@@ -54,9 +54,14 @@ def chronic(das, q):
                 conditions.update({r.data["reporting"]["Default"][i]["name"] : r.data["reporting"]["Default"][i]["description"]})
     return conditions
 
-def conditions(das):
+def conditions(das, session=None):
     tw   = timewindow(das)
-    cond = chronic(das, tw)
+    if session and 'conditions' in session:
+        cond = session['conditions']
+    else
+        cond = chronic(das, tw)
+        session['conditions'] = cond
+        session.save()
     return cond
 
 def format_query(q):
