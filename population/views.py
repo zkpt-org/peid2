@@ -21,12 +21,12 @@ def index(request):
 
 @login_required            
 def graph1(request):
-    das = Das(session=request.session)
     try:
         data = Graph1().find(request.GET)
             
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
+            das  = Das(session=request.session)
             data = process.graph1(das, request.GET)
         else:
             data = {"session":"expired"}

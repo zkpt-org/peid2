@@ -50,12 +50,12 @@ def show_alerts(request):
 
 @login_required
 def graph1(request):
-    das = Das(session=request.session)
     try:
         data = Graph1().find(request.GET)
             
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
+            das = Das(session=request.session)
             # data = queue.send(process.graph1, (das, request.GET), request.session, priority="high")
             data = process.graph1(das, request.GET)
         else:
@@ -65,13 +65,13 @@ def graph1(request):
     return HttpResponse(data)
 
 @login_required
-def graph2(request):    
-    das = Das(session=request.session)
+def graph2(request):
     try:
         data = Graph2().find(request.GET)
             
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
+            das  = Das(session=request.session)
             data = queue.send(process.graph2, (das, request.GET), request.session)
             # data = process.graph2(das, request.GET)
         else:
@@ -82,12 +82,12 @@ def graph2(request):
 
 @login_required
 def graph3(request):
-    das = Das(session=request.session)
     try:
         data = Graph3().find(request.GET)
             
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
+            das = Das(session=request.session)
             # data = queue.send(process.graph3, (das, request.GET), request.session, priority="high")
             data = process.graph3(das, request.GET)
         else:
@@ -98,12 +98,12 @@ def graph3(request):
     
 @login_required
 def graph4(request):
-    das = Das(session=request.session)
     try:
         data = Graph4().find(request.GET)
     
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
+            das  = Das(session=request.session)
             data = queue.send(process.graph4, (das, request.GET), request.session, priority="low")
         else:
             data = {"session":"expired"}
