@@ -58,7 +58,7 @@ def conditions(das, session=None):
     tw   = timewindow(das)
     if session and 'conditions' in session:
         cond = session['conditions']
-    else
+    else:
         cond = chronic(das, tw)
         session['conditions'] = cond
         session.save()
