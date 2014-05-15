@@ -10,4 +10,4 @@ def index(request):
     
     das = Das(session=request.session)
     
-    return render_to_response('projections/index.html',{"page":"returns", "conditions" : conditions(das)}, context_instance=RequestContext(request))
+    return render_to_response('projections/index.html',{"page":"returns", "conditions" : conditions(das, session=request.session)}, context_instance=RequestContext(request))

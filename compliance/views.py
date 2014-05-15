@@ -12,4 +12,4 @@ def index(request):
 
     das = Das(session=request.session)
     
-    return render_to_response('compliance/index.html',{"page":"compliance", "user":request.user, "loop":[i for i in range(5)], "conditions" : conditions(das)}, context_instance=RequestContext(request))
+    return render_to_response('compliance/index.html',{"page":"compliance", "user":request.user, "loop":[i for i in range(5)], "conditions" : conditions(das, session=request.session)}, context_instance=RequestContext(request))
