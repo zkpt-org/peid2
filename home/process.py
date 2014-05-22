@@ -246,7 +246,7 @@ def graph4(das, request):
     
     total_claims = count_claims(das, reporting_from, reporting_to, cohort)
     
-    if total_claims <= 10000:
+    if total_claims <= 100000:
         data = cumulativeF1(das, reporting_from, reporting_to, cohort)
     else:
         data = cumulativeF2(das, reporting_from, reporting_to, cohort, total_claims)
@@ -307,7 +307,7 @@ def cumulativeF1(das, _from, _to, cohort):
     params  = {
     "service"  : "search", 
     "table"    : "smc",
-    "pageSize" : 100,
+    "pageSize" : 1000,
     "order"    : "paidAmount:desc",
     "query"    : "{'and':[{'serviceDate.gte':'" + _from + "'},{'serviceDate.lte':'" + _to + "'},{'paidAmount.gt':'0'}]}",
     "fields"   : "[paidAmount]",

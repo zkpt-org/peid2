@@ -24,3 +24,15 @@ class Cohort(models.Model):
             ('cohort_id', self.cohort_id),
             ('traits', self.traits),
         ))
+
+class TopProcedures(models.Model):
+    description = models.CharField(max_length=128)
+    groupercode = models.CharField(max_length=64)
+    
+    def json(self):
+        from collections import OrderedDict
+        return OrderedDict((
+            ('id', self.id),
+            ('description', self.description),
+            ('groupercode', self.groupercode),
+        ))

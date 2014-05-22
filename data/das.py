@@ -158,6 +158,8 @@ class Das:
     
     def pages(self, p, x, y):
         """Get records contained in the indicated pages."""
+        if 'service' not in p:
+            p['service'] = 'search'
         if p['service'] == 'search':
             responses = []
             if y < x: y = x
