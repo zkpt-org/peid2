@@ -26,15 +26,21 @@ class Cohort(models.Model):
         ))
 
 class TopProcedures(models.Model):
-    description  = models.CharField(max_length=128)
-    grouper_code = models.CharField(max_length=10)
-    start_date   = models.CharField(max_length=10, default="")
-    end_date     = models.CharField(max_length=10, default="")    
+    description = models.CharField(max_length=128)
+    grouper     = models.CharField(max_length=10)
+    cost        = models.DecimalField(max_digits=20, decimal_places=2)
+    count       = models.IntegerField()
+    start_date  = models.CharField(max_length=10, default="")
+    end_date    = models.CharField(max_length=10, default="")    
     
     def json(self):
         from collections import OrderedDict
         return OrderedDict((
             ('id', self.id),
             ('description', self.description),
-            ('groupercode', self.groupercode),
+            ('grouper', self.grouper),
+            ('cost', self.cost),
+            ('count', self.count),
+            ('start_date', self.start_date),
+            ('end_date', self.end_date)
         ))
