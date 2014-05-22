@@ -27,7 +27,7 @@ class Cohort(models.Model):
 
 class TopProcedures(models.Model):
     description  = models.CharField(max_length=128)
-    grouper_code = models.CharField(max_length=64)
+    grouper_code = models.CharField(max_length=10)
     start_date   = models.CharField(max_length=10, default="")
     end_date     = models.CharField(max_length=10, default="")    
     
