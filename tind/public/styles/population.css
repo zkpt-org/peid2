@@ -87,8 +87,9 @@
 }
 
 #view-switch{
-    margin-left:650px;
+    margin-left:550px;
     margin-top:20px;
+    width:200px;
 }
 #treatments .x.axis path {
   display: none;
@@ -103,4 +104,16 @@ treatments .y.axis path {
 
 #graph-2 .box{
     min-height:380px;
+}
+
+.group-label{
+    font-size: x-small !important;
+}
+.bar-text2{
+    display:none;
+}
+.bar-costs{
+    fill: #fff;
+    font-size:x-small !important;
+    font-weight:bold;
 }

@@ -33,3 +33,16 @@ def graph1(request):
         return HttpResponse(json.dumps(data))
     return HttpResponse(data)
 
+@login_required            
+def graph2(request):
+    try:
+        data = Graph2().find(request.GET)
+            
+    except ObjectDoesNotExist:
+        if 'pgt' in request.session:
+            das  = Das(session=request.session)
+            data = process.graph2(das, request.GET)
+        else:
+            data = {"session":"expired"}
+        return HttpResponse(json.dumps(data))
+    return HttpResponse(data)
