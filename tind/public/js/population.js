@@ -79,12 +79,10 @@ function draw_top_diseases(){
     .style("left", 615/* String(legend[0][0].getBoundingClientRect().left + 140) */ +"px" )
     .attr("id", "condition-stats");   
     
-    
     var orig_color;
     var labels = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"]
     var i = -1;
     
-    //d3.json("../public/data/top_diseases.json", function(error, data) {
     RenderGraph("population", 1, function(data){    
       
       data.forEach(function(d) {
@@ -243,14 +241,6 @@ function treatments(){
     var margin = {top: 30, right: 30, bottom: 60, left: 30},
     width  = 760 - margin.left - margin.right,
     height = 400 - margin.top  - margin.bottom;
-    
-    /* var height = 600 - margin.top  - margin.bottom; */
-    var parseDate = d3.time.format("%Y-%m").parse,
-    formatYear = d3.format("02d"),
-/*     formatDate = function(d) { return "Q" + ((d.getMonth() / 3 | 0) + 1) + formatYear(d.getFullYear() % 100); }; */
-    formatDate = function(d) { return d };
-
-
 
 var y0 = d3.scale.ordinal()
     .rangeRoundBands([height,0], 0.01);
@@ -262,9 +252,261 @@ var x = d3.scale.ordinal()
 
 var xAxis1 = d3.svg.axis()
     .scale(x)
-    .orient("bottom")
-    .tickFormat(formatDate);
+    .orient("bottom");
 
+var nest = d3.nest()
+    .key(function(d) { return d.treatment; });
+
+var stack = d3.layout.stack()
+    .values(function(d) { return d.values; })
+    .x(function(d) { return d.dates; })
+    .y(function(d) { return d.cost; })
+    .out(function(d, y0) { d.valueOffset = y0; });
+
+var color = d3.scale.ordinal().range(['#ff4566','#db55a6','#c95cc7','#a96aff','#8e7cff','#57a1ff']);
+
+var svg = d3.select("#treatments").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+RenderGraph("population", 2, function(data){
+  data.forEach(function(d) {
+      d.value = +d['cost%'];
+      d.cost  =  parseFloat(d['cost$'].replace(/,/g, ''));
+  });
+  
+
+  var dataByYear = d3.nest().key(function(d){ return d.dates; }).entries(data)
+  var dataByGroup = nest.entries(data);
+
+  dataByGroup = dataByGroup.slice(0, 5);
+  
+  var totals = []
+  
+  dataByYear.forEach(function(d){
+    d.values = d.values.slice(0,5)
+    s = 0
+    for(v in d.values)
+        s += d.values[v].cost
+    d.total = s
+    totals.push(s)
+  })
+  
+  var maxcost = Array.max(totals)
+
+  dataByGroup.forEach(function(d){
+      for(var i in d.values){
+          dataByYear.forEach(function(y){
+              if(y.key == d.values[i].dates)
+                d.values[i].total = y.total
+          })
+      }  
+  })
+  
+  stack(dataByGroup);
+    
+  x.domain(dataByGroup[0].values.map(function(d) { return d.dates; }));
+  y0.domain(dataByGroup.map(function(d) { return d.key; }));
+  y1.domain([0, d3.max(data, function(d) { return d.cost; })]).range([y0.rangeBand(), 0]);
+
+  var group = svg.selectAll(".group")
+      .data(dataByGroup)
+    .enter().append("g")
+      .attr("class", "group")
+      .attr("transform", function(d) { return "translate(0," + y0(d.key) + ")"; });
+
+  group.append("text")
+      .attr("class", "group-label")
+      .attr("x", -20)
+      .attr("y", function(d) { return y1(d.values[0].value / 2); })
+      .attr("dy", ".35em")
+      .text(function(d) { return d.key; });
+
+  group.selectAll("rect")
+      .data(function(d) { return d.values; })
+    .enter().append("rect")
+      .style("fill", function(d) { return color(d.treatment); })
+      .style("stroke", "#fff")
+      .attr("x", function(d) { return x(d.dates)+(x.rangeBand()/2)*1.1; })
+      .attr("y", function(d) { return y1(d.cost); })
+      .attr("width", x.rangeBand()/1.5)
+      .attr("height", function(d) { return (y0.rangeBand() - y1(d.cost)); });
+
+  group.filter(function(d, i) { return !i; }).append("g")
+      .attr("class", "x axis")
+      .attr("transform", "translate("+((x.rangeBand()/3)*1.2)+"," + y0.rangeBand() + ")")
+      .call(xAxis1);
+
+  group.selectAll("svg").
+      data(function(d) { return d.values; }).
+      enter().
+      append("svg:text").
+      attr("class", "percent").
+      attr("x", function(d) { return x(d.dates)+(x.rangeBand()/3)*1.1;}).
+      attr("y", function(d) { return y1(d.cost); }).
+      attr("dx", x.rangeBand()).
+      attr("dy", "1.2em").
+      attr("text-anchor", "middle").
+      text(function(d) { return d.value+"%";}).
+      attr("class", "bar-text")
+      .style("fill", function(d){return color(d.treatment)});
+
+  group.selectAll("svg").
+      data(function(d) { return d.values; }).
+      enter().
+      append("svg:text").
+      attr("dx", x.rangeBand()).
+      attr("dy", "1.2em").
+      attr("text-anchor", "middle").
+      text(function(d) { return d.count+"%";}).
+      attr("class", "bar-text2").
+      attr("x", function(d) { return x(d.dates)+(x.rangeBand()/3)*1.1;}).
+      attr("y", function(d) { return (d.total < maxcost/3 ) ? y1(d.cost)-15 : y1(d.cost); });
+
+  group.selectAll("svg").
+      data(function(d) { return d.values; }).
+      enter().
+      append("svg:text").
+      attr("class", "percent").
+      attr("x", function(d) { return x(d.dates)}).
+      attr("y", function(d) { return y1(d.cost); }).
+      attr("dx", x.rangeBand()).
+      attr("dy", "1.2em").
+      attr("text-anchor", "middle").
+      text(function(d) { return "$"+d['cost$'];}).
+      attr("class", "bar-costs").
+      attr("y", function(d) { return (d.total < maxcost/3 ) ? y1(d.cost)-15 : y1(d.cost); }).
+      style("fill", function(d) { return (d.total < maxcost/3 ) ? color(d.treatment) : "#fff";});
+
+  var totalcost = svg.append("g").attr("class", "total-costs");
+  totalcost.selectAll("svg")
+    .data(dataByYear).enter()
+    .append("svg:text")
+    .attr("class","total-label")
+    /* .attr("y", function(d){ return y1(d.values[0] - d.values[0].valueOffset); }) */
+    .attr("dx", x.rangeBand())
+    .attr("dy", ".35em")
+    .attr("text-anchor", "middle")
+    .text(function(d) { return "$" + d.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");})
+    .attr("x", function(d){ return x(d.key) - (this.getComputedTextLength()/2)/2; })
+    
+
+  d3.selectAll("input").on("change", change);
+
+  var timeout = setTimeout(function() {
+    d3.select("input[value=\"stacked\"]").property("checked", true).each(change);
+  }, 2000);
+
+  function change() {
+    clearTimeout(timeout);
+    if (this.value === "multiples") transitionMultiples();
+    else transitionStacked();
+  }
+
+  function transitionMultiples() {
+    var t = svg.transition().duration(750),
+        g = t.selectAll(".group").attr("transform", function(d) { return "translate(0," + y0(d.key) + ")"; });
+    
+    $(".bar-text2").fadeOut()
+    $(".total-label").fadeOut({"done":function(){
+        svg.selectAll(".total-label").attr("y",0)
+        $(".total-label").fadeIn()
+    }})
+    
+    
+    g.selectAll("rect").attr("y", function(d) { return y1(d.cost); });
+    g.select(".group-label").attr("y", function(d) { return y1(d.values[0].value / 2); })
+    g.selectAll(".bar-text2").attr("y", function(d) { return (d.total < maxcost/3 ) ? y1(d.cost)-15 : y1(d.cost); })
+    g.selectAll(".bar-text2").style("fill", function(d){return color(d.treatment)})
+    g.selectAll(".bar-costs").attr("y", function(d) { return (d.total < maxcost/3 ) ? y1(d.cost)-15 : y1(d.cost); })
+    g.selectAll(".bar-costs").style("fill", function(d) { return (d.total < maxcost/3 ) ? color(d.treatment) : "#fff";})
+
+    $(".total-label").fadeIn()
+    $('#treatments').animate({
+        height: height + margin.top  + margin.bottom + 40,
+        }, 750, function() {
+    });
+    
+    $('#graph-3 .box').animate({'min-height': "400px"}, 750)
+    
+    $('#treatments svg').animate({
+        height: height + margin.top  + margin.bottom + 40,
+        }, 750, function() {
+    });
+    
+    
+  }
+
+  function transitionStacked() {
+    var t = svg.transition().duration(750),
+        g = t.selectAll(".group").attr("transform", "translate(0," + y0(y0.domain()[0]) + ")"),
+        tc = t.selectAll(".total-cost").attr("transform", "translate(0," + y0(y0.domain()[0]) + ")");
+        
+    var offset = y0(y0.domain()[0]) - (margin.top + margin.bottom)
+        
+    g.selectAll("rect").attr("y", function(d) { return y1(d.cost + d.valueOffset) - offset; });
+    g.select(".group-label").attr("y", function(d) { 
+        /* var hi = Math.max(d.values[0].total, d.values[1].total, d.values[2].total) */
+        for(var i in d.values)
+            if(d.values[i].total == maxcost)
+                return y1(d.values[i].value/2 + d.values[i].valueOffset) - offset; 
+    });
+    g.selectAll(".bar-text2").attr("y", function(d) { 
+        if(d.total > maxcost/3 )  
+            return y1(d.cost + d.valueOffset) - offset;
+    });
+    g.selectAll(".bar-text2").style("fill", function(d){return color(d.treatment)})
+    
+    g.selectAll(".bar-costs").attr("y", function(d) { 
+        if(d.total > maxcost/3 )
+            return y1(d.cost + d.valueOffset) - offset; 
+    });
+    
+    $(".total-label").fadeOut({"done":function(){
+        svg.selectAll(".total-label").attr("y", function(d) { return y0(y0.domain()[0])-y1(d.values[0].value) ; });
+        $(".total-label").fadeIn()
+    }})
+    
+    $('#treatments').animate({
+        height: offset + (margin.top + margin.bottom),
+        }, 750, function() {
+        
+    });
+    
+    $('#graph-3 .box').animate({'min-height': (160 + margin.top  + margin.bottom +60) + "px"}, 750)
+    
+    $('#treatments svg').animate({
+        height: offset + (margin.top + margin.bottom),
+        }, 750, function() {
+            $(".bar-text2").fadeIn()
+    });
+
+  }
+});
+}
+
+
+/*
+function treatments(){
+    // example at http://bl.ocks.org/mbostock/4679202
+    
+    var margin = {top: 30, right: 30, bottom: 60, left: 30},
+    width  = 760 - margin.left - margin.right,
+    height = 400 - margin.top  - margin.bottom;
+
+var y0 = d3.scale.ordinal()
+    .rangeRoundBands([height,0], 0.01);
+var y1 = d3.scale.linear();
+//var y1 = d3.scale.linear().domain([0, height])
+
+var x = d3.scale.ordinal()
+    .rangeRoundBands([10, width-80], 0.1, 0);
+
+var xAxis1 = d3.svg.axis()
+    .scale(x)
+    .orient("bottom");
 
 var nest = d3.nest()
     .key(function(d) { return d.treatment; });
@@ -275,11 +517,7 @@ var stack = d3.layout.stack()
     .y(function(d) { return d.value; })
     .out(function(d, y0) { d.valueOffset = y0; });
 
-
-/* var color = d3.scale.ordinal().range(["#98abc5", "#8a89a6", "#7b6888", "#6b486b", "#a05d56", "#d0743c", "#ff8c00"]); */
-/* var color = d3.scale.ordinal().range([ '#90CA77', '#81C6DD', '#E9B64D', '#E48743', '#E48743', '#9E3B33' ]); */
 var color = d3.scale.ordinal().range(['#ff4566','#db55a6','#c95cc7','#a96aff','#8e7cff','#57a1ff']);
-/*var color = d3.scale.linear().range(["#aad", "#556"]);*/
 
 var svg = d3.select("#treatments").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -287,32 +525,21 @@ var svg = d3.select("#treatments").append("svg")
   .append("g")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-//d3.csv("../public/data/treatments.csv", function(error, data) {
 RenderGraph("population", 2, function(data){
   data.forEach(function(d) {
-    /*d.date = parseDate(d.date);*/
-    d.value = +d['cost%'];
+      d.value = +d['cost%'];
+      d.cost  =  parseFloat(d['cost$'].replace(/,/g, ''));
+      console.log(d.cost)
   });
   
   var dataByGroup = nest.entries(data);
   dataByGroup = dataByGroup.slice(0, 5);
   
-  //nest(dataByGroup);
   stack(dataByGroup);
     
   x.domain(dataByGroup[0].values.map(function(d) { return d.dates; }));
   y0.domain(dataByGroup.map(function(d) { return d.key; }));
-/*
-  y1.domain([0, d3.max(dataByGroup, function(dg){ 
-    var arr = []
-    for(i in dg.values)
-        arr.push(dg.values[i].count)
-    console.log(Math.max.apply(Math,arr))
-    return Math.max.apply(Math,arr); 
-  })]).range([y0.rangeBand(), 0]);  
-*/
-  
-  y1.domain([0, d3.max(data, function(d) { return d.value; })]).range([y0.rangeBand(), 0]);
+  y1.domain([0, d3.max(data, function(d) {  return d.value; })]).range([y0.rangeBand(), 0]);
 
   var group = svg.selectAll(".group")
       .data(dataByGroup)
@@ -447,3 +674,4 @@ RenderGraph("population", 2, function(data){
   }
 });
 }
+*/

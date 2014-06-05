@@ -7,6 +7,14 @@ var firstdate, lastdate;
 //var year_ago = Date.today().clearTime().addMonths(-12);
 //var start_of_month = Date.today().clearTime().moveToFirstDayOfMonth();
 
+Array.max = function( array ){
+    return Math.max.apply( Math, array );
+};
+ 
+Array.min = function( array ){
+    return Math.min.apply( Math, array );
+};
+
 function monthDiff(d1, d2) {
     var months
     months = (d2.getFullYear() - d1.getFullYear()) * 12

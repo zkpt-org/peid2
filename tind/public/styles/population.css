@@ -117,3 +117,8 @@ treatments .y.axis path {
     font-size:x-small !important;
     font-weight:bold;
 }
+.total-label{
+    font-size:medium !important;
+    font-weight:bold;
+    fill: #ff4566;
+}
