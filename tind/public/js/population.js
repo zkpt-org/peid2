@@ -272,34 +272,39 @@ var svg = d3.select("#treatments").append("svg")
     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 RenderGraph("population", 2, function(data){
+  
+  var totals  = []
+  var totals2 = []
+  
   data.forEach(function(d) {
       d.value = +d['cost%'];
       d.cost  =  parseFloat(d['cost$'].replace(/,/g, ''));
+      d.totalcost =  parseFloat(d.totalcost.replace(/,/g, ''));
+      totals2.push(d.totalcost)     
   });
-  
 
   var dataByYear = d3.nest().key(function(d){ return d.dates; }).entries(data)
   var dataByGroup = nest.entries(data);
 
   dataByGroup = dataByGroup.slice(0, 5);
   
-  var totals = []
-  
   dataByYear.forEach(function(d){
     d.values = d.values.slice(0,5)
     s = 0
     for(v in d.values)
         s += d.values[v].cost
-    d.total = s
+    d.top5 = s
     totals.push(s)
   })
   
   var maxcost = Array.max(totals)
+  var maxtotal = Array.max(totals2)
 
   dataByGroup.forEach(function(d){
       for(var i in d.values){
           dataByYear.forEach(function(y){
               if(y.key == d.values[i].dates)
+                d.values[i].top5 = y.top5
                 d.values[i].total = y.total
           })
       }  
@@ -322,7 +327,8 @@ RenderGraph("population", 2, function(data){
       .attr("x", -20)
       .attr("y", function(d) { return y1(d.values[0].value / 2); })
       .attr("dy", ".35em")
-      .text(function(d) { return d.key; });
+      .text(function(d) { return d.key; })
+      .call(d3wrap, 100);
 
   group.selectAll("rect")
       .data(function(d) { return d.values; })
@@ -363,7 +369,7 @@ RenderGraph("population", 2, function(data){
       text(function(d) { return d.count+"%";}).
       attr("class", "bar-text2").
       attr("x", function(d) { return x(d.dates)+(x.rangeBand()/3)*1.1;}).
-      attr("y", function(d) { return (d.total < maxcost/3 ) ? y1(d.cost)-15 : y1(d.cost); });
+      attr("y", function(d) { return ((d.totalcost/maxtotal) * d.value < 3 ) ? y1(d.cost)-15 : y1(d.cost); });
 
   group.selectAll("svg").
       data(function(d) { return d.values; }).
@@ -373,12 +379,12 @@ RenderGraph("population", 2, function(data){
       attr("x", function(d) { return x(d.dates)}).
       attr("y", function(d) { return y1(d.cost); }).
       attr("dx", x.rangeBand()).
-      attr("dy", "1.2em").
+      attr("dy", "1.0em").
       attr("text-anchor", "middle").
       text(function(d) { return "$"+d['cost$'];}).
       attr("class", "bar-costs").
-      attr("y", function(d) { return (d.total < maxcost/3 ) ? y1(d.cost)-15 : y1(d.cost); }).
-      style("fill", function(d) { return (d.total < maxcost/3 ) ? color(d.treatment) : "#fff";});
+      attr("y", function(d) { return ((d.totalcost/maxtotal) * d.value < 3 ) ? y1(d.cost)-15 : y1(d.cost); }).
+      style("fill", function(d) { return ((d.totalcost/maxtotal) * d.value < 3 ) ? color(d.treatment) : "#fff";});
 
   var totalcost = svg.append("g").attr("class", "total-costs");
   totalcost.selectAll("svg")
@@ -389,7 +395,7 @@ RenderGraph("population", 2, function(data){
     .attr("dx", x.rangeBand())
     .attr("dy", ".35em")
     .attr("text-anchor", "middle")
-    .text(function(d) { return "$" + d.total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");})
+    .text(function(d) { return "$" + d.top5.toFixed(2).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");})
     .attr("x", function(d){ return x(d.key) - (this.getComputedTextLength()/2)/2; })
     
 
@@ -414,14 +420,14 @@ RenderGraph("population", 2, function(data){
         svg.selectAll(".total-label").attr("y",0)
         $(".total-label").fadeIn()
     }})
-    
-    
+        
     g.selectAll("rect").attr("y", function(d) { return y1(d.cost); });
-    g.select(".group-label").attr("y", function(d) { return y1(d.values[0].value / 2); })
-    g.selectAll(".bar-text2").attr("y", function(d) { return (d.total < maxcost/3 ) ? y1(d.cost)-15 : y1(d.cost); })
+    g.selectAll(".group-label").attr("y", function(d) { return y1(d.values[0].value / 2); })
+    g.selectAll(".group-label tspan").attr("y", function(d) { return y1(d.values[0].value / 2);});
+    g.selectAll(".bar-text2").attr("y", function(d) { return ((d.totalcost/maxtotal) * d.value < 3 ) ? y1(d.cost)-15 : y1(d.cost); })
     g.selectAll(".bar-text2").style("fill", function(d){return color(d.treatment)})
-    g.selectAll(".bar-costs").attr("y", function(d) { return (d.total < maxcost/3 ) ? y1(d.cost)-15 : y1(d.cost); })
-    g.selectAll(".bar-costs").style("fill", function(d) { return (d.total < maxcost/3 ) ? color(d.treatment) : "#fff";})
+    g.selectAll(".bar-costs").attr("y", function(d) { return ((d.totalcost/maxtotal) * d.value < 3 ) ? y1(d.cost)-15 : y1(d.cost); })
+    g.selectAll(".bar-costs").style("fill", function(d) { return ((d.totalcost/maxtotal) * d.value < 3 ) ? color(d.treatment) : "#fff";})
 
     $(".total-label").fadeIn()
     $('#treatments').animate({
@@ -434,9 +440,7 @@ RenderGraph("population", 2, function(data){
     $('#treatments svg').animate({
         height: height + margin.top  + margin.bottom + 40,
         }, 750, function() {
-    });
-    
-    
+    });    
   }
 
   function transitionStacked() {
@@ -447,20 +451,29 @@ RenderGraph("population", 2, function(data){
     var offset = y0(y0.domain()[0]) - (margin.top + margin.bottom)
         
     g.selectAll("rect").attr("y", function(d) { return y1(d.cost + d.valueOffset) - offset; });
-    g.select(".group-label").attr("y", function(d) { 
-        /* var hi = Math.max(d.values[0].total, d.values[1].total, d.values[2].total) */
+    g.selectAll(".group-label").attr("y", function(d) { 
         for(var i in d.values)
-            if(d.values[i].total == maxcost)
-                return y1(d.values[i].value/2 + d.values[i].valueOffset) - offset; 
+            if(d.values[i].top5 == maxcost)
+                return y1(d.values[i].value/2 + d.values[i].valueOffset) - offset;
     });
-    g.selectAll(".bar-text2").attr("y", function(d) { 
-        if(d.total > maxcost/3 )  
+    g.select(".group-label tspan").attr("y", function(d) { 
+        for(var i in d.values)
+            if(d.values[i].top5 == maxcost)
+                return y1(d.values[i].value/2 + d.values[i].valueOffset) - offset;
+    });
+    
+    
+    g.selectAll(".bar-text2").attr("y", function(d) {
+        if((d.totalcost/maxtotal) * d.value > 3 )  
             return y1(d.cost + d.valueOffset) - offset;
+        
     });
+    
     g.selectAll(".bar-text2").style("fill", function(d){return color(d.treatment)})
     
     g.selectAll(".bar-costs").attr("y", function(d) { 
-        if(d.total > maxcost/3 )
+        /* if(d.top5 > maxcost/3 ) */
+        if((d.totalcost/maxtotal) * d.value > 3)
             return y1(d.cost + d.valueOffset) - offset; 
     });
     

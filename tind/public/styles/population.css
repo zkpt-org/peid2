@@ -122,3 +122,8 @@ treatments .y.axis path {
     font-weight:bold;
     fill: #ff4566;
 }
+#treatments g.tick.major text{
+    font-weight: bold !important;
+    font-size: small !important;
+    fill:#999 !important;
+}

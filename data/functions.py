@@ -33,6 +33,11 @@ def timewindow(das):
     return {"reportingFrom" : reporting_from, "reportingTo" : reporting_to, 
             "comparisonFrom" : comparison_from, "comparisonTo" : comparison_to}
 
+def shiftdate(dt, years=0, months=0, days=0, forward=False):
+    d = datetime.datetime.strptime(dt, "%Y-%m-%d")
+    date = (d-relativedelta(years=years)).strftime("%Y-%m-%d")
+    return date
+
 def chronic(das, q):
     from collections import OrderedDict
     p = {
