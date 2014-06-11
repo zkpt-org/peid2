@@ -41,7 +41,8 @@ def graph2(request):
     except ObjectDoesNotExist:
         if 'pgt' in request.session:
             das  = Das(session=request.session)
-            data = process.graph2(das, request.GET)
+            data = queue.send(process.graph2, (das, request.GET), request.session)
+            # data = process.graph2(das, request.GET)
         else:
             data = {"session":"expired"}
         return HttpResponse(json.dumps(data))
