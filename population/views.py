@@ -4,6 +4,7 @@ from django.template import RequestContext
 from django.contrib.auth.decorators import login_required
 from models import *
 from django.core.exceptions import ObjectDoesNotExist
+from data import queue
 from data.das import Das
 from data.functions import conditions
 from population import process
