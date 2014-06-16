@@ -369,7 +369,7 @@ RenderGraph("population", 2, function(data){
       text(function(d) { return d.count+"%";}).
       attr("class", "bar-text2").
       attr("x", function(d) { return x(d.dates)+(x.rangeBand()/3)*1.1;}).
-      attr("y", function(d) { return ((d.totalcost/maxtotal) * d.value < 5 ) ? y1(d.cost)-15 : y1(d.cost); });
+      attr("y", function(d) { return ((d.totalcost/maxtotal) * d.value < 7 ) ? y1(d.cost)-15 : y1(d.cost); });
 
   group.selectAll("svg").
       data(function(d) { return d.values; }).
@@ -383,8 +383,8 @@ RenderGraph("population", 2, function(data){
       attr("text-anchor", "middle").
       text(function(d) { return "$"+d['cost$'];}).
       attr("class", "bar-costs").
-      attr("y", function(d) { return ((d.totalcost/maxtotal) * d.value < 5 ) ? y1(d.cost)-15 : y1(d.cost); }).
-      style("fill", function(d) { return ((d.totalcost/maxtotal) * d.value < 5 ) ? color(d.treatment) : "#fff";});
+      attr("y", function(d) { return ((d.totalcost/maxtotal) * d.value < 7 ) ? y1(d.cost)-15 : y1(d.cost); }).
+      style("fill", function(d) { return ((d.totalcost/maxtotal) * d.value < 7 ) ? color(d.treatment) : "#fff";});
 
   var totalcost = svg.append("g").attr("class", "total-costs");
   totalcost.selectAll("svg")
@@ -424,10 +424,10 @@ RenderGraph("population", 2, function(data){
     g.selectAll("rect").attr("y", function(d) { return y1(d.cost); });
     g.selectAll(".group-label").attr("y", function(d) { return y1(d.values[0].value / 2); })
     g.selectAll(".group-label tspan").attr("y", function(d) { return y1(d.values[0].value / 2);});
-    g.selectAll(".bar-text2").attr("y", function(d) { return ((d.totalcost/maxtotal) * d.value < 5 ) ? y1(d.cost)-15 : y1(d.cost); })
+    g.selectAll(".bar-text2").attr("y", function(d) { return ((d.totalcost/maxtotal) * d.value < 7 ) ? y1(d.cost)-15 : y1(d.cost); })
     g.selectAll(".bar-text2").style("fill", function(d){return color(d.treatment)})
-    g.selectAll(".bar-costs").attr("y", function(d) { return ((d.totalcost/maxtotal) * d.value < 5 ) ? y1(d.cost)-15 : y1(d.cost); })
-    g.selectAll(".bar-costs").style("fill", function(d) { return ((d.totalcost/maxtotal) * d.value < 5 ) ? color(d.treatment) : "#fff";})
+    g.selectAll(".bar-costs").attr("y", function(d) { return ((d.totalcost/maxtotal) * d.value < 7 ) ? y1(d.cost)-15 : y1(d.cost); })
+    g.selectAll(".bar-costs").style("fill", function(d) { return ((d.totalcost/maxtotal) * d.value < 7 ) ? color(d.treatment) : "#fff";})
 
     $(".total-label").fadeIn()
     $('#treatments').animate({
@@ -464,7 +464,7 @@ RenderGraph("population", 2, function(data){
     
     
     g.selectAll(".bar-text2").attr("y", function(d) {
-        if((d.totalcost/maxtotal) * d.value > 5 )  
+        if((d.totalcost/maxtotal) * d.value > 7 )  
             return y1(d.cost + d.valueOffset) - offset;
         
     });
@@ -473,7 +473,7 @@ RenderGraph("population", 2, function(data){
     
     g.selectAll(".bar-costs").attr("y", function(d) { 
         /* if(d.top5 > maxcost/3 ) */
-        if((d.totalcost/maxtotal) * d.value > 5)
+        if((d.totalcost/maxtotal) * d.value > 7)
             return y1(d.cost + d.valueOffset) - offset; 
     });
     
