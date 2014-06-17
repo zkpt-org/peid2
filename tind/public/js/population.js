@@ -369,7 +369,7 @@ RenderGraph("population", 2, function(data){
       text(function(d) { return d.count+"%";}).
       attr("class", "bar-text2").
       attr("x", function(d) { return x(d.dates)+(x.rangeBand()/3)*1.1;}).
-      attr("y", function(d) { return ((d.totalcost/maxtotal) * d.value < 7 ) ? y1(d.cost)-15 : y1(d.cost); });
+      attr("y", function(d) { return ((d.totalcost/maxtotal) * d.value < 3 ) ? y1(d.cost)-15 : y1(d.cost); });
 
   group.selectAll("svg").
       data(function(d) { return d.values; }).
@@ -383,8 +383,8 @@ RenderGraph("population", 2, function(data){
       attr("text-anchor", "middle").
       text(function(d) { return "$"+d['cost$'];}).
       attr("class", "bar-costs").
-      attr("y", function(d) { return ((d.totalcost/maxtotal) * d.value < 7 ) ? y1(d.cost)-15 : y1(d.cost); }).
-      style("fill", function(d) { return ((d.totalcost/maxtotal) * d.value < 7 ) ? color(d.treatment) : "#fff";});
+      attr("y", function(d) { return ((d.totalcost/maxtotal) * d.value < 3 ) ? y1(d.cost)-15 : y1(d.cost); }).
+      style("fill", function(d) { return ((d.totalcost/maxtotal) * d.value < 3 ) ? color(d.treatment) : "#fff";});
 
   var totalcost = svg.append("g").attr("class", "total-costs");
   totalcost.selectAll("svg")
@@ -404,13 +404,18 @@ RenderGraph("population", 2, function(data){
   var timeout = setTimeout(function() {
     d3.select("input[value=\"stacked\"]").property("checked", true).each(change);
   }, 2000);
-
+  
+  if(this.value !== "multiples"){
+    transitionMultiples();
+    d3.select("input[value=\"multiples\"]").property("checked", true)
+  }
+    
   function change() {
     clearTimeout(timeout);
     if (this.value === "multiples") transitionMultiples();
     else transitionStacked();
   }
-
+  
   function transitionMultiples() {
     var t = svg.transition().duration(750),
         g = t.selectAll(".group").attr("transform", function(d) { return "translate(0," + y0(d.key) + ")"; });
@@ -424,10 +429,10 @@ RenderGraph("population", 2, function(data){
     g.selectAll("rect").attr("y", function(d) { return y1(d.cost); });
     g.selectAll(".group-label").attr("y", function(d) { return y1(d.values[0].value / 2); })
     g.selectAll(".group-label tspan").attr("y", function(d) { return y1(d.values[0].value / 2);});
-    g.selectAll(".bar-text2").attr("y", function(d) { return ((d.totalcost/maxtotal) * d.value < 7 ) ? y1(d.cost)-15 : y1(d.cost); })
+    g.selectAll(".bar-text2").attr("y", function(d) { return ((d.totalcost/maxtotal) * d.value < 3 ) ? y1(d.cost)-15 : y1(d.cost); })
     g.selectAll(".bar-text2").style("fill", function(d){return color(d.treatment)})
-    g.selectAll(".bar-costs").attr("y", function(d) { return ((d.totalcost/maxtotal) * d.value < 7 ) ? y1(d.cost)-15 : y1(d.cost); })
-    g.selectAll(".bar-costs").style("fill", function(d) { return ((d.totalcost/maxtotal) * d.value < 7 ) ? color(d.treatment) : "#fff";})
+    g.selectAll(".bar-costs").attr("y", function(d) { return ((d.totalcost/maxtotal) * d.value < 3 ) ? y1(d.cost)-15 : y1(d.cost); })
+    g.selectAll(".bar-costs").style("fill", function(d) { return ((d.totalcost/maxtotal) * d.value < 3 ) ? color(d.treatment) : "#fff";})
 
     $(".total-label").fadeIn()
     $('#treatments').animate({
@@ -464,7 +469,7 @@ RenderGraph("population", 2, function(data){
     
     
     g.selectAll(".bar-text2").attr("y", function(d) {
-        if((d.totalcost/maxtotal) * d.value > 7 )  
+        if((d.totalcost/maxtotal) * d.value > 3 )  
             return y1(d.cost + d.valueOffset) - offset;
         
     });
@@ -473,7 +478,7 @@ RenderGraph("population", 2, function(data){
     
     g.selectAll(".bar-costs").attr("y", function(d) { 
         /* if(d.top5 > maxcost/3 ) */
-        if((d.totalcost/maxtotal) * d.value > 7)
+        if((d.totalcost/maxtotal) * d.value > 3)
             return y1(d.cost + d.valueOffset) - offset; 
     });
     
@@ -495,196 +500,6 @@ RenderGraph("population", 2, function(data){
         }, 750, function() {
             $(".bar-text2").fadeIn()
     });
-
   }
 });
 }
-
-
-/*
-function treatments(){
-    // example at http://bl.ocks.org/mbostock/4679202
-    
-    var margin = {top: 30, right: 30, bottom: 60, left: 30},
-    width  = 760 - margin.left - margin.right,
-    height = 400 - margin.top  - margin.bottom;
-
-var y0 = d3.scale.ordinal()
-    .rangeRoundBands([height,0], 0.01);
-var y1 = d3.scale.linear();
-//var y1 = d3.scale.linear().domain([0, height])
-
-var x = d3.scale.ordinal()
-    .rangeRoundBands([10, width-80], 0.1, 0);
-
-var xAxis1 = d3.svg.axis()
-    .scale(x)
-    .orient("bottom");
-
-var nest = d3.nest()
-    .key(function(d) { return d.treatment; });
-
-var stack = d3.layout.stack()
-    .values(function(d) { return d.values; })
-    .x(function(d) { return d.dates; })
-    .y(function(d) { return d.value; })
-    .out(function(d, y0) { d.valueOffset = y0; });
-
-var color = d3.scale.ordinal().range(['#ff4566','#db55a6','#c95cc7','#a96aff','#8e7cff','#57a1ff']);
-
-var svg = d3.select("#treatments").append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-  .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-RenderGraph("population", 2, function(data){
-  data.forEach(function(d) {
-      d.value = +d['cost%'];
-      d.cost  =  parseFloat(d['cost$'].replace(/,/g, ''));
-      console.log(d.cost)
-  });
-  
-  var dataByGroup = nest.entries(data);
-  dataByGroup = dataByGroup.slice(0, 5);
-  
-  stack(dataByGroup);
-    
-  x.domain(dataByGroup[0].values.map(function(d) { return d.dates; }));
-  y0.domain(dataByGroup.map(function(d) { return d.key; }));
-  y1.domain([0, d3.max(data, function(d) {  return d.value; })]).range([y0.rangeBand(), 0]);
-
-  var group = svg.selectAll(".group")
-      .data(dataByGroup)
-    .enter().append("g")
-      .attr("class", "group")
-      .attr("transform", function(d) { return "translate(0," + y0(d.key) + ")"; });
-
-  group.append("text")
-      .attr("class", "group-label")
-      .attr("x", -20)
-      .attr("y", function(d) { return y1(d.values[0].value / 2); })
-      .attr("dy", ".35em")
-      .text(function(d) { return d.key; });
-
-  group.selectAll("rect")
-      .data(function(d) { return d.values; })
-    .enter().append("rect")
-      .style("fill", function(d) { return color(d.treatment); })
-      .style("stroke", "#fff")
-      .attr("x", function(d) { return x(d.dates)+(x.rangeBand()/2)*1.1; })
-      .attr("y", function(d) { return y1(d.value); })
-      .attr("width", x.rangeBand()/1.5)
-      .attr("height", function(d) { return (y0.rangeBand() - y1(d.value)); });
-
-  group.filter(function(d, i) { return !i; }).append("g")
-      .attr("class", "x axis")
-      .attr("transform", "translate("+((x.rangeBand()/3)*1.2)+"," + y0.rangeBand() + ")")
-      .call(xAxis1);
-
-  group.selectAll("svg").
-      data(function(d) { return d.values; }).
-      enter().
-      append("svg:text").
-      attr("class", "percent").
-      attr("x", function(d) { return x(d.dates)+(x.rangeBand()/3)*1.1;}).
-      attr("y", function(d) { return y1(d.value); }).
-      attr("dx", x.rangeBand()).
-      attr("dy", "1.2em").
-      attr("text-anchor", "middle").
-      text(function(d) { return d.value+"%";}).
-      attr("class", "bar-text");
-
-  group.selectAll("svg").
-      data(function(d) { return d.values; }).
-      enter().
-      append("svg:text").
-      attr("class", "percent").
-      attr("x", function(d) { return x(d.dates)+(x.rangeBand()/3)*1.1;}).
-      attr("y", function(d) { return y1(d.value); }).
-      attr("dx", x.rangeBand()).
-      attr("dy", "1.2em").
-      attr("text-anchor", "middle").
-      text(function(d) { return d.count+"%";}).
-      attr("class", "bar-text2");
-
-  group.selectAll("svg").
-      data(function(d) { return d.values; }).
-      enter().
-      append("svg:text").
-      attr("class", "percent").
-      attr("x", function(d) { return x(d.dates)}).
-      attr("y", function(d) { return y1(d.value); }).
-      attr("dx", x.rangeBand()).
-      attr("dy", "1.2em").
-      attr("text-anchor", "middle").
-      text(function(d) { return "$"+d['cost$'];}).
-      attr("class", "bar-costs");
-
-
-  d3.selectAll("input").on("change", change);
-
-  var timeout = setTimeout(function() {
-    d3.select("input[value=\"stacked\"]").property("checked", true).each(change);
-  }, 2000);
-
-  function change() {
-    clearTimeout(timeout);
-    if (this.value === "multiples") transitionMultiples();
-    else transitionStacked();
-  }
-
-  function transitionMultiples() {
-    var t = svg.transition().duration(750),
-        g = t.selectAll(".group").attr("transform", function(d) { return "translate(0," + y0(d.key) + ")"; });
-    
-    $(".bar-text2").fadeOut()
-    
-    g.selectAll("rect").attr("y", function(d) { return y1(d.value); });
-    g.select(".group-label").attr("y", function(d) { return y1(d.values[0].value / 2); })
-    g.selectAll(".bar-text2").attr("y", function(d) { return y1(d.value); })
-    g.selectAll(".bar-costs").attr("y", function(d) { return y1(d.value); })
-    
-    $('#treatments').animate({
-        height: height + margin.top  + margin.bottom + 40,
-        }, 750, function() {
-    });
-    
-    $('#graph-3 .box').animate({'min-height': "400px"}, 750)
-    
-    $('#treatments svg').animate({
-        height: height + margin.top  + margin.bottom + 40,
-        }, 750, function() {
-    });
-    
-    
-  }
-
-  function transitionStacked() {
-    var t = svg.transition().duration(750),
-        g = t.selectAll(".group").attr("transform", "translate(0," + y0(y0.domain()[0]) + ")");
-    
-    var offset = y0(y0.domain()[0]) - (margin.top + margin.bottom)
-    
-    g.selectAll("rect").attr("y", function(d) { return y1(d.value + d.valueOffset) - offset; });
-    g.select(".group-label").attr("y", function(d) { return y1(d.values[0].value / 2 + d.values[0].valueOffset) - offset; });
-    g.selectAll(".bar-text2").attr("y", function(d) { return y1(d.value + d.valueOffset) - offset; });
-    g.selectAll(".bar-costs").attr("y", function(d) { return y1(d.value + d.valueOffset) - offset; });
-    
-    $('#treatments').animate({
-        height: offset + (margin.top + margin.bottom),
-        }, 750, function() {
-        
-    });
-    
-    $('#graph-3 .box').animate({'min-height': (160 + margin.top  + margin.bottom +60) + "px"}, 750)
-    
-    $('#treatments svg').animate({
-        height: offset + (margin.top + margin.bottom),
-        }, 750, function() {
-            $(".bar-text2").fadeIn()
-    });
-  }
-});
-}
-*/
